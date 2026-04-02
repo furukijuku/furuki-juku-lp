@@ -1,119 +1,398 @@
 <?php get_header(); ?>
 
 <?php
-/**
- * キャッチコピー 3案
- *
- * 案A：「なにがわからないか、わからない。だから、Furuki塾。」
- *      → バス広告の認知を活かした直球。中高生の共感を狙う。
- *
- * 案B：「つまずきは、伸びしろだ。」
- *      → シンプルで力強い。保護者・生徒両方に響くポジティブな表現。
- *
- * 案C：「あなたの『わからない』を、一緒に見つけよう。」
- *      → 個別指導の温かさを前面に。LP全体のトーンと馴染みやすい。
- *
- * 使用する案のコメントを外してください（現在は案Cを表示）
- */
+// ===== サイト情報 =====
+$tel        = '03-6770-6936';
+$address    = '東京都江東区千田11-13 丸万マンダリンハイム1F';
+$hours      = '14:00〜21:00';
+$instagram  = 'https://www.instagram.com/furuki_juku/'; // ← 要確認
+$line_url   = 'https://lin.ee/XXXXXXX';                // ← 要確認
+$map_image  = get_template_directory_uri() . '/assets/images/map_furuki-juku.png';
 
-// 案A（採用）
+// ===== キャッチコピー（案A採用）=====
 $catch_main = '何がわからないか<br class="hidden sm:block">わからない。';
 $catch_sub  = 'そんな「悩める」キミに、Furuki塾。';
-
-// 案B
-// $catch_main = 'つまずきは、<br class="hidden sm:block">伸びしろだ。';
-// $catch_sub  = '一人ひとりの「わからない」に向き合う個別指導塾';
-
-// 案C → 「Furuki塾について」セクションのリード文として転用予定
-// 「あなたの『わからない』を、一緒に見つけよう。
-//   Furuki塾の個別指導で、自分だけのペースで着実に伸びる」
+// 案C → 「塾について」セクションで使用
+$about_lead = 'あなたの「わからない」を、一緒に見つけよう。';
+$about_sub  = 'Furuki塾の個別指導で、自分だけのペースで着実に伸びる';
 ?>
 
-<!-- ヒーローセクション -->
-<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-
-  <!-- 背景：後で画像に差し替えてください -->
+<!-- ========================================
+  1. ヒーロー
+======================================== -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
   <div class="absolute inset-0">
     <?php if ( has_post_thumbnail( get_option('page_on_front') ) ) : ?>
       <?php echo get_the_post_thumbnail( get_option('page_on_front'), 'full', ['class' => 'w-full h-full object-cover object-center'] ); ?>
     <?php else : ?>
-      <!-- プレースホルダー：グラデーション背景 -->
       <div class="w-full h-full bg-gradient-to-br from-brand-navy via-[#005a96] to-brand-blue"></div>
-      <!-- 差し替え方法：WordPress管理画面 > フロントページ > アイキャッチ画像 を設定 -->
     <?php endif; ?>
-    <!-- オーバーレイ -->
     <div class="absolute inset-0 bg-brand-navy/70"></div>
-    <!-- ドット装飾（ピクセルアートへのオマージュ） -->
     <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 24px 24px;"></div>
   </div>
 
-  <!-- コンテンツ -->
   <div class="relative z-10 text-center text-white px-6 max-w-4xl mx-auto pt-16">
-
-    <!-- バッジ -->
     <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/30 text-white text-sm font-medium px-5 py-2 rounded-full mb-8">
       <span class="w-2 h-2 rounded-full bg-brand-accent inline-block"></span>
       東京都江東区の個別指導塾
     </div>
-
-    <!-- メインキャッチコピー -->
     <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl font-bold leading-snug mb-5 tracking-wide drop-shadow-lg">
       <?php echo $catch_main; ?>
     </h1>
-
-    <!-- サブコピー -->
-    <p class="text-base sm:text-xl text-white/85 mb-4 leading-relaxed font-sans">
-      <?php echo $catch_sub; ?>
-    </p>
-
-    <!-- 特徴タグ -->
+    <p class="text-base sm:text-xl text-white/85 mb-4 leading-relaxed"><?php echo $catch_sub; ?></p>
     <div class="flex flex-wrap justify-center gap-3 mb-10 text-sm">
       <span class="bg-white/15 border border-white/30 text-white px-4 py-1.5 rounded-full">小1〜中3対応</span>
       <span class="bg-white/15 border border-white/30 text-white px-4 py-1.5 rounded-full">全科目指導</span>
       <span class="bg-white/15 border border-white/30 text-white px-4 py-1.5 rounded-full">通塾スケジュール自由</span>
       <span class="bg-white/15 border border-white/30 text-white px-4 py-1.5 rounded-full">低価格な季節講習</span>
     </div>
-
-    <!-- CTAボタン -->
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="#contact"
-         class="inline-block bg-brand-accent hover:bg-amber-500 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg transition-all duration-200 hover:scale-105">
+      <a href="#contact" class="inline-block bg-brand-accent hover:bg-amber-500 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg transition-all duration-200 hover:scale-105">
         無料体験・お問い合わせ
       </a>
-      <a href="#about"
-         class="inline-block bg-white/15 hover:bg-white/25 text-white font-bold py-4 px-10 rounded-full text-lg border border-white/50 backdrop-blur-sm transition-all duration-200">
+      <a href="#about" class="inline-block bg-white/15 hover:bg-white/25 text-white font-bold py-4 px-10 rounded-full text-lg border border-white/50 backdrop-blur-sm transition-all duration-200">
         塾の詳細を見る
       </a>
     </div>
-
-    <!-- 電話番号 -->
     <p class="mt-8 text-white/70 text-sm">
       お電話でのお問い合わせ：
-      <a href="tel:0367706936" class="text-white font-bold text-base hover:text-brand-accent transition">
-        03-6770-6936
-      </a>
-      <span class="ml-2 text-xs">（受付 14:00〜21:00）</span>
+      <a href="tel:<?php echo str_replace('-', '', $tel); ?>" class="text-white font-bold text-base hover:text-brand-accent transition"><?php echo $tel; ?></a>
+      <span class="ml-2 text-xs">（受付 <?php echo $hours; ?>）</span>
     </p>
-
-    <!-- 注記 -->
     <p class="mt-3 text-white/50 text-xs">しつこい勧誘はございません。</p>
-
   </div>
 
-  <!-- スクロール矢印 -->
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 animate-bounce">
     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
     </svg>
   </div>
-
 </section>
 
-<!-- 以降のセクション追加予定 -->
-<section id="about" class="py-24 bg-brand-warm">
-  <div class="container mx-auto text-center text-brand-navy">
-    <p class="text-gray-400 text-sm">（次のセクションをここに追加予定）</p>
+<!-- ========================================
+  2. 数字で見るFuruki塾
+======================================== -->
+<section class="py-16 bg-brand-blue">
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white">
+      <div>
+        <p class="text-4xl font-bold font-serif">20<span class="text-xl">年以上</span></p>
+        <p class="text-sm mt-1 text-white/80">地域に根ざした指導歴</p><!-- ← 要確認 -->
+      </div>
+      <div>
+        <p class="text-4xl font-bold font-serif">小1<span class="text-xl">〜中3</span></p>
+        <p class="text-sm mt-1 text-white/80">幅広い学年に対応</p>
+      </div>
+      <div>
+        <p class="text-4xl font-bold font-serif">全<span class="text-xl">科目</span></p>
+        <p class="text-sm mt-1 text-white/80">国語・算数・数学・英語 他</p>
+      </div>
+      <div>
+        <p class="text-4xl font-bold font-serif">0<span class="text-xl">円</span></p>
+        <p class="text-sm mt-1 text-white/80">体験授業（無料）</p><!-- ← 要確認 -->
+      </div>
+    </div>
   </div>
 </section>
 
-<?php get_footer(); ?>
+<!-- ========================================
+  3. 塾について（案C活用）
+======================================== -->
+<section id="about" class="py-24 bg-brand-warm">
+  <div class="container mx-auto px-6 max-w-4xl">
+    <div class="text-center mb-12">
+      <span class="text-brand-blue text-sm font-bold tracking-widest uppercase">About</span>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-navy mt-2"><?php echo $about_lead; ?></h2>
+      <p class="text-gray-600 mt-4 text-lg leading-relaxed"><?php echo $about_sub; ?></p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 text-gray-700 leading-relaxed">
+      <div class="bg-white rounded-2xl p-8 shadow-sm">
+        <div class="text-3xl mb-4">📚</div>
+        <h3 class="font-bold text-brand-navy text-lg mb-3">「わからない」を一緒に見つける</h3>
+        <p>何がわからないかもわからない状態のお子さまほど、個別指導が力を発揮します。Furuki塾では、まずつまずきのポイントを丁寧に探すことから始めます。</p>
+      </div>
+      <div class="bg-white rounded-2xl p-8 shadow-sm">
+        <div class="text-3xl mb-4">🕐</div>
+        <h3 class="font-bold text-brand-navy text-lg mb-3">通塾スケジュールは自由に選べる</h3>
+        <p>部活・習い事・学校行事。忙しい毎日に合わせて、通塾日時を柔軟に設定できます。無理なく続けることが、成績向上への近道です。</p>
+      </div>
+      <div class="bg-white rounded-2xl p-8 shadow-sm">
+        <div class="text-3xl mb-4">💰</div>
+        <h3 class="font-bold text-brand-navy text-lg mb-3">季節講習は低価格で充実</h3>
+        <p>夏期・冬期・春期講習は、通い放題プランも含めてリーズナブルな料金設定。「受けたいけど高くて…」という心配は不要です。</p>
+      </div>
+      <div class="bg-white rounded-2xl p-8 shadow-sm">
+        <div class="text-3xl mb-4">🚌</div>
+        <h3 class="font-bold text-brand-navy text-lg mb-3">千田バス停すぐ</h3>
+        <p>都営バス「千田」バス停から徒歩すぐ。バスの車内アナウンスでもご案内しています。アクセス抜群で、雨の日も安心です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+  4. こんな生徒におすすめ
+======================================== -->
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-6 max-w-3xl">
+    <div class="text-center mb-10">
+      <span class="text-brand-blue text-sm font-bold tracking-widest uppercase">For You</span>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-navy mt-2">こんな生徒・保護者の方へ</h2>
+    </div>
+    <div class="space-y-4">
+      <?php
+      $items = [
+        ['何から勉強すればいいかわからない', '中学受験はしないけど、基礎はしっかり固めたい'],
+        ['集中力が続かない、ノートが取れない', '部活や習い事で塾の時間が固定できない'],
+        ['テストで時間が足りなくなる', '暗記が苦手、文章を何度も読み返してしまう'],
+        ['他塾の補習・サポートではなく、メインの塾として使いたい', '季節講習だけ通わせたい'],
+      ];
+      foreach ($items as $pair) :
+      ?>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <?php foreach ($pair as $item) : ?>
+        <div class="flex items-start gap-3 bg-brand-sky rounded-xl px-5 py-4">
+          <span class="text-brand-blue font-bold text-lg mt-0.5">✓</span>
+          <p class="text-brand-navy text-sm font-medium"><?php echo $item; ?></p>
+        </div>
+        <?php endforeach; ?>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+  5. コース・料金（仮）
+======================================== -->
+<section id="price" class="py-24 bg-brand-warm">
+  <div class="container mx-auto px-6 max-w-4xl">
+    <div class="text-center mb-12">
+      <span class="text-brand-blue text-sm font-bold tracking-widest uppercase">Course & Price</span>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-navy mt-2">コース・料金</h2>
+      <p class="text-gray-500 mt-3 text-sm">※ 料金はすべて税込表示です</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- 通常コース -->
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-brand-blue text-white text-center py-4">
+          <h3 class="font-bold text-xl">通常コース</h3>
+          <p class="text-sm text-white/80 mt-1">小1〜中3 / 全科目</p>
+        </div>
+        <div class="p-6 space-y-3 text-sm text-gray-700">
+          <p class="text-center text-gray-400 py-8">（料金・時間数など詳細を追加予定）</p>
+          <div class="border-t pt-4 text-xs text-gray-400">
+            ※ 通塾日時は週ごとに相談可能<br>
+            ※ 映像教材を活用した個別指導
+          </div>
+        </div>
+      </div>
+      <!-- 季節講習コース -->
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-brand-accent text-white text-center py-4">
+          <h3 class="font-bold text-xl">季節講習コース</h3>
+          <p class="text-sm text-white/80 mt-1">夏期・冬期・春期</p>
+        </div>
+        <div class="p-6 space-y-4 text-sm text-gray-700">
+          <div class="bg-brand-sky rounded-xl p-4">
+            <p class="font-bold text-brand-navy mb-2">中学生コース（例：夏期）</p>
+            <p>通い放題（1日2時間まで）</p>
+            <p class="text-2xl font-bold text-brand-blue mt-1">¥34,650</p>
+          </div>
+          <div class="bg-brand-sky rounded-xl p-4">
+            <p class="font-bold text-brand-navy mb-2">読解力強化コース（小1〜中3）</p>
+            <p>50分 × 10回 <span class="font-bold text-brand-blue">¥7,700</span></p>
+            <p>50分 × 5回　 <span class="font-bold text-brand-blue">¥5,500</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="text-center text-gray-400 text-sm mt-6">詳しい料金はお問い合わせください</p>
+  </div>
+</section>
+
+<!-- ========================================
+  6. 保護者・生徒の声（仮）
+======================================== -->
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-6 max-w-4xl">
+    <div class="text-center mb-10">
+      <span class="text-brand-blue text-sm font-bold tracking-widest uppercase">Voice</span>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-navy mt-2">生徒・保護者の声</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <?php
+      $voices = [
+        ['中2 男子', '何から勉強すればいいかわからなかったけど、先生と一緒に整理できた。定期テストの点数が上がった！', '（仮）'],
+        ['小5 保護者', '部活で週の通塾日が毎週変わるのに、快く対応してもらえています。子どもが楽しそうに通っています。', '（仮）'],
+        ['中3 女子', '夏期講習がリーズナブルで、他の習い事と両立できました。受験勉強の基礎固めができた！', '（仮）'],
+      ];
+      foreach ($voices as $v) :
+      ?>
+      <div class="bg-brand-warm rounded-2xl p-6 relative">
+        <p class="text-4xl text-brand-blue/20 font-serif absolute top-4 left-5">"</p>
+        <p class="text-gray-700 text-sm leading-relaxed mt-4 relative z-10"><?php echo $v[1]; ?></p>
+        <div class="mt-4 flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-brand-blue/20 flex items-center justify-center text-xs text-brand-navy font-bold">
+            <?php echo mb_substr($v[0], 0, 1); ?>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-brand-navy"><?php echo $v[0]; ?></p>
+            <p class="text-xs text-gray-400"><?php echo $v[2]; ?></p>
+          </div>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+  7. アクセス（イラスト地図 ＋ Google Maps）
+======================================== -->
+<section id="access" class="py-24 bg-brand-sky">
+  <div class="container mx-auto px-6 max-w-5xl">
+    <div class="text-center mb-12">
+      <span class="text-brand-blue text-sm font-bold tracking-widest uppercase">Access</span>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-navy mt-2">アクセス</h2>
+      <p class="text-gray-600 mt-3"><?php echo $address; ?></p>
+      <p class="text-gray-500 text-sm mt-1">都営バス「千田」バス停 徒歩約2分</p>
+    </div>
+
+    <!-- 2カラム：イラスト地図 ＋ Google Maps -->
+    <div class="grid md:grid-cols-2 gap-6 items-start">
+      <!-- イラスト地図 -->
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-brand-blue text-white text-center py-3 text-sm font-bold">周辺案内図</div>
+        <img src="<?php echo esc_url($map_image); ?>" alt="Furuki塾 周辺地図" class="w-full h-auto">
+      </div>
+      <!-- Google Maps -->
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="bg-brand-navy text-white text-center py-3 text-sm font-bold">Google マップ</div>
+        <div class="relative w-full" style="padding-bottom: 75%;">
+          <iframe
+            class="absolute inset-0 w-full h-full"
+            src="https://maps.google.com/maps?q=東京都江東区千田11-13+丸万マンダリンハイム1F&output=embed&z=16"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- アクセス情報 -->
+    <div class="mt-8 bg-white rounded-2xl p-6 shadow-sm grid sm:grid-cols-3 gap-4 text-sm text-gray-700">
+      <div class="flex items-start gap-3">
+        <span class="text-brand-blue text-xl">🚌</span>
+        <div>
+          <p class="font-bold text-brand-navy">バス</p>
+          <p>都営バス「千田」停<br>徒歩約2分</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <span class="text-brand-blue text-xl">🏫</span>
+        <div>
+          <p class="font-bold text-brand-navy">目印</p>
+          <p>石島交差点そば<br>江東区役所小松橋出張所 近く</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <span class="text-brand-blue text-xl">🕐</span>
+        <div>
+          <p class="font-bold text-brand-navy">受付時間</p>
+          <p>月〜土 <?php echo $hours; ?><br>（日・祝 休み）<!-- ← 要確認 --></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+  8. お問い合わせ
+======================================== -->
+<section id="contact" class="py-24 bg-white">
+  <div class="container mx-auto px-6 max-w-2xl">
+    <div class="text-center mb-10">
+      <span class="text-brand-blue text-sm font-bold tracking-widest uppercase">Contact</span>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-navy mt-2">お問い合わせ・無料体験</h2>
+      <p class="text-gray-500 mt-3 text-sm">しつこい勧誘はございません。お気軽にどうぞ。</p>
+    </div>
+
+    <!-- 連絡手段 -->
+    <div class="grid sm:grid-cols-3 gap-4 mb-10">
+      <a href="tel:<?php echo str_replace('-', '', $tel); ?>"
+         class="flex flex-col items-center gap-2 bg-brand-sky hover:bg-brand-blue hover:text-white text-brand-navy rounded-2xl py-6 px-4 transition-all duration-200 group">
+        <span class="text-3xl">📞</span>
+        <p class="font-bold text-sm">お電話</p>
+        <p class="text-xs text-gray-500 group-hover:text-white/80"><?php echo $tel; ?></p>
+      </a>
+      <a href="<?php echo esc_url($line_url); ?>" target="_blank"
+         class="flex flex-col items-center gap-2 bg-[#06C755]/10 hover:bg-[#06C755] hover:text-white text-[#06C755] rounded-2xl py-6 px-4 transition-all duration-200 group">
+        <span class="text-3xl">💬</span>
+        <p class="font-bold text-sm">LINE</p>
+        <p class="text-xs text-gray-500 group-hover:text-white/80">友だち追加</p><!-- ← LINE ID要確認 -->
+      </a>
+      <a href="<?php echo esc_url($instagram); ?>" target="_blank"
+         class="flex flex-col items-center gap-2 bg-pink-50 hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500 hover:text-white text-pink-500 rounded-2xl py-6 px-4 transition-all duration-200 group">
+        <span class="text-3xl">📸</span>
+        <p class="font-bold text-sm">Instagram</p>
+        <p class="text-xs text-gray-500 group-hover:text-white/80">@furuki_juku<!-- ← 要確認 --></p>
+      </a>
+    </div>
+
+    <!-- お問い合わせフォーム（仮 / Contact Form 7 等に差し替え） -->
+    <div class="bg-brand-warm rounded-2xl p-8">
+      <p class="text-center text-gray-400 text-sm py-6">
+        ここにお問い合わせフォームを設置予定<br>
+        <span class="text-xs">（Contact Form 7 などのプラグインを使用）</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+  Footer
+======================================== -->
+</main>
+<footer class="bg-brand-navy text-white">
+  <div class="container mx-auto px-6 py-12 max-w-5xl">
+    <div class="grid md:grid-cols-3 gap-8 mb-8">
+      <!-- ロゴ・塾名 -->
+      <div>
+        <p class="text-2xl font-serif font-bold text-white mb-2">Furuki塾</p>
+        <p class="text-white/60 text-sm leading-relaxed"><?php echo $address; ?></p>
+        <p class="text-white/60 text-sm mt-1">TEL：<a href="tel:<?php echo str_replace('-', '', $tel); ?>" class="hover:text-brand-accent transition"><?php echo $tel; ?></a></p>
+        <p class="text-white/60 text-sm">受付：<?php echo $hours; ?></p>
+      </div>
+      <!-- ナビ -->
+      <div>
+        <p class="font-bold text-white/80 mb-3 text-sm">メニュー</p>
+        <ul class="space-y-2 text-sm text-white/60">
+          <li><a href="#about" class="hover:text-white transition">塾について</a></li>
+          <li><a href="#price" class="hover:text-white transition">コース・料金</a></li>
+          <li><a href="#access" class="hover:text-white transition">アクセス</a></li>
+          <li><a href="#contact" class="hover:text-white transition">お問い合わせ</a></li>
+        </ul>
+      </div>
+      <!-- SNS -->
+      <div>
+        <p class="font-bold text-white/80 mb-3 text-sm">SNS・公式サイト</p>
+        <div class="flex gap-4">
+          <a href="<?php echo esc_url($instagram); ?>" target="_blank"
+             class="w-10 h-10 rounded-full bg-white/10 hover:bg-pink-500 flex items-center justify-center text-lg transition">📸</a>
+          <a href="<?php echo esc_url($line_url); ?>" target="_blank"
+             class="w-10 h-10 rounded-full bg-white/10 hover:bg-[#06C755] flex items-center justify-center text-lg transition">💬</a>
+        </div>
+        <p class="text-white/40 text-xs mt-4">しつこい勧誘はございません。</p>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-6 text-center text-white/30 text-xs">
+      &copy; <?php echo date('Y'); ?> Furuki塾 All Rights Reserved.
+    </div>
+  </div>
+</footer>
+
+<?php wp_footer(); ?>
+</body>
+</html>
