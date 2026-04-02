@@ -22,12 +22,18 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
 
-      - name: Deploy wp-content via rsync
+      - name: Deploy theme via rsync
         run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
+            -p ${{ secrets.SSH_PORT }} \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+            "sudo chown -R ${{ secrets.SSH_USER }}:${{ secrets.SSH_USER }} /var/www/html/wp-content/themes/"
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p ${{ secrets.SSH_PORT }}" \
-            ./wp-content/ \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/html/wp-content/
+            ./wp-content/themes/furuki-juku/ \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/html/wp-content/themes/furuki-juku/
 
       - name: Fix permissions
         run: |
@@ -36,4 +42,4 @@ jobs:
             -o UserKnownHostsFile=/dev/null \
             -p ${{ secrets.SSH_PORT }} \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            "sudo chown -R www-data:www-data /var/www/html/wp-content/ && echo 'パーミッション設定完了'"
+            "sudo chown -R www-data:www-data /var/www/html/wp-content/themes/ && echo 'パーミッション設定完了'"
