@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'wp-content/**'
+  workflow_dispatch:
 
 jobs:
   deploy:
