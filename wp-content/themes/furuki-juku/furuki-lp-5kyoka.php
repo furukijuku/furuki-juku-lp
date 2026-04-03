@@ -5,6 +5,135 @@
  * Usage: WordPressの「固定ページ」を新規作成し、テンプレートで「LP 5教科・速読解」を選択してください。
  *        このファイルをアクティブテーマのフォルダ（wp-content/themes/あなたのテーマ名/）に配置してください。
  */
+
+/* ============================================================
+   ★ 定期テスト対策 カウントダウン設定
+   - exam_date: テスト初日（YYYY-MM-DD）★ 毎年ここだけ更新
+   - show_days_before: 何日前から表示するか（デフォルト30日）
+============================================================ */
+$exam_alerts = [
+  [
+    'school'           => '深川第四中学校',
+    'exam_name'        => '前期中間テスト',
+    'exam_date'        => '2026-06-09', // ★ 確定したら更新（昨年度実績より）
+    'show_days_before' => 30,
+    'link_url'         => home_url('/contact/'),
+    'link_text'        => 'テスト対策を申し込む',
+  ],
+  // 学校を追加したい場合はここにコピー↓
+  // [
+  //   'school'           => '○○中学校',
+  //   'exam_name'        => '前期中間テスト',
+  //   'exam_date'        => '2026-06-12',
+  //   'show_days_before' => 30,
+  //   'link_url'         => home_url('/contact/'),
+  //   'link_text'        => 'テスト対策を申し込む',
+  // ],
+];
+
+/* ============================================================
+   ★ お知らせバー設定（最大3件）
+   - show:       true=表示 / false=非表示
+   - start/end:  表示期間（'YYYY-MM-DD' 形式）不要なら '' にする
+   - type:       'info'=青 / 'warn'=オレンジ / 'urgent'=赤
+   - icon:       絵文字
+   - text:       本文
+   - link_url:   リンク先URL（不要なら ''）
+   - link_text:  リンクテキスト
+============================================================ */
+$announcements = [
+  [
+    'show'       => true,
+    'start'      => '2026-04-02',
+    'end'        => '2026-05-09',
+    'type'       => 'info',
+    'icon'       => '🎮',
+    'text'       => '【親子体験会】Robloxでプログラミングを学びながらゲームを作ろう！ 5月9日（土）10:00 / 13:00 / 15:00（各回1時間・無料）',
+    'link_url'   => home_url('/event/'),
+    'link_text'  => '詳細・申し込み',
+    'is_default' => false,
+  ],
+  [
+    'show'       => false,
+    'start'      => '',
+    'end'        => '',
+    'type'       => 'warn',
+    'icon'       => '📢',
+    'text'       => 'お知らせ2（showをtrueにして使用してください）',
+    'link_url'   => '',
+    'link_text'  => '',
+    'is_default' => false,
+  ],
+  // ★ 常設CTA：テスト対策カウントダウンがない期間は常に表示
+  [
+    'show'       => true,
+    'start'      => '',
+    'end'        => '',
+    'type'       => 'info',
+    'icon'       => '🎓',
+    'text'       => '無料体験授業・随時受付中！まずはお気軽にご相談ください',
+    'link_url'   => home_url('/contact/'),
+    'link_text'  => '無料体験を申し込む',
+    'is_default' => true,
+  ],
+];
+
+// 表示すべきお知らせを絞り込む
+$today     = date('Y-m-d');
+$today_ts  = strtotime($today);
+
+// ① 通常告知（is_default=false）
+$normal_announcements = array_filter($announcements, function($a) use ($today) {
+  if ($a['is_default'] ?? false) return false;
+  if (!$a['show']) return false;
+  if ($a['start'] !== '' && $today < $a['start']) return false;
+  if ($a['end']   !== '' && $today > $a['end'])   return false;
+  return true;
+});
+
+// ② テスト対策カウントダウン（30日前〜テスト当日まで）
+$exam_announcements = [];
+foreach ($exam_alerts as $ex) {
+  $exam_ts  = strtotime($ex['exam_date']);
+  $days_left = (int) ceil(($exam_ts - $today_ts) / 86400);
+  if ($days_left >= 0 && $days_left <= $ex['show_days_before']) {
+    if ($days_left === 0)       { $countdown = '今日がテスト初日！'; $type = 'urgent'; }
+    elseif ($days_left <= 7)    { $countdown = "テストまで残り{$days_left}日！"; $type = 'urgent'; }
+    elseif ($days_left <= 14)   { $countdown = "テストまであと{$days_left}日"; $type = 'warn'; }
+    else                        { $countdown = "テストまであと{$days_left}日"; $type = 'exam'; }
+    $exam_announcements[] = [
+      'show'       => true,
+      'type'       => $type,
+      'icon'       => '📝',
+      'text'       => "【{$ex['school']} {$ex['exam_name']}】{$countdown} | テスト2週前から対策授業スタート。今すぐご相談を",
+      'link_url'   => $ex['link_url'],
+      'link_text'  => $ex['link_text'],
+      'is_default' => false,
+    ];
+  }
+}
+
+// ③ 常設CTA：テスト対策カウントダウンがない期間は常に表示（イベント告知と共存OK）
+//    テスト対策が発動している期間だけCTAは非表示になる（Aパターン：完全切り替え）
+$default_announcements = [];
+if (empty($exam_announcements)) {
+  $default_announcements = array_filter($announcements, function($a) use ($today) {
+    if (!($a['is_default'] ?? false)) return false;
+    if (!$a['show']) return false;
+    if ($a['start'] !== '' && $today < $a['start']) return false;
+    if ($a['end']   !== '' && $today > $a['end'])   return false;
+    return true;
+  });
+}
+
+// 合算（最大3件）
+$active_announcements = array_slice(
+  array_merge(
+    array_values($normal_announcements),
+    array_values($exam_announcements),
+    array_values($default_announcements)
+  ), 0, 3
+);
 ?><!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -115,6 +244,98 @@ a { color: inherit; text-decoration: none; }
   border: 2px solid var(--orange);
 }
 .btn-outline:hover { background: var(--orange); color: #fff; }
+
+/* ==============================
+   Announcement Bar
+============================== */
+.announcement-bar      { position: fixed; top: 0; left: 0; right: 0; z-index: 9100; width: 100%; }
+.announcement-item     { display: flex; align-items: center; gap: 10px; padding: 9px 20px; font-size: 13px; font-weight: 600; line-height: 1.4; }
+.announcement-item.info   { background: #1e40af; color: #fff; }
+.announcement-item.warn   { background: var(--orange); color: #fff; }
+.announcement-item.urgent { background: #dc2626; color: #fff; }
+.announcement-item.exam   { background: #0f766e; color: #fff; } /* テスト対策：ティール */
+.announcement-icon     { font-size: 16px; flex-shrink: 0; }
+.announcement-text     { flex: 1; }
+.announcement-link     { flex-shrink: 0; background: rgba(255,255,255,.25); color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 10px; white-space: nowrap; transition: background .15s; }
+.announcement-link:hover { background: rgba(255,255,255,.4); }
+.announcement-close         { flex-shrink: 0; background: none; border: none; color: rgba(255,255,255,.7); font-size: 18px; cursor: pointer; padding: 0 4px; line-height: 1; transition: color .15s; }
+.announcement-close:hover   { color: #fff; }
+.announcement-close-spacer  { flex-shrink: 0; display: inline-block; width: 26px; }
+@media(max-width: 640px) {
+  .announcement-item   { font-size: 12px; padding: 8px 12px; }
+  .announcement-text   { font-size: 12px; }
+}
+
+/* ==============================
+   Global Navbar
+============================== */
+.global-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
+  background: rgba(255,251,245,.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  height: 60px;
+  display: flex; align-items: center;
+}
+.global-nav .nav-inner {
+  max-width: 1100px; width: 100%; margin: 0 auto;
+  padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.nav-logo {
+  font-size: 18px; font-weight: 900; color: var(--orange);
+  text-decoration: none; letter-spacing: .02em; white-space: nowrap;
+}
+.nav-logo span { color: var(--text); font-weight: 700; font-size: 13px; display: block; line-height: 1; margin-top: 1px; }
+.nav-links {
+  display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0;
+}
+.nav-links a {
+  font-size: 13px; font-weight: 600; color: var(--text); text-decoration: none;
+  padding: 6px 10px; border-radius: 6px; transition: all .15s; white-space: nowrap;
+}
+.nav-links a:hover { background: var(--orange-light); color: var(--orange-dark); }
+.nav-cta {
+  background: var(--orange); color: #fff !important; padding: 8px 14px !important;
+  border-radius: 20px !important; font-size: 12px !important; white-space: nowrap;
+}
+.nav-cta:hover { background: var(--orange-dark) !important; color: #fff !important; }
+.nav-hamburger {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  padding: 6px; background: none; border: none;
+}
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all .2s; }
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-mobile-menu {
+  display: none; position: fixed; top: 60px; left: 0; right: 0;
+  background: rgba(255,251,245,.98); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px 20px; z-index: 8999;
+  flex-direction: column; gap: 4px;
+}
+.nav-mobile-menu.open { display: flex; }
+.nav-mobile-menu a {
+  font-size: 14px; font-weight: 600; color: var(--text); text-decoration: none;
+  padding: 12px 8px; border-bottom: 1px solid var(--border);
+}
+.nav-mobile-menu a:last-child { border-bottom: none; }
+.nav-mobile-menu a:hover { color: var(--orange); }
+body { padding-top: 60px; }
+body.has-announcements-1 { padding-top: calc(60px + 38px); }
+body.has-announcements-2 { padding-top: calc(60px + 76px); }
+body.has-announcements-3 { padding-top: calc(60px + 114px); }
+body.has-announcements-1 .global-nav { top: 38px; }
+body.has-announcements-2 .global-nav { top: 76px; }
+body.has-announcements-3 .global-nav { top: 114px; }
+body.has-announcements-1 .nav-mobile-menu { top: calc(38px + 60px); }
+body.has-announcements-2 .nav-mobile-menu { top: calc(76px + 60px); }
+body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
+@media(max-width: 768px) {
+  .nav-links    { display: none; }
+  .nav-hamburger { display: flex; }
+}
 
 /* ==============================
    Sticky CTA bar (mobile only)
@@ -319,6 +540,41 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ==============================
+   3.5 VACANCY（残り席数）
+============================== */
+.vacancy-section       { background: #1c1917; color: #fff; padding: 48px 0; }
+.vacancy-lead          { text-align: center; margin-bottom: 32px; }
+.vacancy-lead-label    { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); background: rgba(249,115,22,.15); padding: 4px 14px; border-radius: 20px; margin-bottom: 10px; }
+.vacancy-lead-title    { font-size: 22px; font-weight: 900; }
+.vacancy-lead-title em { color: var(--orange); font-style: normal; }
+.vacancy-lead-note     { font-size: 13px; color: #a8a29e; margin-top: 6px; }
+.vacancy-grid          { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.vacancy-card          { background: #292524; border-radius: 10px; padding: 16px 12px; text-align: center; border: 1px solid #44403c; }
+.vacancy-grade         { font-size: 12px; font-weight: 700; color: #a8a29e; margin-bottom: 8px; letter-spacing: .03em; }
+.vacancy-count         { font-size: 28px; font-weight: 900; line-height: 1; color: #4ade80; }
+.vacancy-count.warn    { color: var(--orange); }
+.vacancy-count.urgent  { color: #f87171; }
+.vacancy-count.full    { font-size: 16px; color: #6b7280; }
+.vacancy-status        { font-size: 11px; margin-top: 4px; font-weight: 700; letter-spacing: .04em; color: #4ade80; }
+.vacancy-status.warn   { color: var(--orange); }
+.vacancy-status.urgent { color: #f87171; }
+.vacancy-status.full   { color: #6b7280; }
+.vacancy-bar           { margin-top: 8px; height: 4px; background: #44403c; border-radius: 2px; overflow: hidden; }
+.vacancy-bar-fill      { height: 100%; border-radius: 2px; background: #4ade80; }
+.vacancy-bar-fill.warn   { background: var(--orange); }
+.vacancy-bar-fill.urgent { background: #f87171; }
+.vacancy-bar-fill.full   { background: #6b7280; }
+.vacancy-unlimited     { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+.vacancy-unlimited-item{ background: #292524; border: 1px solid #44403c; border-radius: 8px; padding: 10px 20px; font-size: 13px; color: #a8a29e; display: flex; align-items: center; gap: 8px; }
+.vacancy-unlimited-item strong { color: #fff; font-size: 14px; }
+.vacancy-unlimited-badge { background: #166534; color: #4ade80; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; letter-spacing: .05em; }
+.vacancy-cta           { text-align: center; margin-top: 28px; }
+.vacancy-cta a         { display: inline-flex; align-items: center; gap: 8px; background: var(--orange); color: #fff; padding: 14px 28px; border-radius: 30px; font-size: 15px; font-weight: 700; text-decoration: none; transition: background .2s; }
+.vacancy-cta a:hover   { background: var(--orange-dark); }
+@media(max-width: 640px) { .vacancy-grid { grid-template-columns: repeat(3, 1fr); } }
+@media(max-width: 400px) { .vacancy-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ==============================
    4. CONCEPT
 ============================== */
 .concept-grid {
@@ -410,6 +666,20 @@ a { color: inherit; text-decoration: none; }
   .teacher-sidebar     { flex: none; padding: 28px 20px; border-right: none; border-bottom: 1px solid var(--orange-light); }
   .teacher-content     { padding: 24px 20px; }
 }
+
+/* ==============================
+   5.5 USAGE（こんな使い方ができます）
+============================== */
+.usage-section         { background: var(--orange-light); }
+.usage-grid            { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+.usage-card            { background: #fff; border-radius: var(--radius); padding: 22px 20px; display: flex; gap: 14px; align-items: flex-start; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+.usage-icon            { font-size: 28px; flex-shrink: 0; }
+.usage-title           { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.usage-body            { font-size: 12px; color: var(--text-light); line-height: 1.65; }
+.usage-note            { text-align: center; margin-top: 24px; font-size: 13px; color: var(--text-light); }
+.usage-note strong     { color: var(--orange-dark); }
+@media(max-width: 768px) { .usage-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 480px) { .usage-grid { grid-template-columns: 1fr; } }
 
 /* ==============================
    6. COURSES
@@ -507,7 +777,7 @@ a { color: inherit; text-decoration: none; }
 /* ==============================
    9. PRICING
 ============================== */
-.pricing-tabs          { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 40px; border-bottom: 2px solid var(--border); padding-bottom: 0; }
+.pricing-tabs          { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: 40px; border-bottom: 2px solid var(--border); padding-bottom: 0; }
 .pricing-tab           { padding: 10px 18px; font-size: 13px; font-weight: 700; border: 2px solid var(--border); border-bottom: none; border-radius: 8px 8px 0 0; background: #fff; color: var(--text-light); cursor: pointer; margin-bottom: -2px; transition: all .2s; }
 .pricing-tab.active    { background: var(--orange); color: #fff; border-color: var(--orange); }
 .pricing-tab:hover:not(.active) { background: var(--orange-light); color: var(--orange-dark); border-color: var(--orange-light); }
@@ -656,8 +926,11 @@ a { color: inherit; text-decoration: none; }
 .footer-links          { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .footer-links a        { font-size: 13px; color: #A8A29E; transition: color .15s; }
 .footer-links a:hover  { color: var(--orange); }
-.footer-social a       { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #A8A29E; transition: color .15s; margin-top: 14px; }
-.footer-social a:hover { color: var(--orange); }
+.footer-social a       { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: #A8A29E; transition: all .2s; margin-top: 14px; text-decoration: none; }
+.footer-social a:hover { color: #fff; }
+.footer-social a:hover .ig-icon { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+.ig-icon               { width: 28px; height: 28px; border-radius: 8px; background: #555; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .2s; }
+.ig-icon svg           { width: 16px; height: 16px; fill: #fff; }
 .footer-bottom         { padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
 .footer-copy           { font-size: 12px; color: #78716C; }
 
@@ -667,14 +940,70 @@ a { color: inherit; text-decoration: none; }
 }
 </style>
 </head>
-<body>
+<?php
+$ann_count = count($active_announcements);
+$body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
+?>
+<body class="<?php echo $body_class; ?>">
+
+<?php if (!empty($active_announcements)): ?>
+<!-- ============================================================
+   ANNOUNCEMENT BAR（お知らせバー）
+============================================================ -->
+<div class="announcement-bar" id="announcementBar">
+  <?php foreach ($active_announcements as $i => $a): ?>
+  <div class="announcement-item <?php echo esc_attr($a['type']); ?>" id="ann-<?php echo $i; ?>">
+    <span class="announcement-icon"><?php echo $a['icon']; ?></span>
+    <span class="announcement-text"><?php echo esc_html($a['text']); ?></span>
+    <?php if (!empty($a['link_url'])): ?>
+      <a href="<?php echo esc_url($a['link_url']); ?>" class="announcement-link"><?php echo esc_html($a['link_text'] ?: '詳しくはこちら'); ?> →</a>
+    <?php endif; ?>
+    <?php if (!($a['is_default'] ?? false)): ?>
+      <button class="announcement-close" onclick="closeAnnouncement('ann-<?php echo $i; ?>')" aria-label="閉じる">×</button>
+    <?php else: ?>
+      <span class="announcement-close-spacer"></span>
+    <?php endif; ?>
+  </div>
+  <?php endforeach; ?>
+</div>
+<?php endif; ?>
+
+<!-- ============================================================
+   GLOBAL NAV
+============================================================ -->
+<nav class="global-nav" role="navigation">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo">Furuki塾<span>江東住吉教室</span></a>
+    <ul class="nav-links">
+      <li><a href="#reasons">選ばれる理由</a></li>
+      <li><a href="#courses">コース紹介</a></li>
+      <li><a href="#pricing">料金</a></li>
+      <li><a href="#faq">よくある質問</a></li>
+      <li><a href="#access">アクセス</a></li>
+      <li><a href="https://lin.ee/7NV1Pld" class="nav-cta">💬 無料体験</a></li>
+    </ul>
+    <button class="nav-hamburger" onclick="toggleNavMenu(this)" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- モバイルメニュー -->
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="#reasons"  onclick="closeNavMenu()">選ばれる理由</a>
+  <a href="#courses"  onclick="closeNavMenu()">コース紹介</a>
+  <a href="#pricing"  onclick="closeNavMenu()">料金のご案内</a>
+  <a href="#faq"      onclick="closeNavMenu()">よくある質問</a>
+  <a href="#access"   onclick="closeNavMenu()">アクセス</a>
+  <a href="https://lin.ee/7NV1Pld" style="color:var(--orange);font-weight:700;">💬 LINEで無料体験に申し込む</a>
+</div>
 
 <!-- ============================================================
    STICKY CTA（モバイル専用 画面下部固定）
 ============================================================ -->
 <div class="sticky-cta">
   <a href="https://lin.ee/7NV1Pld" class="btn" style="background:var(--line-green);color:#fff;">💬 LINEで無料相談</a>
-  <a href="https://furuki-juku.com/?page_id=70" class="btn btn-outline">📝 問い合わせ</a>
+  <a href="<?php echo home_url("/contact/"); ?>" class="btn btn-outline">📝 問い合わせ</a>
 </div>
 
 <!-- ============================================================
@@ -697,23 +1026,23 @@ a { color: inherit; text-decoration: none; }
           <a href="https://lin.ee/7NV1Pld" class="hero-line-btn">
             💬 LINEで無料体験に申し込む
           </a>
-          <a href="https://furuki-juku.com/?page_id=70" class="btn btn-outline">
+          <a href="<?php echo home_url("/contact/"); ?>" class="btn btn-outline">
             📝 フォームでお問い合わせ
           </a>
           <p class="hero-cta-note">※ 無理な勧誘は一切ありません。相談だけでも歓迎です。</p>
         </div>
         <div class="hero-stats">
           <div>
-            <div class="hero-stat-num">2021</div>
-            <div class="hero-stat-label">開塾年</div>
-          </div>
-          <div>
-            <div class="hero-stat-num">20年+</div>
-            <div class="hero-stat-label">塾長の現場経験</div>
-          </div>
-          <div>
             <div class="hero-stat-num">完全個別</div>
             <div class="hero-stat-label">指導スタイル</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">5教科＋α</div>
+            <div class="hero-stat-label">読解・プログラミング含む</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">最大4回</div>
+            <div class="hero-stat-label">無料で体験できます</div>
           </div>
         </div>
       </div>
@@ -791,6 +1120,80 @@ a { color: inherit; text-decoration: none; }
 </section>
 
 <!-- ============================================================
+   3.5 VACANCY（残り募集枠）
+   ★ 空き数が変わったら vacancy-count の数字と vacancy-bar-fill の width を更新
+============================================================ -->
+<?php
+// ★ 空き数をここで管理（満席は 0）
+// level: 'ok'=余裕あり(4名以上) / 'warn'=残りわずか(2〜3名) / 'urgent'=残りわずか(1名) / 'full'=満席
+$vacancy = [
+  ['grade' => '小1〜小3', 'left' => 1, 'total' => 2],
+  ['grade' => '小4〜小6', 'left' => 2, 'total' => 6],
+  ['grade' => '中学1年',  'left' => 4, 'total' => 6],
+  ['grade' => '中学2年',  'left' => 2, 'total' => 6],
+  ['grade' => '中学3年',  'left' => 3, 'total' => 6],
+];
+?>
+<section class="vacancy-section" id="vacancy">
+  <div class="container">
+    <div class="vacancy-lead">
+      <div class="vacancy-lead-label">Availability</div>
+      <h2 class="vacancy-lead-title">現在の<em>残り募集枠</em></h2>
+      <p class="vacancy-lead-note">各学年ごとに人数を限定した少人数制です。お早めにご検討ください。</p>
+    </div>
+    <div class="vacancy-grid">
+      <?php foreach ($vacancy as $v):
+        if ($v['left'] === 0)     { $level = 'full';   $pct = 100; }
+        elseif ($v['left'] === 1) { $level = 'urgent'; $pct = 85; }
+        elseif ($v['left'] <= 3)  { $level = 'warn';   $pct = 60; }
+        else                      { $level = 'ok';     $pct = 25; }
+        $status_text = [
+          'ok'     => '受付中',
+          'warn'   => '残りわずか',
+          'urgent' => '残り1名',
+          'full'   => '受付停止中',
+        ][$level];
+      ?>
+      <div class="vacancy-card">
+        <div class="vacancy-grade"><?php echo $v['grade']; ?></div>
+        <?php if ($level === 'full'): ?>
+          <div class="vacancy-count full">満席</div>
+        <?php else: ?>
+          <div class="vacancy-count <?php echo $level !== 'ok' ? $level : ''; ?>">
+            <?php echo $v['left']; ?><small style="font-size:14px;font-weight:400;">名</small>
+          </div>
+        <?php endif; ?>
+        <div class="vacancy-status <?php echo $level; ?>"><?php echo $status_text; ?></div>
+        <div class="vacancy-bar">
+          <div class="vacancy-bar-fill <?php echo $level !== 'ok' ? $level : ''; ?>" style="width:<?php echo $pct; ?>%;"></div>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+
+    <!-- 制限なしコース -->
+    <div class="vacancy-unlimited">
+      <div class="vacancy-unlimited-item">
+        <strong>プログラミングコース</strong>
+        <span class="vacancy-unlimited-badge">随時受付中</span>
+        <span>人数制限なし</span>
+      </div>
+      <div class="vacancy-unlimited-item">
+        <strong>読解力・国語力コース</strong>
+        <span class="vacancy-unlimited-badge">随時受付中</span>
+        <span>人数制限なし</span>
+      </div>
+    </div>
+
+    <div class="vacancy-cta">
+      <a href="https://lin.ee/7NV1Pld" target="_blank" rel="noopener">
+        💬 空き状況をLINEで確認する
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
    4. CONCEPT（塾のコンセプト）
 ============================================================ -->
 <section class="section" id="concept">
@@ -856,7 +1259,7 @@ a { color: inherit; text-decoration: none; }
           <em>「自分で考える力」</em>こそが、<br>どんな時代でも一番の武器になる。
         </h3>
         <p class="teacher-bio">
-          朝日新聞奨学生として自ら働きながら大学へ進み、電子工学の修士号を取得。
+          朝日新聞奨学生として自ら働きながら大学へ進み、電子工学の修士号を取得
           苦労して学んだその経験が、「自分で道を切り拓く力」の大切さを体で教えてくれました。<br><br>
           その後20年以上、現役エンジニアとして開発の第一線に携わり続けました。
           さらに認定心理士の資格も取得し、子どもの学習心理についても深く学びました。<br><br>
@@ -873,6 +1276,64 @@ a { color: inherit; text-decoration: none; }
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   5.5 USAGE（こんな使い方ができます）
+============================================================ -->
+<section class="section usage-section" id="usage">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">自由な学び方</span>
+      <h2 class="section-title">1回の通塾で、<br><em>何でもできます</em></h2>
+      <p class="section-subtitle">「今日は何をするか」をお子さん自身が決められる。それがFuruki塾のスタイルです。</p>
+    </div>
+    <div class="usage-grid">
+      <div class="usage-card">
+        <div class="usage-icon">📚</div>
+        <div>
+          <div class="usage-title">学校の宿題を進める</div>
+          <div class="usage-body">わからない問題はその場で解決。宿題を終わらせながら、理解を深められます。</div>
+        </div>
+      </div>
+      <div class="usage-card">
+        <div class="usage-icon">🔭</div>
+        <div>
+          <div class="usage-title">次の単元を予習する</div>
+          <div class="usage-body">授業の前に基礎を固めておくことで、学校の授業が格段にわかりやすくなります。</div>
+        </div>
+      </div>
+      <div class="usage-card">
+        <div class="usage-icon">🔄</div>
+        <div>
+          <div class="usage-title">テスト前に集中して復習</div>
+          <div class="usage-body">定期テストの2週前から対策開始。苦手な単元を集中的に仕上げられます。</div>
+        </div>
+      </div>
+      <div class="usage-card">
+        <div class="usage-icon">🏆</div>
+        <div>
+          <div class="usage-title">英検・漢検・数検の対策</div>
+          <div class="usage-body">各種検定の対策も通常の通塾時間内で対応。別途費用はかかりません。</div>
+        </div>
+      </div>
+      <div class="usage-card">
+        <div class="usage-icon">🎯</div>
+        <div>
+          <div class="usage-title">苦手科目を集中的に克服</div>
+          <div class="usage-body">「数学だけ徹底的にやりたい」そんな希望にも柔軟に対応します。</div>
+        </div>
+      </div>
+      <div class="usage-card">
+        <div class="usage-icon">📖</div>
+        <div>
+          <div class="usage-title">複数科目をまとめて学ぶ</div>
+          <div class="usage-body">1回の通塾で2〜3教科を並行して進めることも可能。効率よく成績を上げられます。</div>
+        </div>
+      </div>
+    </div>
+    <p class="usage-note">「何をするか」はその日の状況に合わせてOK。<strong>決まったカリキュラムに縛られない</strong>のがFuruki塾の強みです。</p>
   </div>
 </section>
 
@@ -915,7 +1376,7 @@ a { color: inherit; text-decoration: none; }
               <li>完全個別指導 ——一人ひとりのペース・理解度に合わせた授業です</li>
               <li>月ごとのスケジュールカスタマイズで部活・行事にも対応</li>
               <li>自習席を無料で利用可能。学習習慣づくりもサポートします</li>
-              <li>中3生には通い放題プランあり。受験直前まで徹底サポート</li>
+              <li>中学生は通い放題プランあります。受験直前まで徹底サポート</li>
               <li>速読解力講座（読む力の強化）を授業に組み込んでいます（小1〜小3除く）</li>
             </ul>
             <div>
@@ -1123,7 +1584,7 @@ a { color: inherit; text-decoration: none; }
               <th>学年</th><th>授業時間</th>
               <th>週1回<br><small>算数のみ</small></th>
               <th>週2回<br><small>算数＋国語</small></th>
-              <th>週3回以上<br><small>3教科以上</small></th>
+              <th>週3回<br><small>3教科以上</small></th>
             </tr>
           </thead>
           <tbody>
@@ -1142,7 +1603,7 @@ a { color: inherit; text-decoration: none; }
           </tbody>
         </table>
       </div>
-      <p class="pricing-note">※1 小1〜小3の週1回コースには読解力講座が含まれません。読解力を加える場合は週2回コースになります。<br>※ 週3回以上は1日4時間までの通い放題コースです。</p>
+      <p class="pricing-note">※1 小1〜小3の週1回コースには読解力講座が含まれません。読解力を加える場合は週2回コースになります。</p>
     </div>
 
     <!-- 中学生 -->
@@ -1155,7 +1616,7 @@ a { color: inherit; text-decoration: none; }
               <th>学年</th><th>授業時間</th>
               <th>週1回</th>
               <th>週2回</th>
-              <th>週3回以上<br><small>通い放題 ※2</small></th>
+              <th>通い放題<br><small>1日4時間まで</small></th>
             </tr>
           </thead>
           <tbody>
@@ -1179,8 +1640,8 @@ a { color: inherit; text-decoration: none; }
           </tbody>
         </table>
       </div>
-      <p class="pricing-note">※2 週3回以上は1日4時間までの通い放題コースです。<br>
-      ◎ 高校生コースは中学から継続通塾の生徒さんのみ対応。料金は個別にご案内します（新規入塾不可）。</p>
+      <p class="pricing-note">◎ 定期テスト対策講座：各学校の定期テスト2週前より開始。通常授業に加えてご利用いただけます。<br>
+      ◎ 高校生コースは中学から継続通塾の生徒さんのみ対応。新規の方はお気軽にご相談ください。料金は個別にご案内します。</p>
     </div>
 
     <!-- 読解力 -->
@@ -1225,11 +1686,11 @@ a { color: inherit; text-decoration: none; }
       <div class="pricing-extra">
         <strong>入塾金</strong>
         全学年・全コース 22,000円（税込）<br>
-        兄弟姉妹の同時入塾は全員で22,000円。同時でない場合は2人目以降11,000円/人。
+        兄弟姉妹の同時入塾は全員で22,000円。同時でない場合は2人目以降11,000円/人
       </div>
       <div class="pricing-extra">
         <strong>兄弟姉妹割引</strong>
-        同時通塾の場合、2人目のお子さまの受講費（低い方）から<strong>20%割引</strong>。
+        同時通塾の場合、2人目のお子さまの受講費（低い方）から<strong>20%割引</strong>
       </div>
       <div class="pricing-extra">
         <strong>システム利用料</strong>
@@ -1237,11 +1698,11 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="pricing-extra">
         <strong>教材費</strong>
-        実費負担。各生徒の進捗に合わせた教材をご提案します。
+        実費負担<br>各生徒の進捗に合わせた教材をご提案します。
       </div>
       <div class="pricing-extra">
         <strong>自習席</strong>
-        無料で利用可能。小4以上（2〜3教科コース）は20時まで、中学生は開塾時間中いつでも利用可。
+        無料で利用可能<br>小4以上（2〜3教科コース）は20時まで、中学生は開塾時間中いつでも利用可
       </div>
     </div>
   </div>
@@ -1326,7 +1787,7 @@ a { color: inherit; text-decoration: none; }
       <a href="https://lin.ee/7NV1Pld" class="cta-line-btn">
         💬 LINEで無料体験に申し込む
       </a>
-      <a href="https://furuki-juku.com/?page_id=70" class="cta-form-btn">
+      <a href="<?php echo home_url("/contact/"); ?>" class="cta-form-btn">
         📝 フォームでお問い合わせ
       </a>
       <p class="cta-tel">
@@ -1447,12 +1908,17 @@ a { color: inherit; text-decoration: none; }
         <div class="footer-col-title">お問い合わせ</div>
         <ul class="footer-links">
           <li><a href="https://lin.ee/7NV1Pld">LINEで相談する</a></li>
-          <li><a href="https://furuki-juku.com/?page_id=70">お問い合わせフォーム</a></li>
+          <li><a href="<?php echo home_url("/contact/"); ?>">お問い合わせフォーム</a></li>
           <li><a href="tel:0367706936">03-6770-6936</a></li>
         </ul>
         <div class="footer-social">
           <a href="https://www.instagram.com/furukijuku" target="_blank" rel="noopener noreferrer">
-            📷 @furukijuku
+            <span class="ig-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </span>
+            @furukijuku
           </a>
         </div>
       </div>
@@ -1467,6 +1933,29 @@ a { color: inherit; text-decoration: none; }
    JavaScript
 ============================================================ -->
 <script>
+/* お知らせバー 閉じる */
+function closeAnnouncement(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.style.transition = 'opacity .2s, max-height .3s';
+    el.style.opacity = '0';
+    el.style.maxHeight = '0';
+    el.style.overflow = 'hidden';
+    el.style.padding = '0';
+    setTimeout(function() { el.remove(); }, 350);
+  }
+}
+
+/* ナビゲーション ハンバーガー */
+function toggleNavMenu(btn) {
+  btn.classList.toggle('open');
+  document.getElementById('navMobileMenu').classList.toggle('open');
+}
+function closeNavMenu() {
+  document.querySelector('.nav-hamburger').classList.remove('open');
+  document.getElementById('navMobileMenu').classList.remove('open');
+}
+
 /* 料金タブ切り替え */
 function switchPricingTab(btn, panelId) {
   document.querySelectorAll('.pricing-tab').forEach(function(t) { t.classList.remove('active'); });
