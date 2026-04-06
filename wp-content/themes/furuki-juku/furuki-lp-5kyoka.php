@@ -729,6 +729,17 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 .course-subjects       { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 .subject-tag           { background: var(--orange-light); color: var(--orange-dark); font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: 100px; }
 
+/* 速読解力講座 バナー・よみとくんCTA */
+.sokudoku-banners            { display: flex; gap: 20px; align-items: flex-start; margin-top: 4px; }
+.sokudoku-banner-wrap        { flex: 1; min-width: 0; }
+.sokudoku-banner-link        { display: block; text-decoration: none; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; transition: box-shadow .2s, opacity .2s; }
+.sokudoku-banner-link:hover  { opacity: .9; box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+.sokudoku-link-label         { display: flex; align-items: center; justify-content: flex-end; gap: 4px; font-size: 11px; color: var(--text-light); margin-top: 5px; }
+.sokudoku-placeholder        { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(135deg, #fff8e1, #fff3cd); border: 2px dashed #f5a623; border-radius: 10px; padding: 32px 20px; text-align: center; color: #92400e; font-weight: 700; font-size: 15px; }
+@media(max-width:560px) {
+  .sokudoku-banners { flex-direction: column; }
+}
+
 /* ==============================
    7. SCHEDULE
 ============================== */
@@ -1400,25 +1411,49 @@ $vacancy = [
             <div class="course-icon">⚡</div>
             <div>
               <div class="course-header-title">速読解力講座</div>
-              <div class="course-header-sub">小学1年生 〜 中学3年生 ／ 2025年夏より開始</div>
+              <div class="course-header-sub">小学1年生 〜 中学3年生</div>
             </div>
           </div>
           <div class="course-body">
-            <div class="course-for">
-              <div class="course-for-label">👇 こんなお子さんにおすすめ</div>
-              <ul class="course-for-list">
-                <li>本を読むのが遅い・苦手</li>
-                <li>テストで時間が足りなくなる</li>
-                <li>長文・文章問題に弱い</li>
-                <li>全科目の読解力を底上げしたい</li>
-              </ul>
+            <p style="font-size:15px;line-height:1.85;color:var(--text);margin-bottom:24px;">
+              Furuki塾では、一般社団法人 <strong>日本速読解力協会</strong> の講座を導入しています。<br>
+              25年以上の研究と脳科学に基づいたトレーニングで、「速く・正確に読む力」を養います。<br>
+              読解力が上がると、国語だけでなく<strong>全科目の得点力</strong>が向上します。
+            </p>
+
+            <!-- バナー2枚横並び -->
+            <div class="sokudoku-banners">
+              <!-- 公式サイトバナー -->
+              <div class="sokudoku-banner-wrap">
+                <a href="https://www.sokunousokudoku.net/" target="_blank" rel="noopener noreferrer"
+                   class="sokudoku-banner-link">
+                  <?php
+                    $banner_img = get_template_directory_uri() . '/assets/images/sokudoku-banner.png';
+                    if ( file_exists( get_template_directory() . '/assets/images/sokudoku-banner.png' ) ) :
+                  ?>
+                    <img src="<?php echo esc_url($banner_img); ?>"
+                         alt="日本速読解力協会 公式サイト"
+                         style="width:100%;display:block;">
+                  <?php else : ?>
+                    <div class="sokudoku-placeholder">
+                      <span style="font-size:28px;">⚡</span>
+                      <span>日本速読解力協会 公式サイトへ</span>
+                    </div>
+                  <?php endif; ?>
+                </a>
+                <p class="sokudoku-link-label">🔗 日本速読解力協会 公式サイト（外部リンク）</p>
+              </div>
+              <!-- よみとくんバナー -->
+              <div class="sokudoku-banner-wrap">
+                <a href="https://www.sokunousokudoku.net/yomitokun/" target="_blank" rel="noopener noreferrer"
+                   class="sokudoku-banner-link">
+                  <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/yomitoku-banner.png'); ?>"
+                       alt="読解問題よみとくん - 基礎的読解力をチェック"
+                       style="width:100%;display:block;">
+                </a>
+                <p class="sokudoku-link-label">🔗 よみとくん（外部リンク・無料）</p>
+              </div>
             </div>
-            <ul class="course-features">
-              <li>「速く・正確に読む力」を科学的なトレーニングで身につけます</li>
-              <li>国語だけでなく、理科・社会・数学の文章問題にも大きな効果があります</li>
-              <li>5教科学習コースと組み合わせることで、相乗効果が期待できます</li>
-              <li>週1回50分・月8,800円（税込）から気軽にスタートできます</li>
-            </ul>
           </div>
         </div>
       </div>
