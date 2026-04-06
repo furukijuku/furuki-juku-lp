@@ -440,7 +440,7 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 }
 .hero-stat-num   { font-size: 26px; font-weight: 900; color: var(--orange); line-height: 1; }
 .hero-stat-label { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
-.hero-visual-wrap { flex: 0 0 300px; text-align: center; }
+.hero-visual-wrap  { flex: 0 0 300px; text-align: center; }
 .hero-visual {
   width: 260px; height: 260px;
   background: var(--card-bg);
@@ -453,10 +453,12 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
   font-size: 88px;
   border: 5px solid var(--orange-light);
 }
+.hero-season-img   { width: 300px; height: 300px; object-fit: cover; border-radius: 50%; box-shadow: var(--shadow-lg); border: 5px solid var(--orange-light); display: block; margin: 0 auto; }
 
 @media(max-width: 768px) {
   .hero-inner         { flex-direction: column; gap: 32px; }
-  .hero-visual-wrap   { display: none; }
+  .hero-visual-wrap   { display: block; }
+  .hero-season-img    { width: 200px; height: 200px; }
   .hero-cta-wrap      { width: 100%; }
   .hero-cta-wrap > *  { width: 100%; justify-content: center; }
   .hero-stats         { justify-content: center; flex-wrap: wrap; gap: 20px; }
@@ -1058,7 +1060,26 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
         </div>
       </div>
       <div class="hero-visual-wrap">
-        <div class="hero-visual">📚</div>
+        <?php
+          $month = (int) date('n');
+          $day   = (int) date('j');
+          // 12/26〜1/10 は正月、それ以外の冬は雪だるま
+          $is_newyear = ( $month === 12 && $day >= 26 ) || ( $month === 1 && $day <= 10 );
+          if      ($month >= 3 && $month <= 5)  { $season_img = 'spring.png';  $season_alt = '春のふるき塾'; }
+          elseif  ($month >= 6 && $month <= 8)  { $season_img = 'summer.png';  $season_alt = '夏のふるき塾'; }
+          elseif  ($month >= 9 && $month <= 11) { $season_img = 'autumn.png';  $season_alt = '秋のふるき塾'; }
+          elseif  ($is_newyear)                  { $season_img = 'winter.png';  $season_alt = 'お正月のふるき塾'; }
+          else                                   { $season_img = 'snow.png';    $season_alt = '冬のふるき塾'; }
+          $season_path = get_template_directory() . '/assets/images/seasons/' . $season_img;
+          $season_url  = get_template_directory_uri() . '/assets/images/seasons/' . $season_img;
+        ?>
+        <?php if ( file_exists($season_path) ): ?>
+          <img src="<?php echo esc_url($season_url); ?>"
+               alt="<?php echo esc_attr($season_alt); ?>"
+               class="hero-season-img">
+        <?php else: ?>
+          <div class="hero-visual">📚</div>
+        <?php endif; ?>
       </div>
     </div>
   </div>
