@@ -1877,7 +1877,27 @@ $vacancy = [
 </section>
 
 <!-- ============================================================
-   13. FOOTER
+   13. INSTAGRAM FEED
+============================================================ -->
+<section class="section" style="background:#fff8f0;" id="instagram">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:32px;">
+      <span class="section-label">Instagram</span>
+      <h2 class="section-title">塾の日常を<br><em>Instagramで発信中</em></h2>
+      <p class="section-desc">授業の様子・合格報告・イベント情報などをお届けしています</p>
+    </div>
+    <?php echo do_shortcode('[instagram-feed feed=1]'); ?>
+    <div class="text-center" style="margin-top:24px;">
+      <a href="https://www.instagram.com/furukijuku" target="_blank" rel="noopener noreferrer"
+         style="display:inline-flex;align-items:center;gap:8px;color:var(--navy);font-weight:700;font-size:15px;text-decoration:none;">
+        <span style="font-size:20px;">📷</span> @furukijuku をフォローする
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+   14. FOOTER
 ============================================================ -->
 <footer class="footer">
   <div class="container">
