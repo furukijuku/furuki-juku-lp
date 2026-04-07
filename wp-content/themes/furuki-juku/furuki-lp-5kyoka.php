@@ -660,15 +660,15 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
   text-align: center;
   border-right: 1px solid var(--orange-light);
 }
-.teacher-avatar        { width: 96px; height: 96px; margin: 0 auto 16px; }
-.teacher-avatar svg    { width: 100%; height: 100%; }
+.teacher-avatar        { width: 160px; height: 160px; margin: 0 auto 16px; }
+.teacher-avatar img    { width: 100%; height: 100%; object-fit: contain; }
 .teacher-name          { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
 .teacher-role          { font-size: 11px; color: var(--text-muted); line-height: 1.6; }
 .teacher-content       { flex: 1; padding: 36px 40px; }
 .teacher-headline      { font-size: clamp(17px, 2.5vw, 21px); font-weight: 700; line-height: 1.5; margin-bottom: 20px; }
 .teacher-headline em   { color: var(--orange); font-style: normal; }
 .teacher-bio           { font-size: 14px; color: var(--text-muted); line-height: 1.95; margin-bottom: 24px; }
-.teacher-tags          { display: flex; flex-wrap: wrap; gap: 8px; }
+.teacher-tags          { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
 .teacher-tag {
   display: inline-flex;
   align-items: center;
@@ -682,10 +682,54 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 }
 .teacher-tag::before   { content: '✓'; color: var(--orange); }
 
+/* キャラクターギャラリー */
+.teacher-chara-gallery {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+.teacher-chara-item {
+  flex: 1;
+  min-width: 140px;
+  text-align: center;
+}
+.teacher-chara-item img {
+  width: 100%;
+  max-width: 180px;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #FFFBF5;
+  border: 1px solid var(--orange-light);
+  padding: 8px;
+  display: block;
+  margin: 0 auto 8px;
+}
+.teacher-chara-dl {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--orange);
+  font-weight: 700;
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid var(--orange);
+  border-radius: 100px;
+  transition: background .2s, color .2s;
+}
+.teacher-chara-dl:hover {
+  background: var(--orange);
+  color: #fff;
+}
+
 @media(max-width: 768px) {
   .teacher-card        { flex-direction: column; }
   .teacher-sidebar     { flex: none; padding: 28px 20px; border-right: none; border-bottom: 1px solid var(--orange-light); }
   .teacher-content     { padding: 24px 20px; }
+  .teacher-chara-gallery { gap: 12px; }
+  .teacher-chara-item img { height: 140px; }
 }
 
 /* ==============================
@@ -1335,17 +1379,9 @@ $vacancy = [
     </div>
     <div class="teacher-card">
       <div class="teacher-sidebar">
-        <!-- シンプルなアイコンアバター（SVG） -->
         <div class="teacher-avatar">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="50" fill="#FED7AA"/>
-            <circle cx="50" cy="37" r="19" fill="#FDBA74"/>
-            <rect x="18" y="60" width="64" height="40" rx="22" fill="#FDBA74"/>
-            <rect x="27" y="33" width="15" height="10" rx="5" fill="none" stroke="#C2410C" stroke-width="2.5"/>
-            <rect x="58" y="33" width="15" height="10" rx="5" fill="none" stroke="#C2410C" stroke-width="2.5"/>
-            <line x1="42" y1="38" x2="58" y2="38" stroke="#C2410C" stroke-width="2"/>
-            <path d="M41 46 Q50 53 59 46" fill="none" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/teacher-chara-final.png'); ?>"
+               alt="古澤塾長キャラクター">
         </div>
         <div class="teacher-name">古澤 塾長</div>
         <div class="teacher-role">Furuki塾<br>江東住吉教室</div>
@@ -1369,6 +1405,25 @@ $vacancy = [
           <span class="teacher-tag">エンジニア歴20年以上</span>
           <span class="teacher-tag">朝日新聞奨学生出身</span>
           <span class="teacher-tag">2021年開塾</span>
+        </div>
+        <!-- キャラクターギャラリー & ダウンロード -->
+        <div class="teacher-chara-gallery">
+          <?php
+            $charas = [
+              [ 'file' => 'teacher-chara-final.png',    'label' => '自己紹介' ],
+              [ 'file' => 'teacher-chara-teaching.png', 'label' => '授業中'   ],
+              [ 'file' => 'teacher-chara-reading.png',  'label' => '読書中'   ],
+            ];
+            foreach ($charas as $c):
+              $url = get_template_directory_uri() . '/assets/images/' . $c['file'];
+          ?>
+          <div class="teacher-chara-item">
+            <img src="<?php echo esc_url($url); ?>" alt="塾長キャラクター - <?php echo esc_attr($c['label']); ?>">
+            <a href="<?php echo esc_url($url); ?>" download="<?php echo esc_attr($c['file']); ?>" class="teacher-chara-dl">
+              ⬇ <?php echo esc_html($c['label']); ?>
+            </a>
+          </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </div>
