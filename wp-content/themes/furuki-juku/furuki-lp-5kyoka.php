@@ -682,47 +682,6 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 }
 .teacher-tag::before   { content: '✓'; color: var(--orange); }
 
-/* キャラクターギャラリー */
-.teacher-chara-gallery {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-top: 32px;
-}
-.teacher-chara-item {
-  flex: 1;
-  min-width: 140px;
-  text-align: center;
-}
-.teacher-chara-item img {
-  width: 100%;
-  max-width: 180px;
-  height: 180px;
-  object-fit: contain;
-  border-radius: 12px;
-  background: #FFFBF5;
-  border: 1px solid var(--orange-light);
-  padding: 8px;
-  display: block;
-  margin: 0 auto 8px;
-}
-.teacher-chara-dl {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  color: var(--orange);
-  font-weight: 700;
-  text-decoration: none;
-  padding: 4px 10px;
-  border: 1px solid var(--orange);
-  border-radius: 100px;
-  transition: background .2s, color .2s;
-}
-.teacher-chara-dl:hover {
-  background: var(--orange);
-  color: #fff;
-}
 
 @media(max-width: 768px) {
   .teacher-card        { flex-direction: column; }
@@ -1405,25 +1364,6 @@ $vacancy = [
           <span class="teacher-tag">エンジニア歴20年以上</span>
           <span class="teacher-tag">朝日新聞奨学生出身</span>
           <span class="teacher-tag">2021年開塾</span>
-        </div>
-        <!-- キャラクターギャラリー & ダウンロード -->
-        <div class="teacher-chara-gallery">
-          <?php
-            $charas = [
-              [ 'file' => 'teacher-chara-final.png',    'label' => '自己紹介' ],
-              [ 'file' => 'teacher-chara-teaching.png', 'label' => '授業中'   ],
-              [ 'file' => 'teacher-chara-reading.png',  'label' => '読書中'   ],
-            ];
-            foreach ($charas as $c):
-              $url = get_template_directory_uri() . '/assets/images/' . $c['file'];
-          ?>
-          <div class="teacher-chara-item">
-            <img src="<?php echo esc_url($url); ?>" alt="塾長キャラクター - <?php echo esc_attr($c['label']); ?>">
-            <a href="<?php echo esc_url($url); ?>" download="<?php echo esc_attr($c['file']); ?>" class="teacher-chara-dl">
-              ⬇ <?php echo esc_html($c['label']); ?>
-            </a>
-          </div>
-          <?php endforeach; ?>
         </div>
       </div>
     </div>
