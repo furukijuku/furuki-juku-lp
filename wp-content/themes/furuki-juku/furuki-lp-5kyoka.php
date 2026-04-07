@@ -361,29 +361,45 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
    1. HERO
 ============================== */
 .hero {
-  background: linear-gradient(140deg, #FFF7ED 0%, #FEF3C7 55%, #FFF7ED 100%);
+  background: linear-gradient(140deg, #EFF8FF 0%, #FFF7ED 45%, #FEF3C7 100%);
   padding: 72px 0 80px;
   position: relative;
   overflow: hidden;
 }
+/* 右上：ブルーの光彩 */
 .hero::before {
   content: '';
   position: absolute;
-  top: -120px; right: -120px;
-  width: 480px; height: 480px;
-  background: radial-gradient(circle, rgba(249,115,22,.14) 0%, transparent 65%);
+  top: -100px; right: -80px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,160,233,.10) 0%, transparent 65%);
   border-radius: 50%;
   pointer-events: none;
 }
+/* 左下：オレンジの光彩 */
 .hero::after {
   content: '';
   position: absolute;
   bottom: -80px; left: -60px;
-  width: 320px; height: 320px;
-  background: radial-gradient(circle, rgba(245,158,11,.11) 0%, transparent 65%);
+  width: 360px; height: 360px;
+  background: radial-gradient(circle, rgba(245,163,35,.13) 0%, transparent 65%);
   border-radius: 50%;
   pointer-events: none;
 }
+/* 浮遊SVG装飾 */
+.hero-deco {
+  position: absolute; pointer-events: none; user-select: none; opacity: .22;
+}
+.hero-deco.d1  { top: 10%; left: 4%;   width: 44px; transform: rotate(-20deg); }
+.hero-deco.d2  { top: 60%; left: 6%;   width: 32px; transform: rotate(10deg);  }
+.hero-deco.d3  { bottom: 12%; left: 16%; width: 48px; transform: rotate(-12deg); }
+.hero-deco.d4  { top: 20%; left: 20%;  width: 28px; transform: rotate(8deg);   }
+.hero-deco.d5  { top: 8%;  left: 40%;  width: 36px; transform: rotate(15deg);  }
+.hero-deco.d6  { bottom: 15%; left: 38%; width: 30px; transform: rotate(-18deg); }
+.hero-deco.d7  { top: 12%; right: 38%; width: 40px; transform: rotate(-10deg); }
+.hero-deco.d8  { bottom: 18%; right: 40%; width: 26px; transform: rotate(20deg); }
+.hero-deco.d9  { top: 45%; left: 10%;  width: 20px; }
+.hero-deco.d10 { top: 35%; left: 32%;  width: 16px; }
 .hero-inner {
   display: flex;
   align-items: center;
@@ -454,6 +470,9 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
   border: 5px solid var(--orange-light);
 }
 .hero-season-img   { width: 300px; height: 300px; object-fit: cover; border-radius: 50%; box-shadow: var(--shadow-lg); border: 5px solid var(--orange-light); display: block; margin: 0 auto; }
+.hero-chara-mid    { flex-shrink: 0; align-self: flex-end; padding-bottom: 8px; }
+.hero-chara-mid img { width: 160px; display: block; filter: drop-shadow(2px 4px 6px rgba(0,0,0,.15)); transform: scaleX(-1); }
+@media(max-width: 960px) { .hero-chara-mid { display: none; } }
 
 @media(max-width: 768px) {
   .hero-inner         { flex-direction: column; gap: 32px; }
@@ -1023,6 +1042,46 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
    1. HERO
 ============================================================ -->
 <section class="hero" id="top">
+  <!-- 浮遊SVG装飾 -->
+  <!-- 鉛筆 -->
+  <svg class="hero-deco d1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="#f5a623"/>
+  </svg>
+  <!-- 星 -->
+  <svg class="hero-deco d2" viewBox="0 0 24 24" fill="#00a0e9" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+  </svg>
+  <!-- 本 -->
+  <svg class="hero-deco d3" viewBox="0 0 24 24" fill="#00497a" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+  </svg>
+  <!-- 電球 -->
+  <svg class="hero-deco d4" viewBox="0 0 24 24" fill="#f5a623" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/>
+  </svg>
+  <!-- 三角定規 -->
+  <svg class="hero-deco d5" viewBox="0 0 24 24" fill="#00a0e9" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 21L12 3l9 18H3zm2.5-2h13L12 6.5 5.5 19z"/>
+  </svg>
+  <!-- 星（小） -->
+  <svg class="hero-deco d6" viewBox="0 0 24 24" fill="#f5a623" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+  </svg>
+  <!-- 鉛筆（右） -->
+  <svg class="hero-deco d7" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="#00497a"/>
+  </svg>
+  <!-- 本（小） -->
+  <svg class="hero-deco d8" viewBox="0 0 24 24" fill="#f5a623" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+  </svg>
+  <!-- 丸ドット装飾 -->
+  <svg class="hero-deco d9" viewBox="0 0 24 24" fill="#00a0e9" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10"/>
+  </svg>
+  <svg class="hero-deco d10" viewBox="0 0 24 24" fill="#f5a623" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10"/>
+  </svg>
   <div class="container">
     <div class="hero-inner">
       <div class="hero-content">
@@ -1058,6 +1117,11 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
             <div class="hero-stat-label">無料で体験できます</div>
           </div>
         </div>
+      </div>
+      <!-- 中間装飾キャラ -->
+      <div class="hero-chara-mid">
+        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/chara-run.png'); ?>"
+             alt="" aria-hidden="true">
       </div>
       <div class="hero-visual-wrap">
         <?php
