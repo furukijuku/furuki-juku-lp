@@ -693,6 +693,25 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 }
 
 /* ==============================
+   WAVE DIVIDERS
+============================== */
+.wave-divider {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  margin: -1px 0;
+  display: block;
+}
+.wave-divider svg {
+  display: block;
+  width: 100%;
+  height: 56px;
+}
+@media(max-width: 640px) {
+  .wave-divider svg { height: 36px; }
+}
+
+/* ==============================
    5.5 USAGE（こんな使い方ができます）
 ============================== */
 .usage-section         { background: var(--orange-light); }
@@ -1187,6 +1206,12 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
   </div>
 </section>
 
+<!-- wave: white → #FFF7ED -->
+<div class="wave-divider" style="background:#fff;">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,28 C240,56 480,0 720,28 C960,56 1200,0 1440,28 L1440,56 L0,56 Z" fill="#FFF7ED"/>
+  </svg>
+</div>
 <!-- ============================================================
    3. REASONS（選ばれる3つの理由）
 ============================================================ -->
@@ -1259,6 +1284,12 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
   </div>
 </section>
 
+<!-- wave: #FFF7ED → #1c1917 -->
+<div class="wave-divider" style="background:#FFF7ED;">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 C360,56 1080,0 1440,40 L1440,56 L0,56 Z" fill="#1c1917"/>
+  </svg>
+</div>
 <!-- ============================================================
    3.5 VACANCY（残り募集枠）
    ★ 空き数が変わったら vacancy-count の数字と vacancy-bar-fill の width を更新
@@ -1333,6 +1364,12 @@ $vacancy = [
   </div>
 </section>
 
+<!-- wave: #1c1917 → white -->
+<div class="wave-divider" style="background:#1c1917;">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C480,0 960,56 1440,20 L1440,56 L0,56 Z" fill="#ffffff"/>
+  </svg>
+</div>
 <!-- ============================================================
    4. CONCEPT（塾のコンセプト）
 ============================================================ -->
@@ -1368,6 +1405,12 @@ $vacancy = [
   </div>
 </section>
 
+<!-- wave: white → #FFF7ED -->
+<div class="wave-divider" style="background:#ffffff;">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,28 C360,0 720,56 1080,20 C1200,8 1320,40 1440,28 L1440,56 L0,56 Z" fill="#FFF7ED"/>
+  </svg>
+</div>
 <!-- ============================================================
    5. TEACHER PROFILE（塾長について）
 ============================================================ -->
@@ -1411,6 +1454,12 @@ $vacancy = [
   </div>
 </section>
 
+<!-- wave: #FFF7ED → #FEF3C7 -->
+<div class="wave-divider" style="background:#FFF7ED;">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,20 C480,56 960,0 1440,36 L1440,56 L0,56 Z" fill="#FEF3C7"/>
+  </svg>
+</div>
 <!-- ============================================================
    5.5 USAGE（こんな使い方ができます）
 ============================================================ -->
@@ -1469,6 +1518,12 @@ $vacancy = [
   </div>
 </section>
 
+<!-- wave: #FEF3C7 → white -->
+<div class="wave-divider" style="background:#FEF3C7;">
+  <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,36 C360,0 1080,56 1440,20 L1440,56 L0,56 Z" fill="#ffffff"/>
+  </svg>
+</div>
 <!-- ============================================================
    6. COURSES（コース紹介）
 ============================================================ -->
