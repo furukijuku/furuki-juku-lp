@@ -139,6 +139,7 @@ $active_announcements = array_slice(
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo.svg'); ?>" type="image/svg+xml">
 <title>Furuki塾江東住吉教室｜完全個別指導・5教科学習・速読解力講座</title>
 <meta name="description" content="江東区の完全個別指導学習塾。電子工学修士・認定心理士の塾長が「自ら考える力」を育てます。5教科学習・速読解力講座。無料体験随時受付中。">
 <meta property="og:title" content="Furuki塾江東住吉教室｜完全個別指導・5教科・速読解力">
@@ -283,10 +284,35 @@ a { color: inherit; text-decoration: none; }
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
 .nav-logo {
-  font-size: 18px; font-weight: 900; color: var(--orange);
-  text-decoration: none; letter-spacing: .02em; white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  letter-spacing: .02em;
+  white-space: nowrap;
 }
-.nav-logo span { color: var(--text); font-weight: 700; font-size: 13px; display: block; line-height: 1; margin-top: 1px; }
+.nav-logo-mark {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: block;
+}
+.nav-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+.nav-logo-text strong {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--orange);
+}
+.nav-logo-sub {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 1px;
+}
 .nav-links {
   display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0;
 }
@@ -974,6 +1000,9 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
    13. FOOTER
 ============================== */
 .footer                { background: #292524; color: #fff; padding: 52px 0 32px; }
+.footer-brand          { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 10px; }
+.footer-logo-mark      { width: 48px; height: 48px; flex-shrink: 0; display: block; }
+.footer-brand-text     { min-width: 0; }
 .footer-logo           { font-size: 19px; font-weight: 900; color: var(--orange); margin-bottom: 6px; }
 .footer-tagline        { font-size: 13px; color: #A8A29E; margin-bottom: 28px; }
 .footer-grid           { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 32px; padding-bottom: 32px; border-bottom: 1px solid #44403C; }
@@ -1028,7 +1057,10 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 ============================================================ -->
 <nav class="global-nav" role="navigation">
   <div class="nav-inner">
-    <a href="#top" class="nav-logo">Furuki塾<span>江東住吉教室</span></a>
+    <a href="#top" class="nav-logo">
+      <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo.svg'); ?>" alt="" class="nav-logo-mark" width="40" height="40" decoding="async">
+      <span class="nav-logo-text"><strong>Furuki塾</strong><span class="nav-logo-sub">江東住吉教室</span></span>
+    </a>
     <ul class="nav-links">
       <li><a href="#reasons">選ばれる理由</a></li>
       <li><a href="#courses">コース紹介</a></li>
@@ -2114,8 +2146,13 @@ $vacancy = [
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-logo">Furuki塾</div>
-        <p class="footer-tagline">時代に左右されない能力を身につけよう。</p>
+        <div class="footer-brand">
+          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo.svg'); ?>" alt="" class="footer-logo-mark" width="48" height="48" decoding="async">
+          <div class="footer-brand-text">
+            <div class="footer-logo">Furuki塾</div>
+            <p class="footer-tagline">時代に左右されない能力を身につけよう。</p>
+          </div>
+        </div>
         <p style="font-size:13px;color:#A8A29E;line-height:1.9;">
           〒135-0013<br>
           東京都江東区千田11-13 丸万マンダリンハイム1F<br>
