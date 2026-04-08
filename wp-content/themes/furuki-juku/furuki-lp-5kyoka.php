@@ -292,10 +292,12 @@ a { color: inherit; text-decoration: none; }
   white-space: nowrap;
 }
 .nav-logo-mark {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
   display: block;
+  border-radius: 6px;
+  object-fit: cover;
 }
 .nav-logo-text {
   display: flex;
@@ -1001,7 +1003,7 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 ============================== */
 .footer                { background: #292524; color: #fff; padding: 52px 0 32px; }
 .footer-brand          { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 10px; }
-.footer-logo-mark      { width: 48px; height: 48px; flex-shrink: 0; display: block; }
+.footer-logo-mark      { width: 48px; height: 48px; flex-shrink: 0; display: block; border-radius: 6px; object-fit: cover; }
 .footer-brand-text     { min-width: 0; }
 .footer-logo           { font-size: 19px; font-weight: 900; color: var(--orange); margin-bottom: 6px; }
 .footer-tagline        { font-size: 13px; color: #A8A29E; margin-bottom: 28px; }
@@ -1058,7 +1060,7 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 <nav class="global-nav" role="navigation">
   <div class="nav-inner">
     <a href="#top" class="nav-logo">
-      <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo.svg'); ?>" alt="" class="nav-logo-mark" width="40" height="40" decoding="async">
+      <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-kanban.png'); ?>" alt="" class="nav-logo-mark" width="44" height="44" decoding="async">
       <span class="nav-logo-text"><strong>Furuki塾</strong><span class="nav-logo-sub">江東住吉教室</span></span>
     </a>
     <ul class="nav-links">
@@ -2147,7 +2149,7 @@ $vacancy = [
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo.svg'); ?>" alt="" class="footer-logo-mark" width="48" height="48" decoding="async">
+          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-kanban.png'); ?>" alt="" class="footer-logo-mark" width="48" height="48" decoding="async">
           <div class="footer-brand-text">
             <div class="footer-logo">Furuki塾</div>
             <p class="footer-tagline">時代に左右されない能力を身につけよう。</p>
@@ -2190,6 +2192,9 @@ $vacancy = [
           </a>
         </div>
       </div>
+    </div>
+    <div style="text-align:center;padding:28px 0 4px;">
+      <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo-capsule.png'); ?>" alt="Furuki塾" width="171" height="67" decoding="async" style="opacity:.75;">
     </div>
     <div class="footer-bottom">
       <p class="footer-copy">© 2021 Furuki塾江東住吉教室 All Rights Reserved.</p>
