@@ -550,7 +550,8 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
   background: linear-gradient(90deg, var(--orange), var(--amber));
 }
 .reason-num   { font-size: 44px; font-weight: 900; color: var(--orange-light); line-height: 1; margin-bottom: 6px; }
-.reason-icon  { font-size: 36px; margin-bottom: 12px; }
+.reason-icon  { width: 64px; height: 64px; margin: 0 auto 14px; display: flex; align-items: center; justify-content: center; }
+.reason-icon svg { width: 100%; height: 100%; }
 .reason-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; line-height: 1.45; }
 .reason-body  { font-size: 13px; color: var(--text-muted); line-height: 1.75; }
 
@@ -1198,19 +1199,59 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
     <div class="reasons-grid">
       <div class="reason-card">
         <div class="reason-num">01</div>
-        <div class="reason-icon">🗓️</div>
+        <div class="reason-icon">
+          <!-- カレンダー＋時計：自由な時間割 -->
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="12" width="42" height="38" rx="5" fill="#FEF3C7" stroke="#F97316" stroke-width="2.5"/>
+            <rect x="6" y="12" width="42" height="12" rx="5" fill="#F97316"/>
+            <rect x="14" y="6" width="4" height="12" rx="2" fill="#F97316"/>
+            <rect x="36" y="6" width="4" height="12" rx="2" fill="#F97316"/>
+            <circle cx="46" cy="44" r="12" fill="#fff" stroke="#F97316" stroke-width="2.5"/>
+            <line x1="46" y1="38" x2="46" y2="44" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <line x1="46" y1="44" x2="51" y2="47" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="18" cy="32" r="2.5" fill="#F97316"/>
+            <circle cx="27" cy="32" r="2.5" fill="#F97316"/>
+            <circle cx="18" cy="41" r="2.5" fill="#F97316"/>
+            <circle cx="27" cy="41" r="2.5" fill="#F97316"/>
+          </svg>
+        </div>
         <h3 class="reason-title">完全個別指導 ×<br>自由な時間割</h3>
         <p class="reason-body">月ごとにスケジュールをカスタマイズ。部活・習い事との両立が可能です。15:00〜22:00の間で通塾時間を自由に設定できます。</p>
       </div>
       <div class="reason-card">
         <div class="reason-num">02</div>
-        <div class="reason-icon">📖</div>
+        <div class="reason-icon">
+          <!-- 本＋稲妻：5教科＋速読解力 -->
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="10" width="30" height="40" rx="3" fill="#FEF3C7" stroke="#F97316" stroke-width="2.5"/>
+            <rect x="8" y="10" width="30" height="40" rx="3" fill="none" stroke="#F97316" stroke-width="2.5"/>
+            <line x1="16" y1="22" x2="30" y2="22" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <line x1="16" y1="29" x2="30" y2="29" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <line x1="16" y1="36" x2="24" y2="36" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <path d="M38 8 L28 32 H38 L26 56 L52 24 H40 L50 8 Z" fill="#FBBF24" stroke="#F97316" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
         <h3 class="reason-title">5教科 ＋ 速読解力の<br>一体型学習</h3>
         <p class="reason-body">5教科の学習に加え、速読解力講座で「読む力」を底上げ。読む力が上がると、全科目の理解力・得点力が向上します。</p>
       </div>
       <div class="reason-card">
         <div class="reason-num">03</div>
-        <div class="reason-icon">🧠</div>
+        <div class="reason-icon">
+          <!-- 電球＋歯車：エンジニアが教える -->
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="28" cy="24" r="14" fill="#FEF3C7" stroke="#F97316" stroke-width="2.5"/>
+            <path d="M22 34 Q22 40 28 40 Q34 40 34 34" fill="#FEF3C7" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <line x1="24" y1="40" x2="32" y2="40" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <line x1="25" y1="44" x2="31" y2="44" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+            <path d="M28 18 L26 24 H30 L27 30" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="48" cy="46" r="8" fill="#FEF3C7" stroke="#F97316" stroke-width="2"/>
+            <circle cx="48" cy="46" r="3" fill="#F97316"/>
+            <rect x="46" y="36" width="4" height="4" rx="1" fill="#F97316"/>
+            <rect x="46" y="52" width="4" height="4" rx="1" fill="#F97316"/>
+            <rect x="36" y="44" width="4" height="4" rx="1" fill="#F97316"/>
+            <rect x="52" y="44" width="4" height="4" rx="1" fill="#F97316"/>
+          </svg>
+        </div>
         <h3 class="reason-title">現場経験20年のエンジニアが<br>「なぜ？」から教える</h3>
         <p class="reason-body">電子工学修士・認定心理士でもある塾長が指導。答えを与えるのではなく、自分で考えられるようになる授業が特長です。</p>
       </div>
