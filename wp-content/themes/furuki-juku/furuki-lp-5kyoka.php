@@ -134,23 +134,17 @@ $active_announcements = array_slice(
     array_values($default_announcements)
   ), 0, 3
 );
-
-// ドット絵ブランド（assets/images/ 参照）看板・横ロゴ・マスコット
-$furuki_uri_kanban  = get_template_directory_uri() . '/assets/images/furuki-kanban.png';
-$furuki_uri_capsule = get_template_directory_uri() . '/assets/images/furuki-logo-capsule.png';
-$furuki_uri_mascot  = get_template_directory_uri() . '/assets/images/furuki-chara-mascot.png';
 ?><!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="<?php echo esc_url($furuki_uri_kanban); ?>" type="image/png" sizes="any">
+<link rel="icon" href="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo.svg'); ?>" type="image/svg+xml">
 <title>Furuki塾江東住吉教室｜完全個別指導・5教科学習・速読解力講座</title>
 <meta name="description" content="江東区の完全個別指導学習塾。電子工学修士・認定心理士の塾長が「自ら考える力」を育てます。5教科学習・速読解力講座。無料体験随時受付中。">
 <meta property="og:title" content="Furuki塾江東住吉教室｜完全個別指導・5教科・速読解力">
 <meta property="og:description" content="AIの時代でも通用する力を育てる完全個別指導塾。江東区千田。無料体験随時受付中。">
 <meta property="og:type" content="website">
-<meta property="og:image" content="<?php echo esc_url($furuki_uri_kanban); ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -297,18 +291,11 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: .02em;
   white-space: nowrap;
 }
-.pixel-art-img {
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  image-rendering: pixelated;
-}
 .nav-logo-mark {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
   display: block;
-  border-radius: 10px;
-  box-shadow: 0 1px 8px rgba(0,160,233,.2);
 }
 .nav-logo-text {
   display: flex;
@@ -447,29 +434,6 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
   z-index: 1;
 }
 .hero-content { flex: 1; }
-.hero-brand-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px 20px;
-  margin-bottom: 18px;
-}
-.hero-kanban {
-  width: 72px;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 2px 14px rgba(0,160,233,.22);
-  flex-shrink: 0;
-}
-.hero-capsule {
-  height: 48px;
-  width: auto;
-  max-width: min(100%, 440px);
-}
-@media(max-width: 480px) {
-  .hero-capsule { height: 40px; }
-  .hero-kanban { width: 58px; }
-}
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -533,11 +497,10 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 }
 .hero-season-img   { width: 300px; height: 300px; object-fit: cover; border-radius: 50%; box-shadow: var(--shadow-lg); border: 5px solid var(--orange-light); display: block; margin: 0 auto; }
 .hero-chara-mid    { flex-shrink: 0; align-self: flex-end; padding-bottom: 8px; }
-.hero-chara-mid img { width: 168px; display: block; filter: drop-shadow(2px 4px 6px rgba(0,0,0,.15)); transform: scaleX(-1); }
+.hero-chara-mid img { width: 160px; display: block; filter: drop-shadow(2px 4px 6px rgba(0,0,0,.15)); transform: scaleX(-1); }
 @media(max-width: 960px) { .hero-chara-mid { display: none; } }
 
 @media(max-width: 768px) {
-  .hero-brand-row    { justify-content: center; width: 100%; }
   .hero-inner         { flex-direction: column; gap: 32px; }
   .hero-visual-wrap   { display: block; }
   .hero-season-img    { width: 200px; height: 200px; }
@@ -1038,9 +1001,7 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 ============================== */
 .footer                { background: #292524; color: #fff; padding: 52px 0 32px; }
 .footer-brand          { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 10px; }
-.footer-logo-mark      { width: 56px; height: 56px; flex-shrink: 0; display: block; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
-.footer-capsule-wrap   { margin: 0 0 22px; max-width: 100%; }
-.footer-capsule-img    { height: 46px; width: auto; max-width: 100%; display: block; }
+.footer-logo-mark      { width: 48px; height: 48px; flex-shrink: 0; display: block; }
 .footer-brand-text     { min-width: 0; }
 .footer-logo           { font-size: 19px; font-weight: 900; color: var(--orange); margin-bottom: 6px; }
 .footer-tagline        { font-size: 13px; color: #A8A29E; margin-bottom: 28px; }
@@ -1097,8 +1058,8 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 <nav class="global-nav" role="navigation">
   <div class="nav-inner">
     <a href="#top" class="nav-logo">
-      <img src="<?php echo esc_url($furuki_uri_kanban); ?>" alt="Furuki塾" class="nav-logo-mark pixel-art-img" width="48" height="48" decoding="async" fetchpriority="high">
-      <span class="nav-logo-text"><span class="nav-logo-sub">江東住吉教室</span></span>
+      <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo.svg'); ?>" alt="" class="nav-logo-mark" width="40" height="40" decoding="async">
+      <span class="nav-logo-text"><strong>Furuki塾</strong><span class="nav-logo-sub">江東住吉教室</span></span>
     </a>
     <ul class="nav-links">
       <li><a href="#reasons">選ばれる理由</a></li>
@@ -1179,10 +1140,6 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
   <div class="container">
     <div class="hero-inner">
       <div class="hero-content">
-        <div class="hero-brand-row">
-          <img src="<?php echo esc_url($furuki_uri_kanban); ?>" alt="" width="72" height="72" class="hero-kanban pixel-art-img" aria-hidden="true" decoding="async">
-          <img src="<?php echo esc_url($furuki_uri_capsule); ?>" alt="Furuki塾 小中学生向け プログラム・学習塾" class="hero-capsule pixel-art-img" decoding="async">
-        </div>
         <div class="hero-badge">✦ 無料体験 随時受付中</div>
         <h1 class="hero-title">
           何がわからないか、<br>
@@ -1218,8 +1175,8 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
       </div>
       <!-- 中間装飾キャラ -->
       <div class="hero-chara-mid">
-        <img src="<?php echo esc_url($furuki_uri_mascot); ?>"
-             alt="" class="pixel-art-img" aria-hidden="true" decoding="async">
+        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/chara-run.png'); ?>"
+             alt="" aria-hidden="true">
       </div>
       <div class="hero-visual-wrap">
         <?php
@@ -2190,15 +2147,12 @@ $vacancy = [
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <img src="<?php echo esc_url($furuki_uri_kanban); ?>" alt="Furuki塾" class="footer-logo-mark pixel-art-img" width="56" height="56" decoding="async">
+          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo.svg'); ?>" alt="" class="footer-logo-mark" width="48" height="48" decoding="async">
           <div class="footer-brand-text">
             <div class="footer-logo">Furuki塾</div>
             <p class="footer-tagline">時代に左右されない能力を身につけよう。</p>
           </div>
         </div>
-        <p class="footer-capsule-wrap">
-          <img src="<?php echo esc_url($furuki_uri_capsule); ?>" alt="小中学生向け プログラム・学習塾 Furuki塾" class="footer-capsule-img pixel-art-img" decoding="async">
-        </p>
         <p style="font-size:13px;color:#A8A29E;line-height:1.9;">
           〒135-0013<br>
           東京都江東区千田11-13 丸万マンダリンハイム1F<br>
