@@ -31,7 +31,11 @@ body {
 /* ============================================================
    表面
 ============================================================ */
-.front { background: #FFFBF5; }
+.front {
+  background: #FFFBF5;
+  background-image: radial-gradient(circle, rgba(0,160,233,0.07) 1.5px, transparent 1.5px);
+  background-size: 6mm 6mm;
+}
 
 .front-header {
   background: #00497a;
@@ -73,6 +77,8 @@ body {
   color: #fff;
   padding: 7mm 12mm 6mm;
   text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 .front-hero-catch {
   font-size: 8.5pt;
@@ -106,6 +112,7 @@ body {
   padding: 4mm 3mm;
   text-align: center;
   border: 1.5px solid #E7E5E4;
+  border-top: 3px solid #00a0e9;
   box-shadow: 0 2px 6px rgba(0,0,0,.06);
 }
 .feature-icon { font-size: 18pt; margin-bottom: 2mm; }
@@ -115,7 +122,7 @@ body {
 /* 料金（最低料金のみ） */
 .front-price {
   background: #FFF7ED;
-  border-top: 3px solid #F97316;
+  border-left: 4px solid #F97316;
   margin: 0 8mm;
   border-radius: 8px;
   padding: 3.5mm 5mm;
@@ -146,7 +153,25 @@ body {
 
 /* 通塾の流れ */
 .front-steps-wrap { margin: 4mm 8mm 0; }
-.front-steps-title { font-size: 8pt; font-weight: 700; color: #78716C; letter-spacing: .08em; margin-bottom: 2mm; }
+.front-steps-title {
+  font-size: 8pt;
+  font-weight: 700;
+  color: #00497a;
+  letter-spacing: .08em;
+  margin-bottom: 2mm;
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+.front-steps-title::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  background: #F97316;
+  border-radius: 1.5px;
+  flex-shrink: 0;
+}
 .front-steps { display: flex; gap: 0; align-items: stretch; }
 .step-item {
   flex: 1;
@@ -159,21 +184,42 @@ body {
 }
 .step-num {
   width: 26px; height: 26px;
-  background: #F97316; color: #fff;
+  background: linear-gradient(135deg, #F97316, #FB923C); color: #fff;
   border-radius: 50%; font-size: 12pt; font-weight: 900;
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 2mm; line-height: 1;
+  box-shadow: 0 2px 6px rgba(249,115,22,0.4);
 }
 .step-label { font-size: 7.5pt; font-weight: 700; line-height: 1.4; }
 .step-arrow { color: #FED7AA; font-size: 12pt; display: flex; align-items: center; padding: 0 0.5mm; margin-top: 6mm; }
 
 /* 声 */
-.front-voice { margin: 4mm 8mm 0; display: flex; gap: 3mm; }
+.front-voice {
+  margin: 4mm 0 0;
+  padding: 3mm 8mm;
+  background: #EFF8FF;
+  display: flex;
+  gap: 3mm;
+  position: relative;
+  overflow: hidden;
+}
+.front-voice::before {
+  content: '\201C';
+  position: absolute;
+  top: -4mm;
+  left: 3mm;
+  font-size: 70pt;
+  color: rgba(0,160,233,0.08);
+  font-family: Georgia, serif;
+  line-height: 1;
+  pointer-events: none;
+}
 .voice-card {
   flex: 1;
   background: #fff;
   border-radius: 6px;
   border: 1px solid #E7E5E4;
+  border-left: 3px solid #F97316;
   padding: 2.5mm 3mm;
   font-size: 7pt;
   color: #57534E;
@@ -187,10 +233,10 @@ body {
 
 /* 表面CTA */
 .front-cta {
-  background: #F97316; color: #fff;
-  margin: 4mm 8mm 0;
-  border-radius: 8px;
-  padding: 4mm 6mm;
+  background: linear-gradient(135deg, #EA6C00, #F97316);
+  color: #fff;
+  margin: 0;
+  padding: 4mm 8mm;
   display: flex; align-items: center; justify-content: space-between; gap: 4mm;
 }
 .front-cta-text { font-size: 12pt; font-weight: 900; line-height: 1.4; }
@@ -210,7 +256,8 @@ body {
 .back { background: #fff; }
 
 .back-header {
-  background: #00497a; color: #fff;
+  background: linear-gradient(135deg, #003d6b, #00497a);
+  color: #fff;
   padding: 4mm 8mm;
   display: flex; align-items: center; justify-content: space-between;
 }
@@ -228,7 +275,7 @@ body {
 /* コース */
 .course-grid { display: flex; gap: 2.5mm; margin-bottom: 2.5mm; }
 .course-card { flex: 1; border: 1.5px solid #E7E5E4; border-radius: 6px; overflow: hidden; }
-.course-head { background: #00497a; color: #fff; padding: 1.5mm 3mm; font-size: 7.5pt; font-weight: 700; text-align: center; }
+.course-head { color: #fff; padding: 1.5mm 3mm; font-size: 7.5pt; font-weight: 700; text-align: center; }
 .course-body { padding: 2mm 3mm; font-size: 7pt; color: #57534E; line-height: 1.6; }
 .course-price-note { background: #FFF7ED; padding: 1.5mm 3mm; font-size: 6.5pt; color: #C2410C; font-weight: 700; border-top: 1px solid #E7E5E4; }
 
@@ -248,7 +295,7 @@ body {
   flex-shrink: 0; margin-top: 0.5mm;
 }
 .faq-text { color: #1C1917; line-height: 1.55; flex: 1; }
-.faq-text.ans { color: #57534E; }
+.faq-text.ans { color: #374151; background: #F0F9FF; padding: 1mm 2mm; border-radius: 3px; border-left: 2px solid #00a0e9; }
 
 /* アクセス */
 .access-grid { display: flex; gap: 3mm; margin-bottom: 2.5mm; }
@@ -259,11 +306,11 @@ body {
 
 /* 裏面CTA（QRコード並列） */
 .back-cta {
-  background: linear-gradient(135deg, #00497a, #00a0e9);
+  background: linear-gradient(135deg, #003d6b, #0085c7);
   color: #fff;
-  border-radius: 8px;
-  padding: 3.5mm 6mm;
-  margin: 0 8mm 4mm;
+  border-radius: 0;
+  padding: 4mm 8mm;
+  margin: 0;
   display: flex; align-items: center; gap: 5mm;
 }
 .back-cta-main { flex: 1; }
@@ -306,6 +353,25 @@ body {
   </div>
 
   <div class="front-hero">
+    <!-- 書籍イラスト（装飾） -->
+    <svg class="hero-books" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 95" style="position:absolute;right:3mm;bottom:2mm;width:28mm;opacity:0.13;pointer-events:none;">
+      <rect x="5" y="70" width="65" height="13" rx="3" fill="white"/>
+      <rect x="12" y="54" width="58" height="13" rx="3" fill="white"/>
+      <rect x="18" y="38" width="52" height="13" rx="3" fill="white"/>
+      <path d="M28 22 Q45 12 62 22 Q45 32 28 22Z" fill="white"/>
+      <path d="M62 22 Q79 12 96 22 Q79 32 62 22Z" fill="white"/>
+      <line x1="62" y1="11" x2="62" y2="35" stroke="white" stroke-width="2"/>
+      <rect x="88" y="2" width="7" height="40" rx="3" fill="white" transform="rotate(20, 91, 22)"/>
+      <polygon points="86,42 94,42 90,52" fill="white" transform="rotate(20, 90, 42)"/>
+      <circle cx="10" cy="20" r="2" fill="white" opacity="0.7"/>
+      <circle cx="20" cy="8" r="1.5" fill="white" opacity="0.5"/>
+    </svg>
+
+    <!-- 無料体験バッジ -->
+    <div style="position:absolute;top:3mm;right:3mm;width:16mm;height:16mm;background:linear-gradient(135deg,#F97316,#FB923C);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-size:5pt;font-weight:900;text-align:center;line-height:1.4;border:2px solid rgba(255,255,255,0.5);transform:rotate(15deg);box-shadow:0 3px 10px rgba(0,0,0,0.25);z-index:10;">
+      <span style="font-size:7.5pt;">無料</span>体験<br>受付中
+    </div>
+
     <div class="front-hero-catch">何がわからないかわからない、そんなキミへ</div>
     <div class="front-hero-title">
       その日の目的を決めて、<br><em>集中して帰る。</em>
@@ -353,7 +419,9 @@ body {
 
   <!-- 通塾の流れ -->
   <div class="front-steps-wrap">
-    <div class="front-steps-title">■ 毎回の通塾の流れ</div>
+    <div class="front-steps-title">
+      毎回の通塾の流れ
+    </div>
     <div class="front-steps">
       <div class="step-item">
         <div class="step-num">1</div>
@@ -438,24 +506,24 @@ body {
     <div class="back-section-title">コース紹介</div>
     <div class="course-grid">
       <div class="course-card">
-        <div class="course-head">📚 5教科学習コース（小学生）</div>
+        <div class="course-head" style="background: #00497a;">📚 5教科学習コース（小学生）</div>
         <div class="course-body">全科目対応。宿題・予習・復習・テスト対策まで幅広く対応。週1回から通塾回数を選べます。</div>
         <div class="course-price-note">月額 11,000円〜 ／ 詳細はHPへ</div>
       </div>
       <div class="course-card">
-        <div class="course-head">📖 5教科学習コース（中学生）</div>
+        <div class="course-head" style="background: #005f99;">📖 5教科学習コース（中学生）</div>
         <div class="course-body">定期テスト対策・内申点向上。受験に向けた学習計画もサポートします。</div>
         <div class="course-price-note">月額 19,800円〜 ／ 詳細はHPへ</div>
       </div>
     </div>
     <div class="course-grid">
       <div class="course-card">
-        <div class="course-head">👁 速読解力講座</div>
+        <div class="course-head" style="background: #0070a8;">👁 速読解力講座</div>
         <div class="course-body">専用教材で読む速さ・読み取る力を同時に鍛えます。全科目の土台になる力です。</div>
         <div class="course-price-note">月額 9,900円〜 ／ 5教科との併用可</div>
       </div>
       <div class="course-card">
-        <div class="course-head">💻 プログラミング講座</div>
+        <div class="course-head" style="background: #C2410C;">💻 プログラミング講座</div>
         <div class="course-body">実践的な課題でプログラミングの基礎と論理思考を育てます。</div>
         <div class="course-price-note">月額 12,100円〜 ／ 詳細はHPへ</div>
       </div>
@@ -514,6 +582,7 @@ body {
   </div>
 
   <!-- 裏面CTA + QR -->
+  <svg viewBox="0 0 794 16" preserveAspectRatio="none" style="display:block;width:100%;height:4mm;margin-bottom:-1px;"><path d="M0,16 C198,0 596,0 794,16 L794,16 L0,16 Z" fill="#003d6b"/></svg>
   <div class="back-cta">
     <div class="back-cta-main">
       <div class="back-cta-title">無料体験・お問い合わせ</div>
