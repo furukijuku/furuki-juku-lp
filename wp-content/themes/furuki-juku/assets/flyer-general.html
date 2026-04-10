@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Furuki塾チラシ（集客全般）</title>
+<style>
+/* ============================================================
+   印刷設定
+   ブラウザで開き、Ctrl+P（Cmd+P）→「PDFに保存」
+   用紙: A4 / 余白: なし / 背景のグラフィック: オン
+============================================================ */
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 210mm; }
+body {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+  font-size: 10pt;
+  color: #1C1917;
+  line-height: 1.6;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ページ（表・裏それぞれA4） */
+.page {
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  position: relative;
+  page-break-after: always;
+}
+
+/* ============================================================
+   表面
+============================================================ */
+.front { background: #FFFBF5; }
+
+/* ヘッダーバー */
+.front-header {
+  background: #00497a;
+  color: #fff;
+  padding: 6mm 10mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.front-header-logo {
+  font-size: 18pt;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+.front-header-logo span { color: #F97316; }
+.front-header-sub {
+  font-size: 8pt;
+  opacity: .85;
+  text-align: right;
+  line-height: 1.5;
+}
+
+/* ヒーローエリア */
+.front-hero {
+  background: linear-gradient(135deg, #00497a 0%, #00a0e9 100%);
+  color: #fff;
+  padding: 10mm 12mm 8mm;
+  text-align: center;
+}
+.front-hero-catch {
+  font-size: 9pt;
+  font-weight: 700;
+  letter-spacing: .12em;
+  background: rgba(255,255,255,.2);
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 100px;
+  margin-bottom: 5mm;
+}
+.front-hero-title {
+  font-size: 22pt;
+  font-weight: 900;
+  line-height: 1.35;
+  margin-bottom: 4mm;
+}
+.front-hero-title em { color: #F97316; font-style: normal; }
+.front-hero-sub {
+  font-size: 9pt;
+  opacity: .9;
+  line-height: 1.7;
+}
+
+/* 特徴3点 */
+.front-features {
+  display: flex;
+  gap: 0;
+  margin: 6mm 8mm;
+}
+.feature-card {
+  flex: 1;
+  background: #fff;
+  border-radius: 8px;
+  padding: 5mm 4mm;
+  text-align: center;
+  border: 1.5px solid #E7E5E4;
+  margin: 0 2mm;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.feature-icon { font-size: 20pt; margin-bottom: 2mm; }
+.feature-title {
+  font-size: 9pt;
+  font-weight: 700;
+  color: #00497a;
+  margin-bottom: 2mm;
+  line-height: 1.4;
+}
+.feature-body { font-size: 7.5pt; color: #78716C; line-height: 1.6; }
+
+/* 料金ハイライト */
+.front-price {
+  background: #FFF7ED;
+  border-top: 3px solid #F97316;
+  margin: 0 8mm;
+  border-radius: 8px;
+  padding: 4mm 6mm;
+}
+.front-price-title {
+  font-size: 9pt;
+  font-weight: 700;
+  color: #C2410C;
+  margin-bottom: 3mm;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #E7E5E4;
+  padding: 2mm 0;
+  font-size: 8.5pt;
+  align-items: baseline;
+}
+.price-row:last-child { border-bottom: none; }
+.price-label { color: #1C1917; font-weight: 500; }
+.price-val { font-weight: 700; color: #C2410C; font-size: 10pt; }
+.price-note { font-size: 7pt; color: #78716C; margin-top: 2mm; }
+
+/* 通塾の流れ */
+.front-steps {
+  margin: 4mm 8mm;
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+}
+.front-steps-title {
+  font-size: 8pt;
+  font-weight: 700;
+  color: #78716C;
+  letter-spacing: .08em;
+  margin-bottom: 2mm;
+  padding-left: 8mm;
+}
+.step-item {
+  flex: 1;
+  background: #fff;
+  border-radius: 6px;
+  padding: 3mm;
+  text-align: center;
+  border: 1px solid #E7E5E4;
+  margin: 0 1.5mm;
+  position: relative;
+}
+.step-num {
+  width: 28px;
+  height: 28px;
+  background: #F97316;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 13pt;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2mm;
+  line-height: 1;
+}
+.step-label { font-size: 7.5pt; font-weight: 700; line-height: 1.4; }
+.step-arrow {
+  color: #FED7AA;
+  font-size: 12pt;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5mm;
+  margin-top: 8mm;
+}
+
+/* 声 */
+.front-voice {
+  margin: 4mm 8mm;
+  display: flex;
+  gap: 4mm;
+}
+.voice-card {
+  flex: 1;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #E7E5E4;
+  padding: 3mm 4mm;
+  font-size: 7.5pt;
+  color: #57534E;
+  line-height: 1.65;
+  position: relative;
+}
+.voice-quote {
+  font-size: 20pt;
+  color: #FED7AA;
+  line-height: 1;
+  margin-bottom: 1mm;
+}
+.voice-author {
+  margin-top: 2mm;
+  font-size: 7pt;
+  color: #A8A29E;
+  font-weight: 700;
+  border-top: 1px solid #E7E5E4;
+  padding-top: 1.5mm;
+}
+
+/* フッターCTA */
+.front-cta {
+  background: #F97316;
+  color: #fff;
+  margin: 4mm 8mm 0;
+  border-radius: 8px;
+  padding: 4mm 8mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.front-cta-text { font-size: 11pt; font-weight: 900; line-height: 1.4; }
+.front-cta-text small { display: block; font-size: 7.5pt; font-weight: 400; opacity: .9; }
+.front-cta-contact { text-align: right; font-size: 8pt; line-height: 1.8; }
+.front-cta-contact strong { font-size: 13pt; display: block; }
+
+/* 下部注釈 */
+.front-footer {
+  position: absolute;
+  bottom: 4mm;
+  left: 8mm;
+  right: 8mm;
+  display: flex;
+  justify-content: space-between;
+  font-size: 6.5pt;
+  color: #A8A29E;
+}
+
+/* ============================================================
+   裏面
+============================================================ */
+.back { background: #fff; }
+
+.back-header {
+  background: #00497a;
+  color: #fff;
+  padding: 5mm 10mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.back-header-title { font-size: 13pt; font-weight: 900; }
+.back-header-sub { font-size: 8pt; opacity: .85; }
+
+/* コース詳細 */
+.back-section {
+  padding: 5mm 8mm 0;
+}
+.back-section-title {
+  font-size: 10pt;
+  font-weight: 700;
+  color: #00497a;
+  border-left: 4px solid #F97316;
+  padding-left: 3mm;
+  margin-bottom: 3mm;
+}
+
+.course-grid {
+  display: flex;
+  gap: 3mm;
+  margin-bottom: 4mm;
+}
+.course-card {
+  flex: 1;
+  border: 1.5px solid #E7E5E4;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.course-head {
+  background: #00497a;
+  color: #fff;
+  padding: 2mm 3mm;
+  font-size: 8pt;
+  font-weight: 700;
+  text-align: center;
+}
+.course-body {
+  padding: 3mm;
+  font-size: 7.5pt;
+  color: #57534E;
+  line-height: 1.7;
+}
+.course-price {
+  background: #FFF7ED;
+  padding: 2mm 3mm;
+  font-size: 7.5pt;
+  color: #C2410C;
+  font-weight: 700;
+  border-top: 1px solid #E7E5E4;
+}
+
+/* FAQ */
+.faq-list { margin-bottom: 4mm; }
+.faq-row {
+  border-bottom: 1px solid #E7E5E4;
+  padding: 2.5mm 0;
+  display: flex;
+  gap: 3mm;
+  font-size: 8pt;
+}
+.faq-q-badge {
+  width: 16px;
+  height: 16px;
+  background: #00a0e9;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 7pt;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.5mm;
+}
+.faq-a-badge {
+  width: 16px;
+  height: 16px;
+  background: #F97316;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 7pt;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.5mm;
+}
+.faq-text { color: #1C1917; line-height: 1.6; flex: 1; }
+.faq-text.ans { color: #57534E; }
+
+/* アクセス */
+.access-grid {
+  display: flex;
+  gap: 4mm;
+  margin-bottom: 4mm;
+}
+.access-info { flex: 1; font-size: 8pt; line-height: 1.8; color: #57534E; }
+.access-info strong { color: #1C1917; }
+.access-map-placeholder {
+  flex: 1;
+  background: #E8F7FD;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7.5pt;
+  color: #00497a;
+  font-weight: 700;
+  min-height: 28mm;
+  border: 1px solid #bae6fd;
+}
+
+/* 体験申込 */
+.back-cta {
+  background: linear-gradient(135deg, #00497a, #00a0e9);
+  color: #fff;
+  border-radius: 8px;
+  padding: 5mm 8mm;
+  margin: 0 8mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.back-cta-main { font-size: 12pt; font-weight: 900; line-height: 1.5; }
+.back-cta-main small { font-size: 8pt; font-weight: 400; display: block; opacity: .9; }
+.back-cta-contacts { text-align: right; font-size: 7.5pt; line-height: 2.1; }
+.back-cta-contacts strong { font-size: 11pt; display: block; }
+
+.back-footer {
+  position: absolute;
+  bottom: 4mm;
+  left: 8mm;
+  right: 8mm;
+  display: flex;
+  justify-content: space-between;
+  font-size: 6.5pt;
+  color: #A8A29E;
+}
+
+/* 印刷時のフォント読み込み */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     表面
+============================================================ -->
+<div class="page front">
+
+  <!-- ヘッダー -->
+  <div class="front-header">
+    <div class="front-header-logo">Furuki<span>塾</span> 江東住吉教室</div>
+    <div class="front-header-sub">
+      小1〜中3対応 ／ 個別指導<br>
+      東京都江東区千田11-13
+    </div>
+  </div>
+
+  <!-- ヒーロー -->
+  <div class="front-hero">
+    <div class="front-hero-catch">何がわからないかわからない、そんなキミへ</div>
+    <div class="front-hero-title">
+      その日の目的を決めて、<br>
+      <em>集中して帰る。</em>
+    </div>
+    <div class="front-hero-sub">
+      一人ひとりのペースに合わせた個別指導で、「わかった」が積み重なる塾です。
+    </div>
+  </div>
+
+  <!-- 特徴3点 -->
+  <div class="front-features">
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">完全個別指導<br>×自由な時間割</div>
+      <div class="feature-body">部活・習い事に合わせてスケジュール調整OK。テスト前に集中して通えます。</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📚</div>
+      <div class="feature-title">5教科＋<br>速読解力</div>
+      <div class="feature-body">全科目対応。読解力を土台から育てる速読解力講座も同時に受講できます。</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎓</div>
+      <div class="feature-title">認定心理士×<br>エンジニア塾長</div>
+      <div class="feature-body">電子工学修士・認定心理士。答えを教えるより「考え方の道筋」を丁寧に伝えます。</div>
+    </div>
+  </div>
+
+  <!-- 料金ハイライト -->
+  <div class="front-price">
+    <div class="front-price-title">💰 月額料金（税込）</div>
+    <div class="price-row">
+      <span class="price-label">5教科学習コース（小学生）</span>
+      <span class="price-val">8,800円〜</span>
+    </div>
+    <div class="price-row">
+      <span class="price-label">5教科学習コース（中学生）</span>
+      <span class="price-val">13,200円〜</span>
+    </div>
+    <div class="price-row">
+      <span class="price-label">速読解力講座</span>
+      <span class="price-val">5,500円〜</span>
+    </div>
+    <div class="price-note">※ 週の通塾回数によって変動。季節講習は低価格で提供。入会金・教材費別途。</div>
+  </div>
+
+  <!-- 通塾の流れ -->
+  <div style="margin: 4mm 8mm 1mm;">
+    <div class="front-steps-title">■ 毎回の通塾の流れ</div>
+    <div class="front-steps">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-label">今日やることを<br>塾長と確認</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-label">集中して<br>取り組む</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-label">次回に向けて<br>整理して帰る</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 声 -->
+  <div class="front-voice">
+    <div class="voice-card">
+      <div class="voice-quote">"</div>
+      塾に来ると自然と集中できる。苦手だった数学の点数が上がってきました。
+      <div class="voice-author">中学2年生（本人）</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-quote">"</div>
+      部活の予定に合わせて通えて、テスト前も集中して使えるのが本当に助かります。
+      <div class="voice-author">中3・保護者の方</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-quote">"</div>
+      自分から質問できるようになった。「わからない」と言える雰囲気が良かったです。
+      <div class="voice-author">小5・保護者の方</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="front-cta">
+    <div class="front-cta-text">
+      無料体験授業、随時受付中
+      <small>しつこい勧誘は一切ありません。まずはお気軽にどうぞ。</small>
+    </div>
+    <div class="front-cta-contact">
+      <strong>03-6770-6936</strong>
+      LINE・フォームでも受付中<br>
+      furuki-juku.com
+    </div>
+  </div>
+
+  <div class="front-footer">
+    <span>Furuki塾 江東住吉教室 ／ 東京都江東区千田11-13 丸万マンダリンハイム1F</span>
+    <span>月〜金 15:00〜21:30</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     裏面
+============================================================ -->
+<div class="page back">
+
+  <div class="back-header">
+    <div class="back-header-title">Furuki塾 ／ コース・料金・よくある質問</div>
+    <div class="back-header-sub">小1〜中3対応 ／ 江東区千田</div>
+  </div>
+
+  <!-- コース詳細 -->
+  <div class="back-section">
+    <div class="back-section-title">コース・料金（月額税込）</div>
+    <div class="course-grid">
+      <div class="course-card">
+        <div class="course-head">5教科学習コース（小学生）</div>
+        <div class="course-body">
+          全科目対応。宿題・予習・復習・テスト対策まで幅広く対応します。<br>
+          週1回〜柔軟に通塾回数を選べます。
+        </div>
+        <div class="course-price">週1回 8,800円 ／ 週2回 14,300円 ／ 週3回 19,800円</div>
+      </div>
+      <div class="course-card">
+        <div class="course-head">5教科学習コース（中学生）</div>
+        <div class="course-body">
+          定期テスト対策・内申点向上を中心に、受験に向けた学習計画もサポート。
+        </div>
+        <div class="course-price">週1回 13,200円 ／ 週2回 20,900円 ／ 週3回 28,600円</div>
+      </div>
+    </div>
+    <div class="course-grid">
+      <div class="course-card">
+        <div class="course-head">速読解力講座</div>
+        <div class="course-body">
+          週1回の専用教材で、読む速さ・読み取る力を同時に鍛えます。<br>全科目の土台になる力です。
+        </div>
+        <div class="course-price">週1回 5,500円〜（5教科との併用で割引あり）</div>
+      </div>
+      <div class="course-card">
+        <div class="course-head">プログラミング講座</div>
+        <div class="course-body">
+          Scratchや実践的な課題でプログラミングの基礎と論理思考を育てます。
+        </div>
+        <div class="course-price">週1回 5,500円〜</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="back-section">
+    <div class="back-section-title">よくある質問</div>
+    <div class="faq-list">
+      <div class="faq-row">
+        <div class="faq-q-badge">Q</div>
+        <div class="faq-text">無料体験はどんな内容ですか？</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-a-badge">A</div>
+        <div class="faq-text ans">実際の授業と同じ形式で受けていただけます。2週間で最大4回まで無料で体験できます。</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q-badge">Q</div>
+        <div class="faq-text">部活や習い事と両立できますか？</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-a-badge">A</div>
+        <div class="faq-text ans">はい。毎週固定ではなく、その週の予定に合わせて曜日・時間を調整できます。</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q-badge">Q</div>
+        <div class="faq-text">学校に行けない時期でも通えますか？</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-a-badge">A</div>
+        <div class="faq-text ans">はい。少人数・静かな環境で、お子さんのペースに合わせて進められます。まずご相談ください。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- アクセス -->
+  <div class="back-section">
+    <div class="back-section-title">アクセス</div>
+    <div class="access-grid">
+      <div class="access-info">
+        <strong>Furuki塾 江東住吉教室</strong><br>
+        東京都江東区千田11-13<br>
+        丸万マンダリンハイム1F<br><br>
+        🚌 都営バス「千田」徒歩約2分<br>
+        🚇 東西線 東陽町駅<br>
+        🚇 半蔵門線・新宿線 住吉駅<br><br>
+        📞 03-6770-6936<br>
+        🕐 月〜金 15:00〜21:30
+      </div>
+      <div class="access-map-placeholder">
+        📍 furuki-juku.com<br>でマップを確認
+      </div>
+    </div>
+  </div>
+
+  <!-- 体験CTA -->
+  <div class="back-cta">
+    <div class="back-cta-main">
+      無料体験授業を申し込む
+      <small>お電話・LINE・Webフォームから。しつこい勧誘はありません。</small>
+    </div>
+    <div class="back-cta-contacts">
+      <strong>03-6770-6936</strong>
+      LINE: @furukijuku<br>
+      Web: furuki-juku.com/contact/
+    </div>
+  </div>
+
+  <div class="back-footer">
+    <span>Furuki塾 江東住吉教室 ／ 東京都江東区千田11-13 丸万マンダリンハイム1F</span>
+    <span>© Furuki塾</span>
+  </div>
+</div>
+
+</body>
+</html>

@@ -179,11 +179,64 @@ $testimonials = [
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo.svg'); ?>" type="image/svg+xml">
-<title>Furuki塾江東住吉教室｜完全個別指導・5教科学習・速読解力講座</title>
-<meta name="description" content="江東区の完全個別指導学習塾。電子工学修士・認定心理士の塾長が「自ら考える力」を育てます。5教科学習・速読解力講座。無料体験随時受付中。">
-<meta property="og:title" content="Furuki塾江東住吉教室｜完全個別指導・5教科・速読解力">
-<meta property="og:description" content="AIの時代でも通用する力を育てる完全個別指導塾。江東区千田。無料体験随時受付中。">
+<title>Furuki塾江東住吉教室｜個別指導・5教科・不登校・発達特性にも対応｜江東区千田</title>
+<meta name="description" content="江東区千田の個別指導学習塾。小1〜中3対応。不登校・発達特性のあるお子さんのご相談も歓迎。認定心理士・電子工学修士の塾長が一人ひとりに寄り添います。5教科学習・速読解力講座。無料体験随時受付中。">
+<link rel="canonical" href="https://furuki-juku.com/">
+<meta property="og:title" content="Furuki塾江東住吉教室｜個別指導・5教科・不登校・発達特性にも対応">
+<meta property="og:description" content="江東区千田の個別指導塾。不登校・発達特性のご相談歓迎。認定心理士の塾長が一人ひとりに寄り添う学習指導。無料体験随時受付中。">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://furuki-juku.com/">
+<meta property="og:image" content="https://furuki-juku.com/wp-content/themes/furuki-juku/assets/images/furuki-logo.svg">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="Furuki塾江東住吉教室">
+<!-- 構造化データ（LocalBusiness + EducationalOrganization） -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["EducationalOrganization", "LocalBusiness"],
+  "name": "Furuki塾 江東住吉教室",
+  "url": "https://furuki-juku.com/",
+  "logo": "https://furuki-juku.com/wp-content/themes/furuki-juku/assets/images/furuki-logo.svg",
+  "image": "https://furuki-juku.com/wp-content/themes/furuki-juku/assets/images/furuki-logo.svg",
+  "description": "江東区千田の個別指導学習塾。小1〜中3対応。不登校・発達特性のあるお子さんのご相談も歓迎。認定心理士・電子工学修士の塾長が一人ひとりに寄り添います。",
+  "telephone": "03-6770-6936",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "千田11-13 丸万マンダリンハイム1F",
+    "addressLocality": "江東区",
+    "addressRegion": "東京都",
+    "postalCode": "135-0007",
+    "addressCountry": "JP"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 35.6742,
+    "longitude": 139.8063
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "15:00",
+      "closes": "21:30"
+    }
+  ],
+  "priceRange": "¥¥",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "学習コース",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "5教科学習コース（小学生）" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "5教科学習コース（中学生）" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "速読解力講座" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "プログラミング講座" } }
+    ]
+  },
+  "sameAs": [
+    "https://www.instagram.com/furukijuku/"
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">

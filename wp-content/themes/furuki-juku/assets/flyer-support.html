@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Furuki塾チラシ（不登校・発達特性サポート）</title>
+<style>
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 210mm; }
+body {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+  font-size: 10pt;
+  color: #1C1917;
+  line-height: 1.6;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.page {
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  position: relative;
+  page-break-after: always;
+}
+
+/* ============================================================
+   表面 — 保護者の悩みに寄り添う入口
+============================================================ */
+.front { background: #fafaf9; }
+
+.front-header {
+  background: #1C4B6B;
+  color: #fff;
+  padding: 5mm 10mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.front-header-logo { font-size: 16pt; font-weight: 900; }
+.front-header-logo span { color: #F97316; }
+.front-header-sub { font-size: 7.5pt; opacity: .85; text-align: right; line-height: 1.6; }
+
+/* キャッチエリア */
+.front-catch {
+  background: linear-gradient(160deg, #1C4B6B 0%, #2d7da8 100%);
+  color: #fff;
+  padding: 9mm 12mm 7mm;
+}
+.front-catch-label {
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: .1em;
+  background: rgba(255,255,255,.18);
+  display: inline-block;
+  padding: 1.5px 10px;
+  border-radius: 100px;
+  margin-bottom: 4mm;
+}
+.front-catch-title {
+  font-size: 20pt;
+  font-weight: 900;
+  line-height: 1.4;
+  margin-bottom: 3mm;
+}
+.front-catch-title em { color: #F97316; font-style: normal; }
+.front-catch-sub {
+  font-size: 9pt;
+  opacity: .88;
+  line-height: 1.75;
+  max-width: 140mm;
+}
+
+/* 共感カード */
+.empathy-section {
+  padding: 5mm 8mm 2mm;
+}
+.empathy-title {
+  font-size: 9pt;
+  font-weight: 700;
+  color: #1C4B6B;
+  border-left: 3px solid #F97316;
+  padding-left: 3mm;
+  margin-bottom: 3mm;
+}
+.empathy-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5mm;
+}
+.empathy-card {
+  width: calc(50% - 1.25mm);
+  background: #fff;
+  border: 1px solid #e0e7ef;
+  border-left: 3px solid #2d7da8;
+  border-radius: 5px;
+  padding: 3mm 3.5mm;
+  font-size: 8pt;
+  color: #374151;
+  line-height: 1.65;
+}
+.empathy-icon { font-size: 11pt; margin-bottom: 1mm; }
+
+/* 安心ポイント */
+.support-section {
+  padding: 4mm 8mm 0;
+}
+.support-title {
+  font-size: 9pt;
+  font-weight: 700;
+  color: #1C4B6B;
+  border-left: 3px solid #F97316;
+  padding-left: 3mm;
+  margin-bottom: 3mm;
+}
+.support-grid {
+  display: flex;
+  gap: 3mm;
+}
+.support-card {
+  flex: 1;
+  background: #EFF6FF;
+  border-radius: 6px;
+  padding: 3.5mm 4mm;
+  text-align: center;
+  border: 1px solid #BFDBFE;
+}
+.support-icon { font-size: 16pt; margin-bottom: 2mm; }
+.support-label {
+  font-size: 8pt;
+  font-weight: 700;
+  color: #1C4B6B;
+  margin-bottom: 1.5mm;
+  line-height: 1.4;
+}
+.support-body { font-size: 7.5pt; color: #4B5563; line-height: 1.6; }
+
+/* 先生紹介 */
+.teacher-section {
+  margin: 4mm 8mm 0;
+  background: #fff;
+  border: 1.5px solid #e0e7ef;
+  border-radius: 7px;
+  padding: 4mm 5mm;
+  display: flex;
+  gap: 4mm;
+  align-items: flex-start;
+}
+.teacher-badge {
+  background: #1C4B6B;
+  color: #fff;
+  border-radius: 6px;
+  padding: 2mm 3mm;
+  font-size: 7pt;
+  font-weight: 700;
+  text-align: center;
+  min-width: 22mm;
+  line-height: 1.8;
+  flex-shrink: 0;
+}
+.teacher-badge span { font-size: 9pt; display: block; }
+.teacher-body { font-size: 8pt; color: #374151; line-height: 1.75; }
+.teacher-body strong { color: #1C4B6B; }
+
+/* 相談CTA */
+.front-cta {
+  background: #F97316;
+  color: #fff;
+  margin: 4mm 8mm 0;
+  border-radius: 8px;
+  padding: 4mm 7mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.front-cta-main { font-size: 11pt; font-weight: 900; line-height: 1.5; }
+.front-cta-main small { font-size: 7.5pt; font-weight: 400; opacity: .92; display: block; }
+.front-cta-right { text-align: right; font-size: 7.5pt; line-height: 2.0; }
+.front-cta-right strong { font-size: 12pt; display: block; }
+
+.front-footer {
+  position: absolute;
+  bottom: 4mm;
+  left: 8mm;
+  right: 8mm;
+  display: flex;
+  justify-content: space-between;
+  font-size: 6.5pt;
+  color: #9CA3AF;
+}
+
+/* ============================================================
+   裏面 — 具体的な内容・FAQ・アクセス
+============================================================ -->
+.back { background: #fff; }
+
+.back-header {
+  background: #1C4B6B;
+  color: #fff;
+  padding: 5mm 10mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.back-header-title { font-size: 12pt; font-weight: 900; }
+.back-header-sub { font-size: 7.5pt; opacity: .85; }
+
+.back-section { padding: 5mm 8mm 0; }
+.back-section-title {
+  font-size: 9.5pt;
+  font-weight: 700;
+  color: #1C4B6B;
+  border-left: 3px solid #F97316;
+  padding-left: 3mm;
+  margin-bottom: 3mm;
+}
+
+/* 特性別の対応例 */
+.trait-grid {
+  display: flex;
+  gap: 3mm;
+  margin-bottom: 4mm;
+}
+.trait-card {
+  flex: 1;
+  border: 1px solid #e0e7ef;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.trait-head {
+  background: #2d7da8;
+  color: #fff;
+  padding: 2mm 3mm;
+  font-size: 8pt;
+  font-weight: 700;
+}
+.trait-body {
+  padding: 3mm;
+  font-size: 7.5pt;
+  color: #374151;
+  line-height: 1.75;
+}
+.trait-body li {
+  list-style: none;
+  padding-left: 1em;
+  text-indent: -1em;
+}
+.trait-body li::before { content: '✓ '; color: #2d7da8; font-weight: 700; }
+
+/* FAQ */
+.faq-list { margin-bottom: 4mm; }
+.faq-row {
+  border-bottom: 1px solid #E7E5E4;
+  padding: 2.5mm 0;
+  display: flex;
+  gap: 3mm;
+  font-size: 8pt;
+}
+.faq-q-badge {
+  width: 16px; height: 16px;
+  background: #2d7da8; color: #fff;
+  border-radius: 50%; font-size: 7pt; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 0.5mm;
+}
+.faq-a-badge {
+  width: 16px; height: 16px;
+  background: #F97316; color: #fff;
+  border-radius: 50%; font-size: 7pt; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 0.5mm;
+}
+.faq-text { color: #1C1917; line-height: 1.6; flex: 1; }
+.faq-text.ans { color: #4B5563; }
+
+/* 流れ */
+.flow-row {
+  display: flex;
+  gap: 2mm;
+  align-items: stretch;
+  margin-bottom: 4mm;
+}
+.flow-step {
+  flex: 1;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 6px;
+  padding: 3mm;
+  text-align: center;
+  font-size: 7.5pt;
+}
+.flow-num {
+  width: 22px; height: 22px;
+  background: #2d7da8; color: #fff;
+  border-radius: 50%; font-size: 9pt; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5mm;
+}
+.flow-label { font-size: 7.5pt; font-weight: 700; line-height: 1.4; color: #1C4B6B; }
+.flow-arrow {
+  color: #BFDBFE; font-size: 14pt;
+  display: flex; align-items: center;
+}
+
+/* アクセス */
+.access-grid {
+  display: flex;
+  gap: 4mm;
+  margin-bottom: 4mm;
+}
+.access-info { flex: 1; font-size: 8pt; line-height: 1.85; color: #4B5563; }
+.access-info strong { color: #1C1917; }
+.access-map-placeholder {
+  flex: 1;
+  background: #EFF6FF;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7.5pt;
+  color: #1C4B6B;
+  font-weight: 700;
+  min-height: 26mm;
+  border: 1px solid #BFDBFE;
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* CTA */
+.back-cta {
+  background: linear-gradient(135deg, #1C4B6B, #2d7da8);
+  color: #fff;
+  border-radius: 8px;
+  padding: 5mm 8mm;
+  margin: 0 8mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.back-cta-main { font-size: 11pt; font-weight: 900; line-height: 1.5; }
+.back-cta-main small { font-size: 8pt; font-weight: 400; opacity: .9; display: block; }
+.back-cta-contacts { text-align: right; font-size: 7.5pt; line-height: 2.1; }
+.back-cta-contacts strong { font-size: 11pt; display: block; }
+
+.back-footer {
+  position: absolute;
+  bottom: 4mm;
+  left: 8mm;
+  right: 8mm;
+  display: flex;
+  justify-content: space-between;
+  font-size: 6.5pt;
+  color: #9CA3AF;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     表面
+============================================================ -->
+<div class="page front">
+
+  <div class="front-header">
+    <div class="front-header-logo">Furuki<span>塾</span> 江東住吉教室</div>
+    <div class="front-header-sub">個別指導 ／ 小1〜中3対応<br>東京都江東区千田11-13</div>
+  </div>
+
+  <div class="front-catch">
+    <div class="front-catch-label">不登校・発達特性のあるお子さんをお持ちの保護者の方へ</div>
+    <div class="front-catch-title">
+      こんなお悩み、<br><em>一人で抱えていませんか。</em>
+    </div>
+    <div class="front-catch-sub">
+      相談できる場所が見つからない。そんな方の最初の一歩に、Furuki塾はなれます。
+    </div>
+  </div>
+
+  <!-- 共感カード -->
+  <div class="empathy-section">
+    <div class="empathy-title">こんな声が届いています</div>
+    <div class="empathy-grid">
+      <div class="empathy-card">
+        <div class="empathy-icon">😔</div>
+        学校に行けない時期が続いていて、勉強の遅れが心配。でもどこに相談すればいいか…
+      </div>
+      <div class="empathy-card">
+        <div class="empathy-icon">💭</div>
+        発達の特性があって、集団の塾では続かなかった。また失敗するのが怖くて動けない。
+      </div>
+      <div class="empathy-card">
+        <div class="empathy-icon">🫂</div>
+        特性のことを誰かに話すのは勇気がいる。親の育て方のせいかと思うこともある。
+      </div>
+      <div class="empathy-card">
+        <div class="empathy-icon">📚</div>
+        診断はないけれど「グレーゾーン」と感じている。どこまで対応してもらえるのか不安。
+      </div>
+    </div>
+  </div>
+
+  <!-- 安心ポイント -->
+  <div class="support-section">
+    <div class="support-title">Furuki塾が選ばれる3つの理由</div>
+    <div class="support-grid">
+      <div class="support-card">
+        <div class="support-icon">🏠</div>
+        <div class="support-label">少人数・静かな<br>環境</div>
+        <div class="support-body">集団が苦手なお子さんも落ち着いて学べる、静かで安心できる空間です。</div>
+      </div>
+      <div class="support-card">
+        <div class="support-icon">🎯</div>
+        <div class="support-label">特性に合わせた<br>個別対応</div>
+        <div class="support-body">お子さんの特性・ペース・得意不得意を把握し、配慮しながら指導します。</div>
+      </div>
+      <div class="support-card">
+        <div class="support-icon">🎓</div>
+        <div class="support-label">認定心理士の<br>塾長が対応</div>
+        <div class="support-body">責めません、否定しません。まずお子さんと保護者の話を丁寧に聞きます。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 先生紹介 -->
+  <div class="teacher-section">
+    <div class="teacher-badge">
+      塾長<br>
+      <span>古澤</span>
+      認定心理士<br>電子工学修士
+    </div>
+    <div class="teacher-body">
+      <strong>「まず話しかけてもらうことが、一番大切だと思っています。」</strong><br>
+      現在も、診断のあるお子さん・グレーゾーンのお子さんが通塾されています。「どう説明すればいいかわからない」そのままで構いません。保護者の方が感じていることを、そのままお話しください。一緒に考えます。
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="front-cta">
+    <div class="front-cta-main">
+      まず「相談だけ」でも大丈夫です
+      <small>入塾を決めていなくても構いません。しつこい勧誘は一切ありません。</small>
+    </div>
+    <div class="front-cta-right">
+      <strong>03-6770-6936</strong>
+      LINE・Webフォームでも<br>furuki-juku.com
+    </div>
+  </div>
+
+  <div class="front-footer">
+    <span>Furuki塾 江東住吉教室 ／ 東京都江東区千田11-13 丸万マンダリンハイム1F</span>
+    <span>月〜金 15:00〜21:30</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     裏面
+============================================================ -->
+<div class="page back">
+
+  <div class="back-header">
+    <div class="back-header-title">Furuki塾 ／ サポート内容・よくある質問</div>
+    <div class="back-header-sub">江東区千田 ／ 個別指導塾</div>
+  </div>
+
+  <!-- 対応内容 -->
+  <div class="back-section">
+    <div class="back-section-title">こんなお子さんをサポートしています</div>
+    <div class="trait-grid">
+      <div class="trait-card">
+        <div class="trait-head">🏠 不登校・行き渋りのお子さん</div>
+        <div class="trait-body">
+          <ul>
+            <li>学校への足が遠のいている時期でも通塾できます</li>
+            <li>勉強の遅れを取り戻すペース配分を一緒に考えます</li>
+            <li>「体験だけ来てみる」から始められます</li>
+            <li>静かで人数が少ないので、集団が苦手でも安心です</li>
+          </ul>
+        </div>
+      </div>
+      <div class="trait-card">
+        <div class="trait-head">🧩 発達の特性があるお子さん</div>
+        <div class="trait-body">
+          <ul>
+            <li>診断あり・グレーゾーン（診断なし）、どちらも対応します</li>
+            <li>特性に合わせた指導ペース・方法を個別に調整します</li>
+            <li>認定心理士の塾長が特性を把握して関わります</li>
+            <li>「集団塾では続かなかった」方にも実績があります</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 通塾の流れ -->
+  <div class="back-section">
+    <div class="back-section-title">相談から通塾までの流れ</div>
+    <div class="flow-row">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-label">お問い合わせ<br>（電話・LINE・Web）</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-label">塾長と<br>ご面談・相談</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-label">無料体験授業<br>（最大4回）</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-label">ご入塾<br>（ご検討のみもOK）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="back-section">
+    <div class="back-section-title">よくある質問</div>
+    <div class="faq-list">
+      <div class="faq-row">
+        <div class="faq-q-badge">Q</div>
+        <div class="faq-text">特性のことを詳しく説明できるか不安です。</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-a-badge">A</div>
+        <div class="faq-text ans">うまく説明できなくて大丈夫です。「なんとなく困っている」でもお話しいただければ、塾長が一緒に整理します。</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q-badge">Q</div>
+        <div class="faq-text">診断書や資料は必要ですか？</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-a-badge">A</div>
+        <div class="faq-text ans">不要です。診断の有無にかかわらず、お子さんの様子をお話しいただければ対応します。</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q-badge">Q</div>
+        <div class="faq-text">周りにバレたくない。個人情報は守られますか？</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-a-badge">A</div>
+        <div class="faq-text ans">もちろんです。ご相談内容・個人情報は厳重に管理し、外部に漏れることは一切ありません。</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-q-badge">Q</div>
+        <div class="faq-text">相談だけで入塾しなくても大丈夫ですか？</div>
+      </div>
+      <div class="faq-row">
+        <div class="faq-a-badge">A</div>
+        <div class="faq-text ans">はい。「まず話を聞いてほしいだけ」で構いません。しつこい勧誘は一切行いません。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- アクセス -->
+  <div class="back-section">
+    <div class="back-section-title">アクセス・お問い合わせ</div>
+    <div class="access-grid">
+      <div class="access-info">
+        <strong>Furuki塾 江東住吉教室</strong><br>
+        東京都江東区千田11-13<br>
+        丸万マンダリンハイム1F<br><br>
+        🚌 都営バス「千田」徒歩約2分<br>
+        🚇 東西線 東陽町駅<br>
+        🚇 半蔵門線・新宿線 住吉駅<br><br>
+        📞 03-6770-6936<br>
+        🕐 月〜金 15:00〜21:30
+      </div>
+      <div class="access-map-placeholder">
+        📍 furuki-juku.com<br>でマップを確認
+      </div>
+    </div>
+  </div>
+
+  <div class="back-cta">
+    <div class="back-cta-main">
+      まずご相談ください
+      <small>電話・LINE・Webフォーム、どこからでも。しつこい勧誘は一切ありません。</small>
+    </div>
+    <div class="back-cta-contacts">
+      <strong>03-6770-6936</strong>
+      LINE: @furukijuku<br>
+      Web: furuki-juku.com/contact/
+    </div>
+  </div>
+
+  <div class="back-footer">
+    <span>Furuki塾 江東住吉教室 ／ 東京都江東区千田11-13 丸万マンダリンハイム1F</span>
+    <span>© Furuki塾</span>
+  </div>
+</div>
+
+</body>
+</html>
