@@ -134,6 +134,45 @@ $active_announcements = array_slice(
     array_values($default_announcements)
   ), 0, 3
 );
+
+/* ============================================================
+   ★ お客様の声（Voice）データ
+   - category: 'junior-high-student'（中学生本人）
+               'junior-high-parent'（中学生保護者）
+               'elementary-parent'（小学生保護者）
+   - avatar:   絵文字
+   - name:     表示名（イニシャル可）
+   - grade:    学年
+   - title:    見出し（悩みやきっかけ）★ 短く
+   - body:     本文（具体的な変化・エピソード）
+   ★ 声が集まり次第、サンプルを実際の回答に差し替えてください
+============================================================ */
+$testimonials = [
+  [
+    'category' => 'junior-high-student',
+    'avatar'   => '🙋',
+    'name'     => 'A.K.くん',
+    'grade'    => '中学2年生（本人）',
+    'title'    => '塾に来ると自然と集中できる',
+    'body'     => '家だとスマホを見てしまうけど、塾に来ると周りが集中しているので自分も手が動きます。わからないところをすぐ聞けるので、苦手だった数学の点数が上がってきました。',
+  ],
+  [
+    'category' => 'junior-high-parent',
+    'avatar'   => '👩',
+    'name'     => 'M.T.様',
+    'grade'    => '中学3年生・保護者',
+    'title'    => '部活と両立できて助かっています',
+    'body'     => 'スケジュールが自由なので、部活の予定に合わせて通えるのが本当にありがたいです。テスト前に集中して通えるのも、子どもにとって無理のないペースで続けられる理由だと思います。',
+  ],
+  [
+    'category' => 'elementary-parent',
+    'avatar'   => '👨',
+    'name'     => 'Y.S.様',
+    'grade'    => '小学5年生・保護者',
+    'title'    => '「わからない」と言えるようになった',
+    'body'     => '集団塾では手が挙げられなかった子が、自分から質問するようになりました。先生が責めずに一緒に考えてくれるので、間違いを恐れなくなったようです。',
+  ],
+];
 ?><!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -841,21 +880,99 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 /* ==============================
    8. TESTIMONIALS
 ============================== */
+/* ==============================
+   Voice（お客様の声）
+============================== */
 .testimonials-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
   margin-top: 40px;
 }
-.t-card                { background: var(--card-bg); border-radius: var(--radius); border: 1.5px solid var(--border); padding: 22px; }
-.t-quote               { font-size: 40px; color: var(--orange-light); line-height: 1; margin-bottom: 10px; }
-.t-text                { font-size: 14px; color: var(--text); line-height: 1.85; margin-bottom: 16px; }
-.t-author              { display: flex; align-items: center; gap: 10px; }
-.t-avatar              { width: 38px; height: 38px; border-radius: 50%; background: var(--orange-light); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-.t-name                { font-size: 13px; font-weight: 700; }
-.t-meta                { font-size: 12px; color: var(--text-light); }
-.t-note                { margin-top: 28px; padding: 18px 24px; background: var(--section-bg); border-radius: var(--radius); text-align: center; font-size: 14px; color: var(--text-muted); line-height: 1.75; }
-.t-note strong         { color: var(--orange-dark); }
+@media(max-width: 860px) { .testimonials-grid { grid-template-columns: 1fr; } }
+@media(min-width: 540px) and (max-width: 860px) { .testimonials-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* カテゴリバッジ */
+.t-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-bottom: 14px;
+}
+.t-badge.cat-junior-high-student { background: #dbeafe; color: #1d4ed8; }
+.t-badge.cat-junior-high-parent  { background: #fce7f3; color: #9d174d; }
+.t-badge.cat-elementary-parent   { background: #d1fae5; color: #065f46; }
+
+/* カード本体 */
+.t-card {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--border);
+  padding: 26px 24px 22px;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow .2s, transform .2s;
+}
+.t-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+
+/* SVG引用符（背景装飾） */
+.t-quote-svg {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 40px;
+  height: 40px;
+  opacity: .08;
+  pointer-events: none;
+}
+
+/* 見出し */
+.t-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+/* 本文 */
+.t-text {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.85;
+  flex: 1;
+  margin-bottom: 18px;
+}
+
+/* 著者情報 */
+.t-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.t-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--orange-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.t-name { font-size: 13px; font-weight: 700; }
+.t-meta { font-size: 12px; color: var(--text-light); }
+
+/* 下部ノート */
+.t-note { margin-top: 28px; padding: 18px 24px; background: var(--section-bg); border-radius: var(--radius); text-align: center; font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+.t-note strong { color: var(--orange-dark); }
 
 /* ==============================
    9. PRICING
@@ -1745,54 +1862,34 @@ $vacancy = [
       <h2 class="section-title">通ってよかった、<br><em>という声をいただいています</em></h2>
     </div>
     <div class="testimonials-grid">
-      <!--
-        TODO: 声が集まり次第、以下のカードを実際のものに差し替えてください。
-        1枚のカード構成:
-        <div class="t-card">
-          <div class="t-quote">"</div>
-          <p class="t-text">（具体的なエピソード）</p>
-          <div class="t-author">
-            <div class="t-avatar">👩</div>
-            <div>
-              <div class="t-name">保護者のお名前（イニシャル可）</div>
-              <div class="t-meta">中2 / 5教科学習コース など</div>
-            </div>
-          </div>
-        </div>
-      -->
+      <?php
+      /* カテゴリ表示名マップ */
+      $cat_labels = [
+        'junior-high-student' => '中学生（本人）',
+        'junior-high-parent'  => '中学生の保護者',
+        'elementary-parent'   => '小学生の保護者',
+      ];
+      foreach ($testimonials as $t) :
+        $cat   = esc_attr($t['category']);
+        $label = esc_html($cat_labels[$t['category']] ?? '');
+      ?>
       <div class="t-card">
-        <div class="t-quote">"</div>
-        <p class="t-text">個別指導なので、子どもが「わからない」と言いやすい雰囲気が良かったです。集団塾では手が挙げられなかった子が、自分から質問するようになりました。</p>
+        <!-- 引用符SVG（背景装飾） -->
+        <svg class="t-quote-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 28C6 22.477 10.477 18 16 18V14C8.268 14 2 20.268 2 28V38H12V28H6ZM24 28C24 22.477 28.477 18 34 18V14C26.268 14 20 20.268 20 28V38H30V28H24Z" fill="#F97316"/>
+        </svg>
+        <span class="t-badge cat-<?php echo $cat; ?>"><?php echo $label; ?></span>
+        <p class="t-title"><?php echo esc_html($t['title']); ?></p>
+        <p class="t-text"><?php echo esc_html($t['body']); ?></p>
         <div class="t-author">
-          <div class="t-avatar">👩</div>
+          <div class="t-avatar"><?php echo $t['avatar']; ?></div>
           <div>
-            <div class="t-name">保護者の方（小5・お子さん）</div>
-            <div class="t-meta">5教科学習コース受講</div>
+            <div class="t-name"><?php echo esc_html($t['name']); ?></div>
+            <div class="t-meta"><?php echo esc_html($t['grade']); ?></div>
           </div>
         </div>
       </div>
-      <div class="t-card">
-        <div class="t-quote">"</div>
-        <p class="t-text">スケジュールが自由なので、部活と無理なく両立できています。テスト前には集中して通えるのが本当に助かります。</p>
-        <div class="t-author">
-          <div class="t-avatar">🙋</div>
-          <div>
-            <div class="t-name">中学2年生（生徒）</div>
-            <div class="t-meta">5教科学習コース受講</div>
-          </div>
-        </div>
-      </div>
-      <div class="t-card">
-        <div class="t-quote">"</div>
-        <p class="t-text">（体験談募集中）より多くの声を集めています。ご協力いただける方はLINEよりご連絡ください。</p>
-        <div class="t-author">
-          <div class="t-avatar">👤</div>
-          <div>
-            <div class="t-name">近日公開予定</div>
-            <div class="t-meta">保護者・生徒の方</div>
-          </div>
-        </div>
-      </div>
+      <?php endforeach; ?>
     </div>
     <div class="t-note">
       現在、より多くの声を募集しています。<br>
