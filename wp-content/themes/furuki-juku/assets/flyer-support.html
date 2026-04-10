@@ -34,13 +34,17 @@ body {
 .front-header {
   background: #1C4B6B;
   color: #fff;
-  padding: 5mm 10mm;
+  padding: 4mm 8mm;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 4mm;
 }
-.front-header-logo { font-size: 16pt; font-weight: 900; }
-.front-header-logo span { color: #F97316; }
+.front-header-logo { display: flex; align-items: center; gap: 3mm; }
+.front-header-logo img { height: 11mm; width: auto; display: block; }
+.front-header-logo-text { font-size: 15pt; font-weight: 900; letter-spacing: .03em; line-height: 1.2; }
+.front-header-logo-text span { color: #F97316; }
+.front-header-logo-sub { font-size: 7pt; opacity: .8; margin-top: 1px; }
 .front-header-sub { font-size: 7.5pt; opacity: .85; text-align: right; line-height: 1.6; }
 
 /* キャッチエリア */
@@ -199,11 +203,14 @@ body {
 .back-header {
   background: #1C4B6B;
   color: #fff;
-  padding: 5mm 10mm;
+  padding: 4mm 8mm;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 4mm;
 }
+.back-header-logo { display: flex; align-items: center; gap: 3mm; }
+.back-header-logo img { height: 9mm; width: auto; }
 .back-header-title { font-size: 12pt; font-weight: 900; }
 .back-header-sub { font-size: 7.5pt; opacity: .85; }
 
@@ -312,37 +319,37 @@ body {
 }
 .access-info { flex: 1; font-size: 8pt; line-height: 1.85; color: #4B5563; }
 .access-info strong { color: #1C1917; }
-.access-map-placeholder {
-  flex: 1;
-  background: #EFF6FF;
+.access-map {
+  flex: 1.2;
   border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 7.5pt;
-  color: #1C4B6B;
-  font-weight: 700;
-  min-height: 26mm;
-  border: 1px solid #BFDBFE;
-  text-align: center;
-  line-height: 1.8;
+  overflow: hidden;
+  border: 1px solid #E7E5E4;
+  min-height: 28mm;
 }
+.access-map img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* CTA */
 .back-cta {
   background: linear-gradient(135deg, #1C4B6B, #2d7da8);
   color: #fff;
   border-radius: 8px;
-  padding: 5mm 8mm;
+  padding: 4mm 6mm;
   margin: 0 8mm;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 5mm;
 }
-.back-cta-main { font-size: 11pt; font-weight: 900; line-height: 1.5; }
-.back-cta-main small { font-size: 8pt; font-weight: 400; opacity: .9; display: block; }
-.back-cta-contacts { text-align: right; font-size: 7.5pt; line-height: 2.1; }
-.back-cta-contacts strong { font-size: 11pt; display: block; }
+.back-cta-main { flex: 1; }
+.back-cta-title { font-size: 12pt; font-weight: 900; line-height: 1.4; margin-bottom: 1.5mm; }
+.back-cta-sub { font-size: 7.5pt; opacity: .9; line-height: 1.7; }
+.back-cta-tel { font-size: 13pt; font-weight: 900; margin-top: 2mm; letter-spacing: .02em; }
+.back-cta-qrs { display: flex; gap: 3mm; flex-shrink: 0; }
+.back-cta-qr { text-align: center; }
+.back-cta-qr img {
+  width: 22mm; height: 22mm; display: block;
+  border: 2.5px solid #fff; border-radius: 4px; background: #fff;
+}
+.back-cta-qr-label { font-size: 6.5pt; margin-top: 1.5mm; opacity: .92; font-weight: 700; }
 
 .back-footer {
   position: absolute;
@@ -366,8 +373,14 @@ body {
 <div class="page front">
 
   <div class="front-header">
-    <div class="front-header-logo">Furuki<span>塾</span> 江東住吉教室</div>
-    <div class="front-header-sub">個別指導 ／ 小1〜中3対応<br>東京都江東区千田11-13</div>
+    <div class="front-header-logo">
+      <img src="images/furuki-logo-capsule.png" alt="Furuki塾ロゴ">
+      <div>
+        <div class="front-header-logo-text">Furuki<span>塾</span> 江東住吉教室</div>
+        <div class="front-header-logo-sub">個別指導学習塾 ／ 小1〜中3対応</div>
+      </div>
+    </div>
+    <div class="front-header-sub">東京都江東区千田11-13<br>📞 03-6770-6936　月〜金 15:00〜21:30</div>
   </div>
 
   <div class="front-catch">
@@ -463,7 +476,10 @@ body {
 <div class="page back">
 
   <div class="back-header">
-    <div class="back-header-title">Furuki塾 ／ サポート内容・よくある質問</div>
+    <div class="back-header-logo">
+      <img src="images/furuki-logo-capsule.png" alt="Furuki塾ロゴ">
+      <div class="back-header-title">Furuki塾 ／ サポート内容・よくある質問</div>
+    </div>
     <div class="back-header-sub">江東区千田 ／ 個別指導塾</div>
   </div>
 
@@ -575,21 +591,34 @@ body {
         📞 03-6770-6936<br>
         🕐 月〜金 15:00〜21:30
       </div>
-      <div class="access-map-placeholder">
-        📍 furuki-juku.com<br>でマップを確認
+      <div class="access-map">
+        <img src="images/map_furuki-juku.png" alt="Furuki塾 地図">
       </div>
     </div>
   </div>
 
   <div class="back-cta">
     <div class="back-cta-main">
-      まずご相談ください
-      <small>電話・LINE・Webフォーム、どこからでも。しつこい勧誘は一切ありません。</small>
+      <div class="back-cta-title">まずご相談ください</div>
+      <div class="back-cta-sub">
+        電話・LINE・Webフォーム、どこからでも。<br>
+        入塾を決めていなくても大丈夫。しつこい勧誘は一切ありません。
+      </div>
+      <div class="back-cta-tel">📞 03-6770-6936</div>
     </div>
-    <div class="back-cta-contacts">
-      <strong>03-6770-6936</strong>
-      LINE: @furukijuku<br>
-      Web: furuki-juku.com/contact/
+    <div class="back-cta-qrs">
+      <div class="back-cta-qr">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://lin.ee/7Bv3xca" alt="LINE QR">
+        <div class="back-cta-qr-label">LINE<br>友達追加</div>
+      </div>
+      <div class="back-cta-qr">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://furuki-juku.com/contact/" alt="申込QR">
+        <div class="back-cta-qr-label">Web<br>相談フォーム</div>
+      </div>
+      <div class="back-cta-qr">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://furuki-juku.com/" alt="HP QR">
+        <div class="back-cta-qr-label">公式HP<br>詳細情報</div>
+      </div>
     </div>
   </div>
 
