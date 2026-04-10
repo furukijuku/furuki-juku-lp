@@ -64,16 +64,16 @@ body {
   margin-bottom: 4mm;
 }
 .front-catch-title {
-  font-size: 20pt;
+  font-size: 26pt;
   font-weight: 900;
-  line-height: 1.4;
+  line-height: 1.3;
   margin-bottom: 3mm;
 }
 .front-catch-title em { color: #F97316; font-style: normal; }
 .front-catch-sub {
-  font-size: 9pt;
-  opacity: .88;
-  line-height: 1.75;
+  font-size: 8pt;
+  opacity: .85;
+  line-height: 1.7;
   max-width: 140mm;
 }
 
@@ -184,16 +184,7 @@ body {
 .front-cta-right { text-align: right; font-size: 7.5pt; line-height: 2.0; }
 .front-cta-right strong { font-size: 12pt; display: block; }
 
-.front-footer {
-  position: absolute;
-  bottom: 4mm;
-  left: 8mm;
-  right: 8mm;
-  display: flex;
-  justify-content: space-between;
-  font-size: 6.5pt;
-  color: #9CA3AF;
-}
+.front-footer { display: none; }
 
 /* ============================================================
    裏面 — 具体的な内容・FAQ・アクセス
@@ -351,16 +342,7 @@ body {
 }
 .back-cta-qr-label { font-size: 6.5pt; margin-top: 1.5mm; opacity: .92; font-weight: 700; }
 
-.back-footer {
-  position: absolute;
-  bottom: 4mm;
-  left: 8mm;
-  right: 8mm;
-  display: flex;
-  justify-content: space-between;
-  font-size: 6.5pt;
-  color: #9CA3AF;
-}
+.back-footer { display: none; }
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
 </style>
@@ -610,10 +592,6 @@ body {
       <div class="back-cta-qr">
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://lin.ee/7Bv3xca" alt="LINE QR">
         <div class="back-cta-qr-label">LINE<br>友達追加</div>
-      </div>
-      <div class="back-cta-qr">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://furuki-juku.com/contact/" alt="申込QR">
-        <div class="back-cta-qr-label">Web<br>相談フォーム</div>
       </div>
       <div class="back-cta-qr">
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://furuki-juku.com/" alt="HP QR">

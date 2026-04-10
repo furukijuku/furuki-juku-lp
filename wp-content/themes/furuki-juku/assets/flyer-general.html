@@ -85,13 +85,13 @@ body {
   margin-bottom: 4mm;
 }
 .front-hero-title {
-  font-size: 21pt;
+  font-size: 26pt;
   font-weight: 900;
-  line-height: 1.35;
+  line-height: 1.3;
   margin-bottom: 3mm;
 }
 .front-hero-title em { color: #F97316; font-style: normal; }
-.front-hero-sub { font-size: 9pt; opacity: .9; line-height: 1.7; }
+.front-hero-sub { font-size: 8pt; opacity: .88; line-height: 1.65; }
 
 /* 特徴3点 */
 .front-features {
@@ -202,11 +202,7 @@ body {
 .front-cta-tel { text-align: right; font-size: 7.5pt; line-height: 1.9; }
 .front-cta-tel strong { font-size: 13pt; display: block; letter-spacing: .02em; }
 
-.front-footer {
-  position: absolute; bottom: 3mm; left: 8mm; right: 8mm;
-  display: flex; justify-content: space-between;
-  font-size: 6pt; color: #A8A29E;
-}
+.front-footer { display: none; }
 
 /* ============================================================
    裏面
@@ -283,11 +279,7 @@ body {
 }
 .back-cta-qr-label { font-size: 6.5pt; margin-top: 1.5mm; opacity: .92; font-weight: 700; }
 
-.back-footer {
-  position: absolute; bottom: 3mm; left: 8mm; right: 8mm;
-  display: flex; justify-content: space-between;
-  font-size: 6pt; color: #A8A29E;
-}
+.back-footer { display: none; }
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
 </style>
@@ -411,8 +403,8 @@ body {
         <div class="front-cta-qr-label">LINE友達追加</div>
       </div>
       <div class="front-cta-qr">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://furuki-juku.com/contact/" alt="申込QR">
-        <div class="front-cta-qr-label">Webから申込</div>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://furuki-juku.com/" alt="HP QR">
+        <div class="front-cta-qr-label">公式HP</div>
       </div>
       <div class="front-cta-tel">
         <strong>03-6770-6936</strong>
@@ -535,10 +527,6 @@ body {
       <div class="back-cta-qr">
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://lin.ee/7Bv3xca" alt="LINE QR">
         <div class="back-cta-qr-label">LINE<br>友達追加</div>
-      </div>
-      <div class="back-cta-qr">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://furuki-juku.com/contact/" alt="申込QR">
-        <div class="back-cta-qr-label">Web<br>申込フォーム</div>
       </div>
       <div class="back-cta-qr">
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://furuki-juku.com/" alt="HP QR">
