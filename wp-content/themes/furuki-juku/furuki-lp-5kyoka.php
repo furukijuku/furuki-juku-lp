@@ -1200,19 +1200,47 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 .cta-tel a             { color: var(--orange-dark); font-weight: 700; font-size: 18px; }
 .cta-meta              { font-size: 12px; color: var(--text-light); margin-top: 16px; line-height: 1.85; }
 .cta-unschool {
-  display: inline-block;
-  margin-top: 32px;
-  padding: 16px 28px;
-  background: rgba(255,255,255,.7);
+  display: block;
+  margin-top: 40px;
+  padding: 28px 32px;
+  background: rgba(255,255,255,.85);
   border-radius: var(--radius);
-  border: 1.5px dashed var(--amber);
-  max-width: 480px;
+  border: 1.5px solid var(--amber);
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
   text-align: left;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-muted);
-  line-height: 1.75;
+  line-height: 1.85;
+  box-shadow: 0 2px 16px rgba(245,166,35,.12);
 }
-.cta-unschool strong   { color: var(--text); display: block; margin-bottom: 4px; }
+.cta-unschool-heading {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cta-unschool-heading::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background: var(--amber);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.cta-unschool-note {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.cta-unschool strong { color: var(--orange-dark); }
 
 @media(max-width: 640px) {
   .cta-line-btn         { width: 100%; justify-content: center; max-width: 360px; }
@@ -1476,6 +1504,14 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
       <div class="pain-card">
         <div class="pain-icon">🤔</div>
         <p class="pain-text">AIが普及する将来、子どもに本当に必要な力って何だろう…</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">💭</div>
+        <p class="pain-text">学校に行けない・行きにくい時期が続いていて、勉強の遅れが心配…どこに相談すればいいかわからない</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🫂</div>
+        <p class="pain-text">発達の特性があって、集団の授業についていくのが難しい。でも誰かに相談するのは勇気がいる…</p>
       </div>
     </div>
     <div class="pain-resolve">
@@ -2245,10 +2281,18 @@ $vacancy = [
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
           <div class="faq-q-badge">Q</div>
-          <div class="faq-q-text">学校になかなか行けない時期でも通えますか？</div>
+          <div class="faq-q-text">学校に行けない・行きにくい時期でも通えますか？</div>
           <span class="faq-chevron">▼</span>
         </div>
-        <div class="faq-a"><span class="hl">はい、ぜひご相談ください。</span>お子さんの状況を丁寧に伺った上で、無理のない通い方を一緒に考えます。まずはLINEまたはフォームからお気軽にご連絡ください。</div>
+        <div class="faq-a"><span class="hl">はい、ぜひご相談ください。</span>実際に、学校への足が遠のいている時期に通塾を始めたお子さんもいます。人数が少なく、静かで落ち着いた環境なので、集団が苦手なお子さんにも通いやすい塾です。「体験だけ来てみる」から始めて大丈夫です。まずはLINEからお気軽にご連絡ください。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-badge">Q</div>
+          <div class="faq-q-text">発達の特性があるお子さんでも通えますか？</div>
+          <span class="faq-chevron">▼</span>
+        </div>
+        <div class="faq-a"><span class="hl">はい、対応しています。</span>現在も、発達の特性があるお子さんが通塾されています。診断のある方も、「グレーゾーン」と感じている方も、どちらもご相談ください。<br><br>塾長は<span class="hl">認定心理士</span>でもあり、お子さんの特性や学習スタイルを丁寧に把握しながら指導します。「うちの子は特性があって…」と話すことに勇気がいるかもしれませんが、責めることも否定することも一切ありません。まずはご状況をそのままお話しください。</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
@@ -2291,12 +2335,14 @@ $vacancy = [
         ※ 無理な勧誘は一切ありません
       </p>
     </div>
-    <!-- 不登校・通いにくい方への配慮ライン -->
-    <div style="text-align:center;margin-top:36px;">
+    <!-- 不登校・発達特性のある方への配慮ライン -->
+    <div style="text-align:center;margin-top:40px;">
       <div class="cta-unschool">
-        <strong>通い方に不安がある方も、まずはご相談ください。</strong>
-        学校の状況や生活リズムに合わせて、一緒に無理のない学習プランを考えます。
-        お気軽にLINEまたはフォームからお声がけください。
+        <div class="cta-unschool-heading">こんなお悩み、一人で抱えていませんか</div>
+        <p>「学校に行けない時期が続いている」「発達の特性があって、集団の塾はうまくいかなかった」——そんなご家庭からのご相談も、Furuki塾では丁寧にお受けしています。</p>
+        <p style="margin-top:8px;">人数が少なく静かな環境、お子さんのペースに合わせた個別指導、そして<strong>認定心理士でもある塾長</strong>が、特性や状況を踏まえて一緒に考えます。</p>
+        <p style="margin-top:8px;">「まだ入塾を決めていない」「相談だけしたい」——それで十分です。勇気を出して連絡していただければ、あとは塾長が一緒に考えます。</p>
+        <div class="cta-unschool-note">✓ 診断あり・診断なし（グレーゾーン）どちらもご相談いただけます　✓ しつこい勧誘は一切ありません</div>
       </div>
     </div>
   </div>
