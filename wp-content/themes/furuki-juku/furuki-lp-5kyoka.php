@@ -792,6 +792,134 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 @media(max-width: 768px) { .usage-grid { grid-template-columns: repeat(2, 1fr); } }
 @media(max-width: 480px) { .usage-grid { grid-template-columns: 1fr; } }
 
+/* 通塾の流れ（3ステップ） */
+.usage-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 40px;
+  margin-bottom: 36px;
+  position: relative;
+}
+/* ステップ間の矢印 */
+.usage-steps::before,
+.usage-steps::after {
+  display: none; /* グリッド化したのでライン不要 */
+}
+.usage-step {
+  background: rgba(255,255,255,.75);
+  border-radius: var(--radius);
+  border: 1.5px solid rgba(249,115,22,.18);
+  padding: 24px 20px 20px;
+  text-align: center;
+  position: relative;
+}
+/* カード間の矢印（PC: 疑似要素で右端に → ） */
+.usage-step:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: var(--orange-light);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ステップ番号バッジ */
+.usage-step-num {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 4px 14px rgba(249,115,22,.30);
+  line-height: 1;
+  gap: 1px;
+}
+/* "STEP" ラベル（小さく） */
+.usage-step-num {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  opacity: 1;
+}
+/* 数字（大きく） */
+.usage-step-num span {
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+
+.usage-step-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+.usage-step-body {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  text-align: left;
+}
+.usage-step-note {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--orange-dark);
+  background: var(--orange-light);
+  padding: 2px 10px;
+  border-radius: 100px;
+}
+.usage-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0 28px;
+  gap: 12px;
+  color: var(--text-light);
+  font-size: 13px;
+}
+.usage-divider::before,
+.usage-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+@media(max-width: 640px) {
+  .usage-steps {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .usage-step {
+    display: flex;
+    align-items: flex-start;
+    text-align: left;
+    gap: 16px;
+    padding: 16px;
+  }
+  .usage-step::after { display: none; }
+  .usage-step-num {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    margin: 0;
+  }
+  .usage-step-num span { font-size: 18px; }
+  .usage-step-title { text-align: left; }
+  .usage-step-body  { text-align: left; }
+}
+
 /* ==============================
    6. COURSES
 ============================== */
@@ -1617,10 +1745,32 @@ $vacancy = [
 <section class="section usage-section" id="usage">
   <div class="container">
     <div class="text-center">
-      <span class="section-label">自由な学び方</span>
-      <h2 class="section-title">1回の通塾で、<br><em>何でもできます</em></h2>
-      <p class="section-subtitle">「今日は何をするか」をお子さん自身が決められる。それがFuruki塾のスタイルです。</p>
+      <span class="section-label">毎回の通塾の流れ</span>
+      <h2 class="section-title">その日の目的を決めて、<br><em>集中して帰る</em></h2>
+      <p class="section-subtitle">「今日は何をするか」を塾長と確認してから始める。<br>目標に向かって、自分のペースで着実に進めます。</p>
     </div>
+    <!-- 毎回の流れ 3ステップ -->
+    <div class="usage-steps">
+      <div class="usage-step">
+        <div class="usage-step-num">STEP<span>1</span></div>
+        <div class="usage-step-title">今日やることを<br>塾長と確認する</div>
+        <div class="usage-step-body">テスト対策？苦手単元の克服？宿題？目標から逆算して、その日のゴールを一緒に決めます。</div>
+        <span class="usage-step-note">慣れたら自分でも決められる</span>
+      </div>
+      <div class="usage-step">
+        <div class="usage-step-num">STEP<span>2</span></div>
+        <div class="usage-step-title">集中して<br>取り組む</div>
+        <div class="usage-step-body">決めたことをその日のうちにやり切る。わからなければすぐ質問できる環境があります。</div>
+      </div>
+      <div class="usage-step">
+        <div class="usage-step-num">STEP<span>3</span></div>
+        <div class="usage-step-title">次回に向けて<br>整理して帰る</div>
+        <div class="usage-step-body">「今日できたこと」「次にやること」を確認して終了。毎回の積み重ねが目標へつながります。</div>
+      </div>
+    </div>
+
+    <div class="usage-divider">たとえばこんな使い方ができます</div>
+
     <div class="usage-grid">
       <div class="usage-card">
         <div class="usage-icon">📚</div>
@@ -1665,7 +1815,7 @@ $vacancy = [
         </div>
       </div>
     </div>
-    <p class="usage-note">「何をするか」はその日の状況に合わせてOK。<strong>決まったカリキュラムに縛られない</strong>のがFuruki塾の強みです。</p>
+    <p class="usage-note">たとえばこんな使い方ができます。目的に合わせて、<strong>その日やることを柔軟に選べます</strong>。</p>
   </div>
 </section>
 
