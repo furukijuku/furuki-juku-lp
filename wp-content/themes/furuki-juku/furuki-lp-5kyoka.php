@@ -1536,7 +1536,7 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
             <div class="hero-stat-label">読解・プログラミング含む</div>
           </div>
           <div>
-            <div class="hero-stat-num">最大4回</div>
+            <div class="hero-stat-num">最大3回</div>
             <div class="hero-stat-label">無料で体験できます</div>
           </div>
         </div>
@@ -2345,7 +2345,11 @@ $vacancy = [
           <div class="faq-q-text">無料体験はいつでも受けられますか？</div>
           <span class="faq-chevron">▼</span>
         </div>
-        <div class="faq-a">はい、随時受け付けています。まずはLINEまたはフォームからご連絡ください。日程はお子さんのご都合に合わせて調整します。</div>
+        <div class="faq-a">はい、随時受け付けています。体験は<span class="hl">初回から2週間以内に最大3回まで</span>お試しいただけます。<br><br>
+          <strong>【体験の流れ】</strong><br>
+          <strong>1回目（約30分）</strong>：まずは塾の雰囲気と学習スタイルを軽く体験。お子さんと塾長が実際に話し、合うかどうかをご確認いただけます。<br>
+          <strong>2・3回目（通常授業と同じ時間）</strong>：本番と同じ環境で学習し、続けられるかどうかを確認したり、別の教科を試したりすることができます。<br><br>
+          まずはLINEまたはフォームからお気軽にご連絡ください。日程はお子さんのご都合に合わせて調整します。</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
@@ -2393,7 +2397,7 @@ $vacancy = [
           <div class="faq-q-text">入塾前に後悔しないか不安です</div>
           <span class="faq-chevron">▼</span>
         </div>
-        <div class="faq-a">まずは無料体験で、授業の雰囲気・塾長の教え方を実際に体験してからご判断ください。無理な勧誘は一切行っておりません。「相談だけ」でも大歓迎です。</div>
+        <div class="faq-a">まずは無料体験で、授業の雰囲気・塾長の教え方を実際に体験してからご判断ください。体験は2週間以内に最大3回まで無料でお試しいただけるので、1回でピンとこなくてもじっくり確認できます。無理な勧誘は一切行っておりません。「相談だけ」でも大歓迎です。</div>
       </div>
     </div>
   </div>
