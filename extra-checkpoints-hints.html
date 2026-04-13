@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ゲームビルダーガレージ エクストラチェックポイント ヒント集</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+      font-size: 11pt;
+      color: #222;
+      background: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 16pt;
+      margin-bottom: 6px;
+      color: #1a1a2e;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 9pt;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .card {
+      border: 2px solid #c8d8e8;
+      border-radius: 8px;
+      overflow: hidden;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .card-header {
+      background: #1a3a5c;
+      color: #fff;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-header .num {
+      background: #f5a623;
+      color: #fff;
+      font-weight: bold;
+      font-size: 10pt;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .card-header .title {
+      font-size: 11pt;
+      font-weight: bold;
+    }
+
+    .card-body {
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hint-block {
+      border-radius: 5px;
+      padding: 5px 9px;
+    }
+
+    .hint-block .label {
+      font-size: 8.5pt;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+
+    .hint-block .text {
+      font-size: 9.5pt;
+      line-height: 1.5;
+    }
+
+    .hint-mondai {
+      background: #eef4fb;
+      border-left: 3px solid #4a90d9;
+    }
+    .hint-mondai .label { color: #2c6fad; }
+
+    .hint-ippo {
+      background: #fffbea;
+      border-left: 3px solid #f5a623;
+    }
+    .hint-ippo .label { color: #c47d00; }
+
+    .hint-kangae {
+      background: #f0faf3;
+      border-left: 3px solid #3cb371;
+    }
+    .hint-kangae .label { color: #2a7a50; }
+
+    @media print {
+      body { padding: 10mm; font-size: 10pt; }
+      h1 { font-size: 14pt; }
+      .grid { gap: 10px; }
+      .card { border-width: 1.5px; }
+      .hint-block { padding: 4px 8px; }
+      .hint-block .text { font-size: 9pt; }
+    }
+
+    @page {
+      size: A4;
+      margin: 15mm 12mm;
+    }
+  </style>
+</head>
+<body>
+
+<h1>ゲームビルダーガレージ エクストラチェックポイント ヒント集</h1>
+<p class="subtitle">※ ヒントを見る前に、まず自分で考えてみよう！</p>
+
+<div class="grid">
+
+  <!-- No.1 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.1</span>
+      <span class="title">綱渡り</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">ヒモを使って綱渡りをし、リンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">「モノ」と「ヒモれんけつ」ノードンを確認しよう。どこに繋ぐ？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">モノとヒモれんけつを連結させてから、モノノードンの「連結面」を変更してみよう。どの面を変えると綱渡りできる向きになる？</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.2 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.2</span>
+      <span class="title">宙づりのリンゴ</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">宙に浮いたリンゴをヒモで引き寄せて取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">ヒモノードンの設定画面を開いてみよう。変えられるパラメーターは何がある？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">ヒモの「長さ」を設定画面で伸ばすと届く範囲が変わるよ。リンゴの位置まで届く長さに調整してみよう。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.3 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.3</span>
+      <span class="title">くらやみに光を</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">暗い画面の中からリンゴを見つけて取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">エフェクト「ライト」がある。このライトの設定で変えられるものは何？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">ライトの「サイズ」を大きくすると照らせる範囲が広がるよ。リンゴのある場所まで光が届くくらい拡大してから、ジャンプして取りに行こう。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.4 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.4</span>
+      <span class="title">ヒミツのかくしコマンド</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">かくしコマンドを入力してリンゴを出現させよう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">コントローラーの「ZL」ボタンに注目。押しながら何かするのかな？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">ZLを押しっぱなしにしながら、A・A・B・Yの順番でボタンを入力してみよう。ゲーム画面でリンゴが現れるよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.5 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.5</span>
+      <span class="title">ピンボールをつくろう</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">フリッパーを動かしてボールを打ち、直方体を壊してリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">フリッパーに繋がっている定数ノードンを確認しよう。値を変えると何が変わる？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">定数の値を大きく（目安：約50）設定するとフリッパーが強く動く。ボールが直方体まで届いて壊せる強さに調整しよう。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.6 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.6</span>
+      <span class="title">どっちもよけて！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">2方向から来る障害物をよけながらリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">ワープ出口の接続先を確認しよう。ヒトノードンにはどんなポートがある？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">ワープ出口をヒトノードンの「ジャンプ」ポートに繋ぐと、ワープしたタイミングでヒトがジャンプする。障害物を越えるタイミングに合わせてみよう。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.7 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.7</span>
+      <span class="title">NOTの意味</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">NOTノードンの仕組みを使って、しかけを動かしリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">定数ノードンの値を確認しよう。NOTは入力が「0」のとき何を出力する？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">NOTは入力が0なら1を出力する。定数の値を「0」に設定してくらべるノードンに繋ぐと、NOTが反転して正しい信号が流れるよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.8 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.8</span>
+      <span class="title">ANDの意味</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">ANDノードンの仕組みを使って、しかけを動かしリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">くらべるノードンの入力ポートに繋がっている定数に注目しよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">ANDは2つの入力が両方1のときだけ1を出力する。くらべるノードン用の定数を「1」に設定すると条件が揃って先に進めるよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.9 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.9</span>
+      <span class="title">人気のポート</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">複数のポートを使いこなして、リンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">くらべるノードンに繋がっている定数の値を確認しよう。いくつに設定すると条件を満たす？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">定数の値を「6」に設定してみよう。入力される数と一致したときにだけ先に進める仕組みになっているよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.10 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.10</span>
+      <span class="title">＋か－か</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">プラスとマイナスの信号を使い分けて、モノを動かしリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">スティック入力のプラス方向・マイナス方向はそれぞれどのノードンに繋がっている？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">スティックの入力をノードンで処理してモノの移動方向を制御しよう。プラスとマイナスそれぞれの出力先が正しいモノのポートに繋がるよう確認して。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.11 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.11</span>
+      <span class="title">ひらけドア！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">ドアを開けてリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">「さわっているセンサー」がある。触れているとき・触れていないとき、それぞれドアはどうなってほしい？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">さわっているセンサーをNOTノードンに繋ごう。「触れていない」ときにドアが開く仕組みになるよ。設定値の調整も忘れずに。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.12 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.12</span>
+      <span class="title">そざいを決め手</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">モノの素材を変えて、うまく通り抜けてリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">モノノードンの「そざい」設定を開いてみよう。どんな素材が選べる？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">左のモノを「ふわふわ」、右のモノを「無重力」に設定してみよう。素材によって動きが変わるので、リンゴに届ける経路を考えて設定して。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.13 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.13</span>
+      <span class="title">つっついて！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">円柱を突いてリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">各円柱の「れんけつ面」設定を確認しよう。今の向きで突ける？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">それぞれの円柱のれんけつ面を指定の値に変更しよう。連結面を変えると突く方向が変わり、リンゴを弾き飛ばせるようになるよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.14 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.14</span>
+      <span class="title">右手はどっち？</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">モノを正しい順に連結してヒトに手足をつけよう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">円柱・球・直方体があるね。どれが腕でどれが足かな？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">円柱・球・直方体をヒトノードンへ連結させよう。「右手」という言葉から、ヒトノードンのどのポートに繋ぐべきか考えて。向きも意識してみて。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.15 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.15</span>
+      <span class="title">確率0.1％</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">0.1％の確率で宝箱を壊してリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">「確率」に関係するノードンを探そう。値を変えると確率が変わる？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">定数値を「1000」に設定してみよう。Yボタンを押すと宝箱が壊れる仕組みになるよ。何度か試してみて！</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.16 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.16</span>
+      <span class="title">リンゴを落とせ</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">引力を使ってリンゴを落とし、取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">引力ノードンの設定を開いてみよう。何に引力をかけるか設定できる？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">引力ノードンの対象設定で「リンゴ」をオンにしよう。リンゴにだけ引力がかかって落ちてくるよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.17 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.17</span>
+      <span class="title">斥力</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">斥力（遠ざける力）を使ってエイリアンを遠ざけ、リンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">引力と斥力はどう違う？定数の「符号（プラス・マイナス）」に注目しよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">定数値をマイナスに設定すると、引力が反転して斥力（押しのける力）になるよ。エイリアンを遠ざけるのに必要な値に調整しよう。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.18 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.18</span>
+      <span class="title">どう回す？</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">3つのヒンジをそれぞれ正しい軸で回してリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">各ヒンジの「回転基準」設定を確認しよう。X・Y・Zのどれを使う？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">3つのヒンジれんけつの回転基準をそれぞれ「Z」「X」「Y」に設定しよう。どれをどの軸にするか、実際に回してみて確認して。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.19 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.19</span>
+      <span class="title">チームキャメラ</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">カメラを使ってリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">カメラノードンに「連結」できる。何と連結するといい？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">カメラをリンゴに連結して、画角を約70に設定しよう。カメラがリンゴを追うことで取りやすくなるよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.20 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.20</span>
+      <span class="title">亜空間反転シールドを完成させよ！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">ワープを使って、エイリアンの弾を跳ね返す「シールド」を完成させよう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">モノワープの「入口」と「出口」をそれぞれ確認してみよう。出口にはどんな設定ができる？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">ワープを通ると向きを変えて出てくるよ。弾がエイリアンに向かって戻るには、出口での「回転」をどの角度にすればいい？</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.21 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.21</span>
+      <span class="title">タッチ位置へGO！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">タッチした位置にモノを動かしてリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">「タッチ位置ノードン」の出力先を確認しよう。どこに繋げばモノが動く？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">タッチ位置ノードンをマッピングノードンに接続しよう。タッチした座標をモノの移動先に変換できるよ。出力範囲の設定も確認して。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.22 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.22</span>
+      <span class="title">はめ込め！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">モノを溝にぴったりはめ込んで、リンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">モノの「回転」設定に注目しよう。形だけじゃなく、向きを変えることはできる？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">モノを回転させて溝の形に合わせるのがポイント。「自動連結」はすべての面ではなく、はめ込む面だけに設定しよう。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.23 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.23</span>
+      <span class="title">パスコードを解析せよ</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">パスコードを解析してロックを解除し、リンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">けいさんノードンの「増やすポート」に何を繋ぐといい？定数ノードンに注目しよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">定数ノードンをけいさんノードンの「増やすポート」に繋ごう。数を足し合わせていって、正しい合計値になったときにロックが解除される仕組みだよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.24 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.24</span>
+      <span class="title">大胆に、慎重に</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">走って壁を壊し、慎重に橋を渡ってリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">「速度センサー」がある。速く動いているときと、ゆっくり動いているとき、それぞれ何かが起こるはず。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">速度センサーを「絶対値ノードン」に繋いでみよう。速さに応じて2つの場所で別々の動きが起きるように接続先を工夫して。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.25 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.25</span>
+      <span class="title">？のブロック</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">？ブロックを叩いてリンゴを出そう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">ワープ出口の接続先を確認しよう。「ことばつきモノ」ノードンとはどう繋ぐ？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">ワープ出口をことばつきモノに連結して、設定を調整しよう。ブロックを叩いたタイミングでリンゴが出てくる仕組みを完成させて。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.26 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.26</span>
+      <span class="title">UFOさん！運んで！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">UFOをうまく動かして、リンゴをゴールまで運ぼう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">フラグノードンに「↑」と「←」がついている。このフラグはどこに繋ぐといい？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">UFOをワープで誘導する仕組みを作ろう。フラグノードンの出力をワープ入口Aに繋ぐだけで動くよ。接続先をよく確認して！</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.27 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.27</span>
+      <span class="title">タイミングをずらせ</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">足場が動くタイミングをずらして、うまく渡ってリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">定数ノードンの値を変えると、足場のどの動きが変わる？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">定数値を約500に設定して足場の進行タイミングを調整しよう。値を変えながら、足場がちょうどいいタイミングでずれるように試してみて。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.28 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.28</span>
+      <span class="title">右も左もクルクル</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">左のモノを回転させて、リンゴを転がそう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">左のモノに「角度センサー」を連結してみよう。センサーが取得した値を次にどこへ渡す？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">角度センサー → Y軸出力 → ヒンジ、という流れで繋ごう。回転軸の方向（どの軸？）に注意して接続すると、直方体がクルクル回るよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.29 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.29</span>
+      <span class="title">3時のおやつ</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">時計の針を「3時の位置」に動かして、リンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">ヒンジノードンの「回転軸」設定を確認しよう。時計の針が回るように見せるには、どの軸を使う？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">球・針・ヒンジを連結して、回転基準をZ軸に設定しよう。針がちょうど「3時」を指す角度になるように、連結の順番と向きを工夫して。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.30 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.30</span>
+      <span class="title">リンゴをお届け</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">矢印ボタンを操作して、リンゴをゴールまで届けよう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">マッピングノードンの「出力範囲」を確認しよう。今の設定で正しい動きになっている？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">3つのマッピングノードンそれぞれの出力範囲を「0～3」「0～7」「-3～0」に調整してみよう。それぞれがどの動きに対応しているか考えながら設定して。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.31 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.31</span>
+      <span class="title">高い壁の向こう</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">高い壁を越えて、リンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">発射ノードンの「オプション」設定を開いてみよう。発射したものの性質を変えられる項目はある？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">「動く」「壊れる」「壊す」をオフにすると、発射したものが空中で止まる足場になるよ。それを使ってどうやって壁の上に乗る？</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.32 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.32</span>
+      <span class="title">狙い撃て！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">的を狙って弾を当て、リンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">マッピングノードンの出力範囲を確認しよう。今の設定では弾がどこに飛ぶ？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">マッピングの出力範囲を「-0.3～0.3」付近に設定してみよう。弾の広がりが小さくなって的に当てやすくなるよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.33 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.33</span>
+      <span class="title">画面端の亜空間</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">画面の端にある不思議なしかけを使って、リンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">「位置センサー」でヒトの位置情報を取得できる。どの軸の値を使えばいい？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">ヒトと位置センサーを連結して、Y軸の出力をスライドに繋ごう。ワープ出口の配置場所と、複数のモノをどこに置くかがカギ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.34 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.34</span>
+      <span class="title">リンゴを発掘せよ</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">Yボタンでブロックを掘り、かくれたリンゴを見つけて取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">エフェクト「ライト」でどこを掘ればいいか確認しよう。さわっているセンサーは何の判定に使う？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">さわっているセンサーでリンゴの判定をしよう。ライトで照らされたマスをYボタンで掘ると、リンゴが出てくるよ。エフェクトとセンサーを上手く連携させて。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.35 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.35</span>
+      <span class="title">おいで！けだまる！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">けだまるを誘導してゴールまで連れて行こう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">自分の位置とけだまるの位置、それぞれを「位置センサー」で取得してみよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">2つの位置センサーの差を「けいさんノードン」で計算しよう。上下・左右を別々に処理して、けだまるが自分の方に向かうようにモノへ出力して。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.36 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.36</span>
+      <span class="title">シュートを決めろ！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">Yボタンでシュートしてゴールを決め、リンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">けいさんノードンからの出力をどこに繋ぐ？スライドれんけつとの接続に注目しよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">けいさんノードンからスライドれんけつに接続しよう。Yボタンを押したときにシュートが発動するように、信号の流れを整えて。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.37 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.37</span>
+      <span class="title">ボクが右ならキミは下</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">自分が右に動くともう1人は下に動く…操作の対応を完成させよう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">スティックの「左右」と「上下」が、別々のノードンから出ていることを確認しよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">右→下、左→上、上→左、下→右、という対応関係をよく整理して。どの方向をそのまま使い、どの方向を反転させてヒトの動きに繋ぐといい？</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.38 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.38</span>
+      <span class="title">小さく変身！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">Yボタンを押して小さくなり、せまい場所を通り抜けてリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">画面に2つのヒトノードンがある。大きいヒトと小さいヒト、ワープを使ってどう繋ぐ？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">ワープ入口A→出口Bの流れを使って、大きいヒトが小さいヒトの位置に「切り替わる」仕組みを作ろう。Yボタンがトリガーになるよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.39 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.39</span>
+      <span class="title">はなて！ためパンチ！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">ためてためてパンチを放ち、遠くのリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">YボタンとNOTノードンを使う場面。ボタンを「押している間」と「離した瞬間」はどう区別する？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">Yボタン押している間 → ため状態。YボタンをNOTに通すと「離した瞬間」が取れる。その信号をパンチの発動に繋げよう。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.40 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.40</span>
+      <span class="title">花火大会</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">花火を正しく打ち上げてリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">スポイトをどこに配置するかがカギ。マーカーの位置に注目しよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">スポイトをマーカーの右上の隅に配置しよう。配置が決まったらゲーム画面で花火を観賞してみて。リンゴが現れるよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.41 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.41</span>
+      <span class="title">10秒間の試練</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">10秒間生き残ってリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">タイマーノードンを使う。Yボタンでタイマーをスタートして、何秒後に何かが起こるよう設定しよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">Yボタン → タイマー → 状態変化の流れで繋ごう。タイマーの秒数を「0.0001」のように極端に小さくすると、すぐに状態が変化するよ。目標の秒数になるよう調整して。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.42 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.42</span>
+      <span class="title">幻影のリンゴ</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">消えたり現れたりするリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">ワープ出口のIDに注目。出口Cと入口Aのつながりを確認しよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">ワープ出口CのIDをAに変更しよう。「さわっているセンサー」をNOTに通すと、リンゴに触れていないときだけワープが発動する仕組みが作れるよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.43 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.43</span>
+      <span class="title">オバケの館</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">複数のワープをくぐって、正しいルートでリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">左右のワープ入口のIDをそれぞれ確認しよう。どの入口がどの出口につながっている？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">入口と出口のIDの対応を紙に書いて整理しよう。見えにくいノードンはマグロを使って確認するのがコツ。正しいIDに変更して正解ルートを作ろう。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.44 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.44</span>
+      <span class="title">ANDとNOTの迷宮</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">ANDとNOTのノードンが並ぶ迷宮を抜けてリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">定数ノードンをワープ入口B・C・Dのどれかに繋ごう。まず1つずつ試してみて。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">各ワープ入口に入れる値（定数）によって、ANDやNOTを通った先が変わる。どの入口にどの定数を入れれば正しい出口にたどり着くか、一歩ずつ追って確かめよう。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.45 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.45</span>
+      <span class="title">クリアを阻むのは思い込みの壁</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">思い込みを捨てて、リンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">上にあるワープ入口「A」の設定を確認しよう。何を通過させることができる？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">上のワープ入口「A」でヒトをセットして、右に移動してみよう。「壁があるから通れない」という思い込みを捨てることがヒントだよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.46 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.46</span>
+      <span class="title">しかけだらけ</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">たくさんのしかけを操作して、リンゴにたどり着こう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">各ボタンと定数ノードンが、どのワープ入口と対応しているかを確認しよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">しかけが動くタイミングをよく観察して、ボタンを押す順番を整理しよう。焦らず1つずつ、どのしかけが何に影響しているか確かめながら進めて。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.47 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.47</span>
+      <span class="title">橋渡し</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">タイミングよく現れる橋を渡って、リンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">タイマーを複数使う。それぞれのタイマーが終わったら次のタイマーが動き出すように繋げよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">タイマーを「2秒→1秒→1秒→1秒→1秒→1秒」の順に連鎖させよう。それぞれのタイマーが橋の出現タイミングに対応しているよ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.48 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.48</span>
+      <span class="title">橋渡し：ハード</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">No.47よりさらに複雑な橋渡しをクリアしよう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">No.47と同じくタイマーを使う。ただし今回は階層的に繋ぐ必要がある。設計図を描いてから始めよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">複数のタイマーを「親→子→孫」のように階層的に連鎖させて、それぞれをワープ入口に分散して接続しよう。どの橋をどのタイミングで出したいか先に計画するのがコツ。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.49 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.49</span>
+      <span class="title">リンゴをとれ！</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">Bボタンとスライドの足場を使ってリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">BボタンとジャンプのポートはどうつながってればいいかCな？スライドれんけつにも注目しよう。</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">Bボタンをジャンプに接続しよう。スライドれんけつで足場を制御して、ジャンプのタイミングと足場の動きを合わせてリンゴに届けよう。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No.50 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="num">No.50</span>
+      <span class="title">パズルの真実</span>
+    </div>
+    <div class="card-body">
+      <div class="hint-block hint-mondai">
+        <div class="label">📋 問題</div>
+        <div class="text">最後のパズルを解いてリンゴを取ろう。</div>
+      </div>
+      <div class="hint-block hint-ippo">
+        <div class="label">👣 最初の一歩</div>
+        <div class="text">「パズルクリア」というノードンに注目しよう。何を繋ぐとゲームがクリアになる？</div>
+      </div>
+      <div class="hint-block hint-kangae">
+        <div class="label">💡 考え方のヒント</div>
+        <div class="text">ボタン「A」からパズルクリアへ、ワイヤーで直接繋ぐだけ。シンプルに見えても、それが答えのこともある。難しく考えすぎないで！</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.grid -->
+
+</body>
+</html>
