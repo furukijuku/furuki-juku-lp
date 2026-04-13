@@ -1730,13 +1730,13 @@ $vacancy = [
           'ok'     => '受付中',
           'warn'   => '残りわずか',
           'urgent' => '残り1名',
-          'full'   => '受付停止中',
+          'full'   => 'ご相談ください',
         ][$level];
       ?>
       <div class="vacancy-card">
         <div class="vacancy-grade"><?php echo $v['grade']; ?></div>
         <?php if ($level === 'full'): ?>
-          <div class="vacancy-count full">満席</div>
+          <div class="vacancy-count full">要相談</div>
         <?php else: ?>
           <div class="vacancy-count <?php echo $level !== 'ok' ? $level : ''; ?>">
             <?php echo $v['left']; ?><small style="font-size:14px;font-weight:400;">名</small>
