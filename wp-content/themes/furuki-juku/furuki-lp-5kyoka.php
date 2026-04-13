@@ -1707,9 +1707,9 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 // level: 'ok'=余裕あり(4名以上) / 'warn'=残りわずか(2〜3名) / 'urgent'=残りわずか(1名) / 'full'=満席
 $vacancy = [
   ['grade' => '小1〜小3', 'left' => 1, 'total' => 2],
-  ['grade' => '小4〜小6', 'left' => 2, 'total' => 6],
+  ['grade' => '小4〜小6', 'left' => 0, 'total' => 6],
   ['grade' => '中学1年',  'left' => 4, 'total' => 6],
-  ['grade' => '中学2年',  'left' => 2, 'total' => 6],
+  ['grade' => '中学2年',  'left' => 1, 'total' => 6],
   ['grade' => '中学3年',  'left' => 3, 'total' => 6],
 ];
 ?>
@@ -2254,7 +2254,7 @@ $vacancy = [
               <td class="hl">42,900円</td>
             </tr>
             <tr>
-              <td class="lbl">中3<br><small>春期講習以降入塾</small></td><td>120分</td>
+              <td class="lbl">中3<br><small>夏期講習以降入塾</small></td><td>120分</td>
               <td>—</td><td>—</td>
               <td class="hl">55,000円〜<br><small>（応相談）</small></td>
             </tr>
