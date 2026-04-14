@@ -2,6 +2,7 @@
 /**
  * Template Name: LP 5教科・速読解
  * Description: Furuki塾江東住吉教室 メインLP（5教科学習・速読解力講座）
+ * 公開ラベル: v1.0 初公開 → Git タグ furuki-lp-v1.0 が指すコミットのスナップショットです。（本番は themes/furuki-juku を参照）
  * Usage: WordPressの「固定ページ」を新規作成し、テンプレートで「LP 5教科・速読解」を選択してください。
  *        このファイルをアクティブテーマのフォルダ（wp-content/themes/あなたのテーマ名/）に配置してください。
  */
