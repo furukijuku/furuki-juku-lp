@@ -494,6 +494,7 @@ body { padding-top: 60px; }
 body.has-announcements-1 { padding-top: calc(60px + 38px); }
 body.has-announcements-2 { padding-top: calc(60px + 76px); }
 body.has-announcements-3 { padding-top: calc(60px + 114px); }
+html { scroll-padding-top: 60px; } /* JSで上書きされる。アンカーリンク用オフセット */
 body.has-announcements-1 .global-nav { top: 38px; }
 body.has-announcements-2 .global-nav { top: 76px; }
 body.has-announcements-3 .global-nav { top: 114px; }
@@ -2605,6 +2606,13 @@ $vacancy = [
 ============================================================ -->
 <script>
 /* お知らせバー 閉じる */
+/* アンカーリンクのスクロール位置をヘッダー高さに合わせて同期 */
+function syncScrollPadding() {
+  var pt = parseInt(getComputedStyle(document.body).paddingTop) || 60;
+  document.documentElement.style.scrollPaddingTop = pt + 'px';
+}
+document.addEventListener('DOMContentLoaded', syncScrollPadding);
+
 function closeAnnouncement(id) {
   var el = document.getElementById(id);
   if (el) {
@@ -2613,7 +2621,7 @@ function closeAnnouncement(id) {
     el.style.maxHeight = '0';
     el.style.overflow = 'hidden';
     el.style.padding = '0';
-    setTimeout(function() { el.remove(); }, 350);
+    setTimeout(function() { el.remove(); syncScrollPadding(); }, 350);
   }
 }
 
