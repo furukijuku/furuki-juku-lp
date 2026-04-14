@@ -1134,7 +1134,7 @@ a { color: inherit; text-decoration: none; }
         兄弟・姉妹同時入塾の場合は全員で22,000円。2人目以降は11,000円/人。
       </div>
       <div class="pricing-extra">
-        <strong>システム利用料</strong>
+        <strong>システム管理費</strong>
         3,300円/月（税込）<br>
         冷暖房費・入退出通知などを含みます。4月・10月に半年分まとめて納入。
       </div>

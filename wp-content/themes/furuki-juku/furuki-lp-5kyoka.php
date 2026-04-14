@@ -2323,7 +2323,7 @@ $vacancy = [
         同時通塾の場合、2人目のお子さまの受講費（低い方）から<strong>20%割引</strong>
       </div>
       <div class="pricing-extra">
-        <strong>システム利用料</strong>
+        <strong>システム管理費</strong>
         毎月 3,300円（税込）
       </div>
       <div class="pricing-extra">

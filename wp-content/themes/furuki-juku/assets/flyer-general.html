@@ -1,29 +1,49 @@
 <!DOCTYPE html>
 <!--
-  Furuki塾 パンフレット（集客全般） 正式版 v1.0
-  復元: git show pamphlet-general-v1.0:wp-content/themes/furuki-juku/assets/flyer-general.html
+  Furuki塾 パンフレット（集客全般） v1.0（正式版・凍結ラベル）
+  Git タグ: pamphlet-general-v1.0 → この版のコミットを指します。
+  復元例:
+    git show pamphlet-general-v1.0:wp-content/themes/furuki-juku/assets/flyer-general.html > flyer-general-v1.0.html
 -->
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>Furuki塾パンフレット（集客全般）v1.0</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
 /* ============================================================
    印刷設定
    ブラウザで開き Cmd+P → PDFに保存
    用紙: A4 / 余白: なし / 背景のグラフィック: オン
+   本文: BIZ UDゴシック（小さめでも読みやすい）／ 極太見出し: Noto Sans JP
 ============================================================ */
 @page { size: A4 portrait; margin: 0; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { width: 210mm; }
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
 body {
-  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif;
-  font-size: 10pt;
+  font-family: 'BIZ UDGothic', 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Yu Gothic UI', sans-serif;
+  font-size: 10.5pt;
   color: #1C1917;
   line-height: 1.6;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
+}
+/* font-weight:900 は Noto で描画（BIZ に 900 がないため） */
+.front-header-logo-text,
+.front-hero-catchphrase,
+.front-cta-headline,
+.back-header-title,
+.back-cta-title,
+.back-cta-tel,
+.cycle-header {
+  font-family: 'Noto Sans JP', 'BIZ UDGothic', 'Hiragino Sans', sans-serif;
+}
+@media print {
+  html { text-rendering: geometricPrecision; }
 }
 .page {
   width: 210mm;
@@ -51,16 +71,16 @@ body {
 }
 .front-header-logo { display: flex; align-items: center; gap: 3mm; }
 .front-header-logo img { height: 11mm; width: auto; display: block; }
-.front-header-logo-text { font-size: 15pt; font-weight: 900; letter-spacing: .03em; line-height: 1.2; }
+.front-header-logo-text { font-size: 16pt; font-weight: 900; letter-spacing: .03em; line-height: 1.2; }
 .front-header-logo-text span { color: #F97316; }
-.front-header-logo-sub { font-size: 6.5pt; opacity: .8; margin-top: 1px; }
-.front-header-addr { font-size: 7pt; opacity: .85; text-align: right; line-height: 1.8; }
+.front-header-logo-sub { font-size: 7.5pt; opacity: .8; margin-top: 1px; font-weight: 500; }
+.front-header-addr { font-size: 8.5pt; opacity: .85; text-align: right; line-height: 1.75; font-weight: 500; }
 
-/* ヒーロー ≈72mm（padding 16mm/13mm + 34pt×2行 + brand + sub） */
+/* ヒーロー（上下に余白を配分してページ下部の空きを減らす） */
 .front-hero {
   background: linear-gradient(135deg, #00497a 0%, #00a0e9 100%);
   color: #fff;
-  padding: 16mm 12mm 13mm;
+  padding: 14mm 11mm 12mm;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -73,45 +93,45 @@ body {
   pointer-events: none;
 }
 .front-hero-catchphrase {
-  font-size: 34pt;
+  font-size: 36pt;
   font-weight: 900;
-  line-height: 1.35;
+  line-height: 1.32;
   letter-spacing: .01em;
-  margin-bottom: 3mm;
+  margin-bottom: 2.5mm;
   position: relative;
 }
 .front-hero-catchphrase em { color: #F97316; font-style: normal; }
 .front-hero-brand {
   /* 和文に大きな letter-spacing を付けると印刷・PDFで字間が空きすぎる */
-  font-size: 9pt; font-weight: 700; letter-spacing: .02em;
+  font-size: 10pt; font-weight: 700; letter-spacing: .02em;
   background: rgba(255,255,255,.18);
   display: inline-block; padding: 2px 14px; border-radius: 100px;
-  margin-bottom: 3mm; opacity: .92; position: relative;
+  margin-bottom: 2.5mm; opacity: .92; position: relative;
 }
-.front-hero-sub { font-size: 7.5pt; opacity: .88; line-height: 1.65; position: relative; }
+.front-hero-sub { font-size: 8.5pt; opacity: .9; line-height: 1.65; position: relative; font-weight: 500; }
 
-/* 特徴3点 ≈52mm（margin 8mm×2 + card padding 5mm×2 + content） */
-.front-features { display: flex; margin: 8mm 8mm; gap: 3mm; }
+/* 特徴3点 */
+.front-features { display: flex; margin: 7.5mm 8mm; gap: 3mm; }
 .feature-card {
   flex: 1; background: #fff; border-radius: 8px;
-  padding: 5mm 3mm; text-align: center;
+  padding: 4.5mm 2.5mm; text-align: center;
   border: 1.5px solid #E7E5E4; border-top: 3px solid #00a0e9;
   box-shadow: 0 2px 8px rgba(0,0,0,.07);
 }
-.feature-icon { font-size: 19pt; margin-bottom: 2mm; }
-.feature-title { font-size: 8pt; font-weight: 700; color: #00497a; margin-bottom: 2mm; line-height: 1.4; }
-.feature-body { font-size: 6.5pt; color: #78716C; line-height: 1.7; text-align: center; }
+.feature-icon { font-size: 18pt; margin-bottom: 1.5mm; line-height: 1; }
+.feature-title { font-size: 9pt; font-weight: 700; color: #00497a; margin-bottom: 1.5mm; line-height: 1.4; }
+.feature-body { font-size: 7.5pt; color: #57534E; line-height: 1.65; text-align: center; font-weight: 500; }
 
-/* コース & 料金 ≈34mm */
-.front-courses { margin: 0 8mm 7mm; }
+/* コース & 料金 */
+.front-courses { margin: 0 8mm 6.5mm; }
 .section-title-bar {
-  font-size: 8pt; font-weight: 700; color: #00497a;
-  letter-spacing: .06em; margin-bottom: 2.5mm;
+  font-size: 9pt; font-weight: 700; color: #00497a;
+  letter-spacing: .05em; margin-bottom: 2.5mm;
   display: flex; align-items: center; gap: 2mm;
 }
 .section-title-bar::before {
   content: ''; display: inline-block;
-  width: 3px; height: 14px; background: #F97316;
+  width: 3px; height: 16px; background: #F97316;
   border-radius: 1.5px; flex-shrink: 0;
 }
 .course-row { display: flex; gap: 2.5mm; }
@@ -120,104 +140,106 @@ body {
   border: 1.5px solid #E7E5E4; box-shadow: 0 1px 4px rgba(0,0,0,.05);
 }
 .course-mini-head {
-  color: #fff; padding: 1.5mm 3mm; font-size: 7pt; font-weight: 700;
+  color: #fff; padding: 1.5mm 2.5mm; font-size: 8pt; font-weight: 700;
   display: flex; align-items: center; gap: 1.5mm;
 }
-.course-mini-body { padding: 1.5mm 3mm; font-size: 6.5pt; color: #57534E; line-height: 1.5; }
+.course-mini-body { padding: 1.5mm 2.5mm; font-size: 7.5pt; color: #57534E; line-height: 1.52; font-weight: 500; }
 .course-mini-price {
-  background: #FFF7ED; padding: 1mm 3mm;
-  font-size: 7pt; font-weight: 700; color: #C2410C;
+  background: #FFF7ED; padding: 1mm 2.5mm;
+  font-size: 8pt; font-weight: 700; color: #C2410C;
   border-top: 1px solid #FED7AA;
 }
-.courses-note { font-size: 6pt; color: #78716C; margin-top: 1.5mm; text-align: right; }
+.courses-note { font-size: 7pt; color: #78716C; margin-top: 1.5mm; text-align: right; font-weight: 500; }
 
-/* 保護者・生徒の声 ≈44mm（margin-top 6mm + padding 4.5mm×2 + content） */
+/* 保護者・生徒の声 */
 .front-voice-section {
-  margin: 6mm 8mm 0;
+  margin: 5.5mm 8mm 0;
   padding: 4.5mm;
   background: #EFF8FF; border-radius: 8px; border: 1px solid #BAE6FD;
 }
 .voice-section-title {
-  font-size: 7.5pt; font-weight: 700; color: #00497a;
+  font-size: 8.5pt; font-weight: 700; color: #00497a;
   margin-bottom: 1.5mm; display: flex; align-items: center; gap: 1.5mm;
 }
-.voice-section-title::before { content: '★'; color: #F97316; font-size: 9pt; }
-.voice-section-intro { font-size: 6.5pt; color: #57534E; margin-bottom: 2mm; line-height: 1.55; }
+.voice-section-title::before { content: '★'; color: #F97316; font-size: 10pt; }
+.voice-section-intro { font-size: 7.5pt; color: #57534E; margin-bottom: 1.5mm; line-height: 1.55; font-weight: 500; }
 .voice-grid { display: flex; gap: 2.5mm; }
 .voice-card {
   flex: 1; background: #fff; border-radius: 6px;
   border: 1px solid #E7E5E4; border-left: 3px solid #F97316;
-  padding: 2.5mm 3mm; font-size: 7pt; color: #57534E; line-height: 1.65;
+  padding: 2mm 2.5mm; font-size: 8pt; color: #57534E; line-height: 1.6; font-weight: 500;
 }
 .voice-author {
-  margin-top: 1.5mm; font-size: 6pt; color: #A8A29E; font-weight: 700;
+  margin-top: 1.5mm; font-size: 7pt; color: #78716C; font-weight: 700;
   border-top: 1px solid #E7E5E4; padding-top: 1mm;
 }
 
-/* 表面CTA（テキストのみ・QR/電話/時間は裏面に集約） ≈35mm */
+/* 表面CTA（下方向の余白を帯内に吸収） */
 .front-cta {
   background: linear-gradient(135deg, #EA6C00, #F97316);
   color: #fff;
-  margin-top: 14mm;
-  padding: 5.5mm 8mm;
+  margin-top: 4.5mm;
+  padding: 5.5mm 8mm 7.5mm;
   text-align: center;
 }
-.front-cta-headline { font-size: 13pt; font-weight: 900; line-height: 1.4; margin-bottom: 2mm; }
-.front-cta-sub { font-size: 7.5pt; opacity: .9; line-height: 1.7; }
-.front-cta-note { font-size: 7pt; opacity: .8; margin-top: 2mm; }
+.front-cta-headline { font-size: 14pt; font-weight: 900; line-height: 1.35; margin-bottom: 1.5mm; }
+.front-cta-sub { font-size: 8.5pt; opacity: .95; line-height: 1.65; font-weight: 500; }
+.front-cta-note { font-size: 8pt; opacity: .9; margin-top: 1.5mm; font-weight: 500; }
 
 /* ============================================================
    裏面  目標高さ: ~248mm（余白 ~49mm）
 ============================================================ */
 .back { background: #FAFAFA; }
 
-/* ヘッダー ≈16mm */
+/* ヘッダー */
 .back-header {
   background: linear-gradient(135deg, #003d6b, #00497a);
-  color: #fff; padding: 3.5mm 8mm;
+  color: #fff; padding: 4mm 8mm;
   display: flex; align-items: center; justify-content: space-between;
 }
 .back-header-logo { display: flex; align-items: center; gap: 3mm; }
 .back-header-logo img { height: 9mm; width: auto; }
-.back-header-title { font-size: 11pt; font-weight: 900; }
-.back-header-sub { font-size: 7pt; opacity: .85; }
+.back-header-title { font-size: 12pt; font-weight: 900; line-height: 1.25; }
+.back-header-sub { font-size: 8.5pt; opacity: .9; font-weight: 500; }
 
-.back-section { padding: 3mm 8mm 0; }
+/* セクション間は margin-top で均等に空ける（インライン指定は使わない） */
+.back-section { padding: 2.5mm 8mm 0; }
+.page.back > .back-section + .back-section { margin-top: 2.2mm; }
 .back-section-title {
-  font-size: 9pt; font-weight: 700; color: #00497a;
+  font-size: 10pt; font-weight: 700; color: #00497a;
   border-left: 3px solid #F97316; padding-left: 3mm; margin-bottom: 2.5mm;
   display: flex; align-items: center; gap: 2mm;
 }
 
-/* 体験の流れ ≈52mm */
+/* 体験の流れ */
 .trial-steps { display: flex; gap: 0; align-items: stretch; }
 .trial-step {
   flex: 1; background: #fff; border-radius: 8px;
   border: 1.5px solid #E7E5E4; border-top: 3px solid #00a0e9;
-  padding: 3mm; text-align: center;
+  padding: 3mm 2mm; text-align: center;
   box-shadow: 0 1px 4px rgba(0,0,0,.05); margin: 0 1.5mm;
 }
 .trial-step-badge {
   display: inline-flex; align-items: center;
   background: #00a0e9; color: #fff;
-  font-size: 6.5pt; font-weight: 700;
+  font-size: 7.5pt; font-weight: 700;
   padding: 1px 8px; border-radius: 100px; margin-bottom: 1.5mm;
 }
-.trial-step-icon { font-size: 15pt; margin-bottom: 1.5mm; }
-.trial-step-title { font-size: 7.5pt; font-weight: 700; color: #00497a; margin-bottom: 1mm; line-height: 1.4; }
-.trial-step-body { font-size: 6.5pt; color: #57534E; line-height: 1.65; text-align: center; }
+.trial-step-icon { font-size: 16pt; margin-bottom: 1.5mm; line-height: 1; }
+.trial-step-title { font-size: 8.5pt; font-weight: 700; color: #00497a; margin-bottom: 1mm; line-height: 1.4; }
+.trial-step-body { font-size: 7.5pt; color: #57534E; line-height: 1.58; text-align: center; font-weight: 500; }
 .trial-step-arrow {
   color: #93C5FD; font-size: 14pt;
   display: flex; align-items: center;
-  padding: 0; margin-top: 10mm; flex-shrink: 0;
+  padding: 0; margin-top: 9mm; flex-shrink: 0;
 }
 .trial-note {
-  font-size: 6.5pt; color: #0369A1; text-align: center;
-  margin-top: 2mm; padding: 1.5mm 3mm;
+  font-size: 7.5pt; color: #0369A1; text-align: center; font-weight: 500;
+  margin-top: 2mm; padding: 1.5mm 2.5mm;
   background: #F0F9FF; border-radius: 4px; border: 1px solid #BAE6FD;
 }
 
-/* 学習サイクル ≈52mm（margin-top 2mm） */
+/* 学習サイクル */
 .cycle-wrap { display: flex; gap: 0; align-items: stretch; }
 .cycle-step {
   flex: 1; background: #fff; border-radius: 8px;
@@ -227,45 +249,45 @@ body {
 }
 .cycle-header {
   background: linear-gradient(135deg, #F97316, #FB923C);
-  color: #fff; font-size: 7.5pt; font-weight: 900;
+  color: #fff; font-size: 8.5pt; font-weight: 900;
   letter-spacing: .04em;
-  padding: 2mm 3mm;
+  padding: 1.8mm 2.5mm;
   text-align: center;
   white-space: nowrap;
 }
-.cycle-icon { font-size: 16pt; margin: 2mm 0 1mm; }
-.cycle-title { font-size: 7.5pt; font-weight: 700; color: #1C1917; line-height: 1.45; padding: 0 3mm; }
-.cycle-divider { height: 1px; background: #E7E5E4; margin: 1.5mm 3mm; flex-shrink: 0; }
-.cycle-body { font-size: 6.5pt; color: #57534E; line-height: 1.6; padding: 0 3mm; flex: 1; }
-.cycle-time { font-size: 6pt; color: #A8A29E; font-weight: 700; padding: 1.5mm 3mm; background: #FAFAFA; border-top: 1px solid #F3F4F6; }
+.cycle-icon { font-size: 17pt; margin: 2mm 0 1.2mm; line-height: 1; }
+.cycle-title { font-size: 8.5pt; font-weight: 700; color: #1C1917; line-height: 1.42; padding: 0 2.5mm; }
+.cycle-divider { height: 1px; background: #E7E5E4; margin: 1.2mm 2.5mm; flex-shrink: 0; }
+.cycle-body { font-size: 7.5pt; color: #57534E; line-height: 1.55; padding: 0 2.5mm; flex: 1; font-weight: 500; }
+.cycle-time { font-size: 7pt; color: #78716C; font-weight: 700; padding: 1.2mm 2.5mm; background: #FAFAFA; border-top: 1px solid #F3F4F6; }
 .cycle-arrow {
   color: #FED7AA; font-size: 12pt;
   display: flex; align-items: center;
-  padding: 0; margin-top: 10mm; flex-shrink: 0;
+  padding: 0; margin-top: 9mm; flex-shrink: 0;
 }
 
-/* FAQ ≈52mm（margin-top 1mm・row padding 1mm） */
+/* FAQ */
 .faq-list { margin-bottom: 2mm; }
-.faq-row { border-bottom: 1px solid #E7E5E4; padding: 1mm 0; display: flex; gap: 2.5mm; font-size: 7pt; }
+.faq-row { border-bottom: 1px solid #E7E5E4; padding: 1mm 0; display: flex; gap: 2.5mm; font-size: 8pt; }
 .faq-q-badge {
-  width: 14px; height: 14px; background: #00a0e9; color: #fff;
-  border-radius: 50%; font-size: 6.5pt; font-weight: 700;
+  width: 15px; height: 15px; background: #00a0e9; color: #fff;
+  border-radius: 50%; font-size: 7pt; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; margin-top: 0.5mm;
 }
 .faq-a-badge {
-  width: 14px; height: 14px; background: #F97316; color: #fff;
-  border-radius: 50%; font-size: 6.5pt; font-weight: 700;
+  width: 15px; height: 15px; background: #F97316; color: #fff;
+  border-radius: 50%; font-size: 7pt; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; margin-top: 0.5mm;
 }
-.faq-text { color: #1C1917; line-height: 1.55; flex: 1; }
+.faq-text { color: #1C1917; line-height: 1.52; flex: 1; font-weight: 500; }
 .faq-text.ans { color: #374151; background: #F0F9FF; padding: 1mm 2mm; border-radius: 3px; border-left: 2px solid #00a0e9; }
 
 /* アクセス（地図は切り抜きせず縦横比維持・枠内に収める） */
-.access-grid { display: flex; gap: 3mm; align-items: flex-start; }
-.access-info { flex: 1; font-size: 7pt; line-height: 1.85; color: #57534E; }
-.access-info strong { color: #1C1917; font-size: 8pt; }
+.access-grid { display: flex; gap: 3.5mm; align-items: flex-start; }
+.access-info { flex: 1; font-size: 8.5pt; line-height: 1.75; color: #57534E; font-weight: 500; }
+.access-info strong { color: #1C1917; font-size: 9.5pt; font-weight: 700; }
 .access-map {
   flex: 1;
   min-width: 0;
@@ -274,8 +296,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* 画像の実寸に依存せず、押し下げ上限だけ決める */
-  max-height: 32mm;
+  max-height: 33mm;
 }
 .access-map img {
   display: block;
@@ -283,28 +304,28 @@ body {
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 32mm;
+  max-height: 33mm;
   border-radius: 4px;
 }
 
-/* 裏面CTA（電話・時間・QR すべてここに集約）— 地図分の縦を確保するためややコンパクト */
+/* 裏面CTA（下の空きを帯のパディングで埋める） */
 .back-cta {
   background: linear-gradient(135deg, #003d6b, #0085c7);
-  color: #fff; padding: 3mm 8mm; margin: 0;
-  display: flex; align-items: center; gap: 4mm;
+  color: #fff; padding: 3.5mm 8mm 5.5mm; margin: 0;
+  display: flex; align-items: center; gap: 3.5mm;
 }
 .back-cta-main { flex: 1; }
-.back-cta-title { font-size: 11pt; font-weight: 900; line-height: 1.35; margin-bottom: 1mm; }
-.back-cta-sub { font-size: 7pt; opacity: .9; line-height: 1.65; }
-.back-cta-tel { font-size: 13pt; font-weight: 900; margin-top: 1.5mm; letter-spacing: .02em; }
-.back-cta-hours { font-size: 6.5pt; opacity: .85; margin-top: 0.5mm; }
+.back-cta-title { font-size: 12pt; font-weight: 900; line-height: 1.3; margin-bottom: 0.8mm; }
+.back-cta-sub { font-size: 8.5pt; opacity: .95; line-height: 1.58; font-weight: 500; }
+.back-cta-tel { font-size: 14pt; font-weight: 900; margin-top: 1.2mm; letter-spacing: .02em; }
+.back-cta-hours { font-size: 8pt; opacity: .9; margin-top: 0.5mm; font-weight: 500; }
 .back-cta-qrs { display: flex; gap: 2.5mm; flex-shrink: 0; }
 .back-cta-qr { text-align: center; }
 .back-cta-qr img {
-  width: 19mm; height: 19mm; display: block;
+  width: 18mm; height: 18mm; display: block;
   border: 2px solid #fff; border-radius: 4px; background: #fff;
 }
-.back-cta-qr-label { font-size: 6.5pt; margin-top: 1mm; opacity: .92; font-weight: 700; line-height: 1.35; }
+.back-cta-qr-label { font-size: 7.5pt; margin-top: 0.8mm; opacity: .95; font-weight: 700; line-height: 1.35; }
 
 </style>
 </head>
@@ -332,13 +353,13 @@ body {
 
   <!-- ヒーロー ≈72mm -->
   <div class="front-hero">
-    <div style="position:absolute;top:4mm;right:4mm;width:15mm;height:15mm;background:linear-gradient(135deg,#F97316,#FB923C);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-size:5pt;font-weight:900;text-align:center;line-height:1.4;border:2px solid rgba(255,255,255,0.5);transform:rotate(15deg);box-shadow:0 3px 10px rgba(0,0,0,0.25);z-index:10;">
-      <span style="font-size:7pt;">無料</span>体験<br>受付中
+    <div style="position:absolute;top:4mm;right:4mm;width:15mm;height:15mm;background:linear-gradient(135deg,#F97316,#FB923C);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-size:6pt;font-weight:900;font-family:'Noto Sans JP','BIZ UDGothic',sans-serif;text-align:center;line-height:1.35;border:2px solid rgba(255,255,255,0.5);transform:rotate(15deg);box-shadow:0 3px 10px rgba(0,0,0,0.25);z-index:10;">
+      <span style="font-size:8pt;">無料</span>体験<br>受付中
     </div>
     <div class="front-hero-catchphrase">
       何がわからないかわからない、<br>そんな<em>悩めるキミに。</em>
     </div>
-    <div class="front-hero-brand">江東区千田 個別指導 ／ Furuki塾</div>
+    <div class="front-hero-brand">個別指導 ／ Furuki塾</div>
     <div class="front-hero-sub">
       あなたの「わからない」を一緒に見つけながら、自分だけのペースで着実に伸びる塾です。
     </div>
@@ -388,7 +409,7 @@ body {
         <div class="course-mini-price">月額 12,100円〜</div>
       </div>
     </div>
-    <div class="courses-note">※ 入塾金22,000円（兄弟割引あり）・教材費3,300円/月。詳細は公式HP → furuki-juku.com</div>
+    <div class="courses-note">※ 入塾金22,000円（兄弟割引あり）・システム管理費3,300円/月（税込）。詳細は公式HP → furuki-juku.com</div>
   </div>
 
   <!-- 保護者・生徒の声 ≈44mm -->
@@ -432,7 +453,7 @@ body {
       <img src="images/furuki-logo-capsule.png" alt="Furuki塾ロゴ">
       <div class="back-header-title">Furuki塾 ／ 体験の流れ・毎回の学習・よくある質問・アクセス</div>
     </div>
-    <div class="back-header-sub">小1〜中3対応 ／ 江東区千田</div>
+    <div class="back-header-sub">小1〜中3対応</div>
   </div>
 
   <!-- 体験の流れ ≈52mm -->
@@ -463,8 +484,8 @@ body {
     <div class="trial-note">📅 まずはLINEまたはお電話でご連絡ください。日程はお子さんのご都合に合わせて調整します。</div>
   </div>
 
-  <!-- 学習サイクル（margin-top 1mm） -->
-  <div class="back-section" style="margin-top:1mm;">
+  <!-- 学習サイクル -->
+  <div class="back-section">
     <div class="back-section-title">🔄 毎回の学習サイクル ― 「ただ座るだけ」ではない理由</div>
     <div class="cycle-wrap">
       <div class="cycle-step">
@@ -496,8 +517,8 @@ body {
     </div>
   </div>
 
-  <!-- FAQ（margin-top 1mm） -->
-  <div class="back-section" style="margin-top:1mm;">
+  <!-- FAQ -->
+  <div class="back-section">
     <div class="back-section-title">❓ よくある質問</div>
     <div class="faq-list">
       <div class="faq-row">
@@ -527,8 +548,8 @@ body {
     </div>
   </div>
 
-  <!-- アクセス（margin-top 1mm） -->
-  <div class="back-section" style="margin-top:1mm;">
+  <!-- アクセス -->
+  <div class="back-section">
     <div class="back-section-title">📍 アクセス</div>
     <div class="access-grid">
       <div class="access-info">
@@ -546,7 +567,7 @@ body {
   </div>
 
   <!-- 裏面CTA（電話・時間・QRコードをここに集約）≈30mm -->
-  <svg viewBox="0 0 794 16" preserveAspectRatio="none" style="display:block;width:100%;height:4mm;margin-bottom:-1px;margin-top:2mm;"><path d="M0,16 C198,0 596,0 794,16 L794,16 L0,16 Z" fill="#003d6b"/></svg>
+  <svg viewBox="0 0 794 16" preserveAspectRatio="none" style="display:block;width:100%;height:4mm;margin-bottom:-1px;margin-top:1.5mm;"><path d="M0,16 C198,0 596,0 794,16 L794,16 L0,16 Z" fill="#003d6b"/></svg>
   <div class="back-cta">
     <div class="back-cta-main">
       <div class="back-cta-title">無料体験・お問い合わせ</div>
