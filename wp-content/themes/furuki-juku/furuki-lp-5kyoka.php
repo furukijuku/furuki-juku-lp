@@ -749,7 +749,7 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 .vacancy-status        { font-size: 11px; margin-top: 4px; font-weight: 700; letter-spacing: .04em; color: #4ade80; }
 .vacancy-status.warn   { color: var(--orange); }
 .vacancy-status.urgent { color: #f87171; }
-.vacancy-status.full   { color: #6b7280; }
+.vacancy-status.full   { color: var(--orange); }
 .vacancy-bar           { margin-top: 8px; height: 4px; background: #44403c; border-radius: 2px; overflow: hidden; }
 .vacancy-bar-fill      { height: 100%; border-radius: 2px; background: #4ade80; }
 .vacancy-bar-fill.warn   { background: var(--orange); }
@@ -1739,13 +1739,13 @@ $vacancy = [
           'ok'     => '受付中',
           'warn'   => '残りわずか',
           'urgent' => '残り1名',
-          'full'   => 'ご相談ください',
+          'full'   => '💬 ご相談ください',
         ][$level];
       ?>
       <div class="vacancy-card">
         <div class="vacancy-grade"><?php echo $v['grade']; ?></div>
         <?php if ($level === 'full'): ?>
-          <div class="vacancy-count full">要相談</div>
+          <div class="vacancy-count full">満席</div>
         <?php else: ?>
           <div class="vacancy-count <?php echo $level !== 'ok' ? $level : ''; ?>">
             <?php echo $v['left']; ?><small style="font-size:14px;font-weight:400;">名</small>
