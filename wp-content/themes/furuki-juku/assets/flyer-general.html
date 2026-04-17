@@ -4,6 +4,13 @@
   Git タグ: pamphlet-general-v1.0 → この版のコミットを指します。
   復元例:
     git show pamphlet-general-v1.0:wp-content/themes/furuki-juku/assets/flyer-general.html > flyer-general-v1.0.html
+
+  【印刷入稿メモ】ブラウザから PDF 保存後、印刷会社の指定に合わせて調整してください。
+  - Cmd+P → 「PDFに保存」／用紙: 合わせる（または 216×303mm が選べる場合）／余白: なし／背景グラフィック: オン
+  - 本HTMLは印刷時のみ「3mm塗り足し＋トンボ相当のコーナーマーク」を出力します（画面プレビューは従来のA4相当表示のまま）。
+  - オフセット・オンデマンドは仕様が異なることがあります。入稿用PDF/X・CMYK・別トンボが必要な場合は、Acrobat／Illustrator／印刷会社DTPで変換してください。
+  - フォントはPDFに埋め込まれるか印刷プレビューで確認。細字が潰れる場合は「高品質」または解像度指定のあるPDF出力を利用。
+  - ロゴ・地図は可能なら 300dpi 相当の画像差し替えが安全（themes/furuki-juku/assets/images/）。
 -->
 <html lang="ja">
 <head>
@@ -14,7 +21,7 @@
 /* ============================================================
    印刷設定
    ブラウザで開き Cmd+P → PDFに保存
-   用紙: A4 / 余白: なし / 背景のグラフィック: オン
+   画面: A4 210×297mm 相当／印刷: 216×303mm（3mm塗り足し）推奨・余白なし・背景グラフィック: オン
    本文: BIZ UDゴシック（小さめでも読みやすい）／ 極太見出し: Noto Sans JP
 ============================================================ */
 @page { size: A4 portrait; margin: 0; }
@@ -327,6 +334,108 @@ body {
 }
 .back-cta-qr-label { font-size: 7.5pt; margin-top: 0.8mm; opacity: .95; font-weight: 700; line-height: 1.35; }
 
+/* ----- 印刷入稿用（画質・断裁） ----- */
+.back-bleed-bar { display: block; }
+
+@media print {
+  @page {
+    size: 216mm 303mm;
+    margin: 0;
+  }
+  html, body {
+    width: 216mm !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .page {
+    width: 216mm !important;
+    height: 303mm !important;
+    padding: 3mm !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    overflow: hidden !important;
+    page-break-after: always;
+  }
+  /* 背景が塗り足し領域まで届かず白フチが出るケース対策
+     - 仕上がり(210×297)の外側=塗り足し(3mm)まで背景を描画
+     - inset は念のため 6mm まで伸ばしておく（ブラウザ差分の白スジ回避） */
+  .page::before {
+    content: '';
+    position: absolute;
+    inset: -6mm;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .page.front::before {
+    background: #FFFBF5;
+    background-image: radial-gradient(circle, rgba(0,160,233,0.06) 1.5px, transparent 1.5px);
+    background-size: 6mm 6mm;
+  }
+  .page.back::before {
+    background: #FAFAFA;
+  }
+  .page > * {
+    position: relative;
+    z-index: 1;
+  }
+  /* 背景まで断裁端まで伸ばす帯（左右パディングは断裁＋3mm＋元の8mm＝11mm） */
+  .front-header,
+  .front-hero,
+  .front-cta,
+  .back-header,
+  .back-bleed-bar,
+  .back-cta {
+    margin-left: -3mm !important;
+    margin-right: -3mm !important;
+    width: 216mm !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+    padding-left: 11mm !important;
+    padding-right: 11mm !important;
+  }
+  .front-header {
+    margin-top: -3mm !important;
+    padding-top: 6.5mm !important;
+  }
+  .front-hero {
+    padding-top: 14mm !important;
+    padding-bottom: 12mm !important;
+  }
+  .front-cta {
+    margin-bottom: -3mm !important;
+    padding-top: 5.5mm !important;
+    padding-bottom: 10.5mm !important;
+  }
+  .back-header {
+    margin-top: -3mm !important;
+    padding-top: 7mm !important;
+    padding-bottom: 4mm !important;
+  }
+  .back-bleed-bar {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    height: 4mm !important;
+    width: 216mm !important;
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .back-cta {
+    margin-bottom: -3mm !important;
+    padding-top: 3.5mm !important;
+    padding-bottom: 8.5mm !important;
+  }
+  img {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  /* QRは印刷時のみやや大きく（読み取り余裕） */
+  .back-cta-qr img {
+    width: 20mm !important;
+    height: 20mm !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -567,7 +676,7 @@ body {
   </div>
 
   <!-- 裏面CTA（電話・時間・QRコードをここに集約）≈30mm -->
-  <svg viewBox="0 0 794 16" preserveAspectRatio="none" style="display:block;width:100%;height:4mm;margin-bottom:-1px;margin-top:1.5mm;"><path d="M0,16 C198,0 596,0 794,16 L794,16 L0,16 Z" fill="#003d6b"/></svg>
+  <svg class="back-bleed-bar" viewBox="0 0 794 16" preserveAspectRatio="none" style="display:block;width:100%;height:4mm;margin-bottom:-1px;margin-top:1.5mm;"><path d="M0,16 C198,0 596,0 794,16 L794,16 L0,16 Z" fill="#003d6b"/></svg>
   <div class="back-cta">
     <div class="back-cta-main">
       <div class="back-cta-title">無料体験・お問い合わせ</div>
