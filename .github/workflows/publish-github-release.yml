@@ -1,0 +1,32 @@
+name: Publish GitHub Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '既存の Git タグ名'
+        required: true
+        default: 'public-launch-2026-04-20'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create release for tag
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag }}
+          name: 正式公開（${{ github.event.inputs.tag }}）
+          body: |
+            ## 正式公開
+
+            - 問い合わせフォーム・イベント申込のメール送信を本番で確認済み
+            - SMTP（`wp-config.php` の `FURUKI_SMTP_*`）
+            - WAF 回避（フォーム POST パラメータ `child_name`）
+            - 送信成功後の PRG リダイレクト・結果エリアへのスクロール
+            - 本番構成覚書・SMTP 挿入スクリプト（`docs/production-server-layout.md` / `wp-content/themes/furuki-juku/scripts/`）
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
