@@ -11,6 +11,11 @@ $errors   = [];
 $success  = false;
 $vals     = [];
 
+// 送信成功後は PRG で遷移（スクロール位置が残り成功表示が画面外になるのを防ぐ）
+if ( isset( $_GET['thanks'] ) && (string) $_GET['thanks'] === '1' ) {
+	$success = true;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Nonce検証
     if (!isset($_POST['_furuki_nonce']) || !wp_verify_nonce($_POST['_furuki_nonce'], 'furuki_contact')) {
@@ -111,7 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 wp_mail($vals['email'], '【Furuki塾】お問い合わせを受け付けました', $auto_body, $auto_headers);
 
                 if ($sent) {
-                    $success = true;
+                    nocache_headers();
+                    wp_safe_redirect( add_query_arg( 'thanks', '1', get_permalink() ), 303 );
+                    exit;
                 } else {
                     $errors[] = 'メールの送信に失敗しました。お手数ですが、お電話またはLINEにてご連絡ください。';
                 }
@@ -296,6 +303,8 @@ body {
 .cf-back-link { margin-top: 16px; }
 .cf-back-link a { font-size: 13px; color: var(--text-light); text-decoration: none; }
 .cf-back-link a:hover { color: var(--orange); }
+
+.cf-submit:disabled { opacity: .65; cursor: wait; transform: none; }
 </style>
 </head>
 <body>
@@ -335,7 +344,7 @@ body {
   <div class="cf-card">
 
     <?php if ($success): ?>
-      <div class="cf-alert cf-alert-success">
+      <div id="cf-result" class="cf-alert cf-alert-success" tabindex="-1">
         <div class="cf-check">✅</div>
         <strong>お問い合わせを受け付けました</strong>
         ご入力いただいたメールアドレスに自動返信メールをお送りしました。
@@ -353,7 +362,7 @@ body {
     <?php else: ?>
 
       <?php if (!empty($errors)): ?>
-        <div class="cf-alert cf-alert-error">
+        <div id="cf-result" class="cf-alert cf-alert-error" tabindex="-1">
           <strong>入力内容をご確認ください</strong>
           <ul>
             <?php foreach ($errors as $e): ?>
@@ -363,7 +372,7 @@ body {
         </div>
       <?php endif; ?>
 
-      <form method="post" action="" novalidate>
+      <form method="post" action="" novalidate onsubmit="var b=this.querySelector('.cf-submit');if(b){b.disabled=true;b.innerHTML='送信中…';}">
         <?php wp_nonce_field('furuki_contact', '_furuki_nonce'); ?>
 
         <!-- ハニーポット -->
@@ -477,6 +486,15 @@ body {
 
 </main>
 
+<?php wp_footer(); ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var el = document.getElementById('cf-result');
+  if (el) {
+    el.focus({ preventScroll: true });
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+</script>
 </body>
 </html>
-<?php wp_footer(); ?>
