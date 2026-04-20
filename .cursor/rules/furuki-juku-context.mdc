@@ -58,6 +58,7 @@ alwaysApply: true
 - **SSHユーザー**: admin（ポート2222）
 - **デプロイ**: GitHub Actions（mainブランチのwp-content/themes変更でトリガー）
 - **リポジトリ**: https://github.com/furukijuku/furuki-juku-lp
+- **本番構成の覚書**: リポジトリ直下 `docs/production-server-layout.md`（DocumentRoot・`wp-config` の位置・SMTP スクリプト）
 
 ## テーマ
 - **テーマ名**: furuki-juku
