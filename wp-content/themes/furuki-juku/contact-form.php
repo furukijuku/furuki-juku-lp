@@ -21,7 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors[] = '不正なリクエストです。';
         } else {
             // 値の取得・サニタイズ
-            $vals['name']    = sanitize_text_field($_POST['name']    ?? '');
+            // POST キーは child_name（「name=」は本番 WAF で 404 になるため）
+            $vals['name']    = sanitize_text_field($_POST['child_name'] ?? '');
             $vals['furigana'] = sanitize_text_field($_POST['furigana'] ?? '');
             $vals['gender']  = sanitize_text_field($_POST['gender']  ?? '');
             $vals['grade']   = sanitize_text_field($_POST['grade']   ?? '');
@@ -371,8 +372,8 @@ body {
         </div>
 
         <div class="cf-field">
-          <label for="name">お子さまのお名前 <span class="cf-required">必須</span></label>
-          <input type="text" id="name" name="name"
+          <label for="child_name">お子さまのお名前 <span class="cf-required">必須</span></label>
+          <input type="text" id="child_name" name="child_name"
             value="<?php echo esc_attr($vals['name'] ?? ''); ?>"
             placeholder="例：山田 太郎" autocomplete="name">
         </div>
