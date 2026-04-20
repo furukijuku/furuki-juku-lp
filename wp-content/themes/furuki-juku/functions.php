@@ -1,5 +1,46 @@
 <?php
 
+/**
+ * 本番で PHP mail() が使えない場合、サーバーの wp-config.php に次を定義（Git に含めない）:
+ * define( 'FURUKI_SMTP_HOST', 'smtp.gmail.com' );
+ * define( 'FURUKI_SMTP_PORT', 587 );
+ * define( 'FURUKI_SMTP_ENCRYPTION', 'tls' ); // tls | ssl | ''
+ * define( 'FURUKI_SMTP_USER', 'furuki.jyuku@gmail.com' );
+ * define( 'FURUKI_SMTP_PASS', 'Googleアプリパスワード' );
+ * define( 'FURUKI_MAIL_FROM', 'furuki.jyuku@gmail.com' ); // SMTP 利用アドレスと揃える
+ * define( 'FURUKI_MAIL_FROM_NAME', 'Furuki塾' );
+ */
+function furuki_juku_phpmailer_smtp( $phpmailer ) {
+	if ( ! defined( 'FURUKI_SMTP_HOST' ) || ! FURUKI_SMTP_HOST ) {
+		return;
+	}
+	$phpmailer->isSMTP();
+	$phpmailer->Host       = FURUKI_SMTP_HOST;
+	$phpmailer->SMTPAuth   = true;
+	$phpmailer->Port       = defined( 'FURUKI_SMTP_PORT' ) ? (int) FURUKI_SMTP_PORT : 587;
+	$phpmailer->Username   = defined( 'FURUKI_SMTP_USER' ) ? FURUKI_SMTP_USER : '';
+	$phpmailer->Password   = defined( 'FURUKI_SMTP_PASS' ) ? FURUKI_SMTP_PASS : '';
+	$enc                   = defined( 'FURUKI_SMTP_ENCRYPTION' ) ? (string) FURUKI_SMTP_ENCRYPTION : 'tls';
+	$phpmailer->SMTPSecure = in_array( $enc, [ 'tls', 'ssl', '' ], true ) ? $enc : 'tls';
+	$phpmailer->CharSet    = 'UTF-8';
+}
+add_action( 'phpmailer_init', 'furuki_juku_phpmailer_smtp' );
+
+if ( defined( 'FURUKI_SMTP_HOST' ) && FURUKI_SMTP_HOST ) {
+	add_filter(
+		'wp_mail_from',
+		static function ( $email ) {
+			return ( defined( 'FURUKI_MAIL_FROM' ) && FURUKI_MAIL_FROM ) ? FURUKI_MAIL_FROM : $email;
+		}
+	);
+	add_filter(
+		'wp_mail_from_name',
+		static function ( $name ) {
+			return ( defined( 'FURUKI_MAIL_FROM_NAME' ) && FURUKI_MAIL_FROM_NAME ) ? FURUKI_MAIL_FROM_NAME : $name;
+		}
+	);
+}
+
 function furuki_juku_setup() {
     add_theme_support( 'title-tag' );
     add_theme_support( 'post-thumbnails' );

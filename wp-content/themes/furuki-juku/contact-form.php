@@ -7,9 +7,10 @@
 define('FURUKI_MAIL_1', 'furuki.jyuku@gmail.com');
 define('FURUKI_MAIL_2', 'furusawa@furuki-juku.com');
 
-$errors   = [];
-$success  = false;
-$vals     = [];
+$errors      = [];
+$mail_error  = '';
+$success     = false;
+$vals        = [];
 
 // 送信成功後は PRG で遷移（スクロール位置が残り成功表示が画面外になるのを防ぐ）
 if ( isset( $_GET['thanks'] ) && (string) $_GET['thanks'] === '1' ) {
@@ -79,49 +80,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $body .= str_repeat('-', 40) . "\n";
                 $body .= "\n※ このメールはFuruki塾LPから自動送信されました。";
 
-                $headers = [
+                $from_addr = ( defined( 'FURUKI_MAIL_FROM' ) && FURUKI_MAIL_FROM ) ? FURUKI_MAIL_FROM : FURUKI_MAIL_2;
+                $headers   = [
                     'Content-Type: text/plain; charset=UTF-8',
-                    'Reply-To: ' . $vals['name'] . ' <' . $vals['email'] . '>',
+                    'From: Furuki塾 <' . $from_addr . '>',
+                    'Reply-To: ' . $vals['email'],
                 ];
 
                 $subject = "【Furuki塾】お問い合わせ：{$vals['name']} 様";
 
-                $sent = wp_mail([FURUKI_MAIL_1, FURUKI_MAIL_2], $subject, $body, $headers);
+                // 宛先を分けて送信（環境によって複数 To が失敗することがある）
+                $sent_a = wp_mail( FURUKI_MAIL_1, $subject, $body, $headers );
+                $sent_b = wp_mail( FURUKI_MAIL_2, $subject, $body, $headers );
+                $sent   = $sent_a && $sent_b;
 
-                // 自動返信メール
-                $auto_body  = "{$vals['name']} 様\n\n";
-                $auto_body .= "Furuki塾へのお問い合わせありがとうございます。\n";
-                $auto_body .= "以下の内容でお問い合わせを受け付けました。\n";
-                $auto_body .= "担当より2〜3営業日以内にご連絡いたします。\n\n";
-                $auto_body .= str_repeat('-', 40) . "\n";
-                $auto_body .= "【お名前】　　　{$vals['name']}（{$vals['furigana']}）\n";
-                $auto_body .= "【性別】　　　　{$vals['gender']}\n";
-                $auto_body .= "【学年】　　　　{$vals['grade']}\n";
-                $auto_body .= "【無料体験】　　{$vals['trial']}\n";
-                $auto_body .= "【お問い合わせ内容】\n{$vals['message']}\n";
-                $auto_body .= str_repeat('-', 40) . "\n\n";
-                $auto_body .= "──────────────────────\n";
-                $auto_body .= "Furuki塾 江東住吉教室\n";
-                $auto_body .= "〒135-0013 東京都江東区千田11-13 丸万マンダリンハイム1F\n";
-                $auto_body .= "TEL: 03-6770-6936\n";
-                $auto_body .= "平日 15:00〜21:30（土日祝休み）\n";
-                $auto_body .= "LINE: https://lin.ee/7NV1Pld\n";
-                $auto_body .= "──────────────────────\n";
+                if ( $sent ) {
+                    // 自動返信は塾宛が届いてから（届いていないのに受付済みと出さない）
+                    $auto_body  = "{$vals['name']} 様\n\n";
+                    $auto_body .= "Furuki塾へのお問い合わせありがとうございます。\n";
+                    $auto_body .= "以下の内容でお問い合わせを受け付けました。\n";
+                    $auto_body .= "担当より2〜3営業日以内にご連絡いたします。\n\n";
+                    $auto_body .= str_repeat('-', 40) . "\n";
+                    $auto_body .= "【お名前】　　　{$vals['name']}（{$vals['furigana']}）\n";
+                    $auto_body .= "【性別】　　　　{$vals['gender']}\n";
+                    $auto_body .= "【学年】　　　　{$vals['grade']}\n";
+                    $auto_body .= "【無料体験】　　{$vals['trial']}\n";
+                    $auto_body .= "【お問い合わせ内容】\n{$vals['message']}\n";
+                    $auto_body .= str_repeat('-', 40) . "\n\n";
+                    $auto_body .= "──────────────────────\n";
+                    $auto_body .= "Furuki塾 江東住吉教室\n";
+                    $auto_body .= "〒135-0013 東京都江東区千田11-13 丸万マンダリンハイム1F\n";
+                    $auto_body .= "TEL: 03-6770-6936\n";
+                    $auto_body .= "平日 15:00〜21:30（土日祝休み）\n";
+                    $auto_body .= "LINE: https://lin.ee/7NV1Pld\n";
+                    $auto_body .= "──────────────────────\n";
 
-                $auto_headers = [
-                    'Content-Type: text/plain; charset=UTF-8',
-                    'From: Furuki塾 <' . FURUKI_MAIL_2 . '>',
-                ];
+                    $auto_headers = [
+                        'Content-Type: text/plain; charset=UTF-8',
+                        'From: Furuki塾 <' . $from_addr . '>',
+                    ];
 
-                wp_mail($vals['email'], '【Furuki塾】お問い合わせを受け付けました', $auto_body, $auto_headers);
+                    wp_mail( $vals['email'], '【Furuki塾】お問い合わせを受け付けました', $auto_body, $auto_headers );
 
-                if ($sent) {
                     nocache_headers();
                     wp_safe_redirect( add_query_arg( 'thanks', '1', get_permalink() ), 303 );
                     exit;
-                } else {
-                    $errors[] = 'メールの送信に失敗しました。お手数ですが、お電話またはLINEにてご連絡ください。';
                 }
+
+                $mail_error = 'メールの送信に失敗しました。お手数ですが、お電話またはLINEにてご連絡ください。';
             }
         }
     }
@@ -361,14 +367,24 @@ body {
 
     <?php else: ?>
 
-      <?php if (!empty($errors)): ?>
-        <div id="cf-result" class="cf-alert cf-alert-error" tabindex="-1">
-          <strong>入力内容をご確認ください</strong>
-          <ul>
-            <?php foreach ($errors as $e): ?>
-              <li><?php echo esc_html($e); ?></li>
-            <?php endforeach; ?>
-          </ul>
+      <?php if ( ! empty( $errors ) || $mail_error ) : ?>
+        <div id="cf-result" tabindex="-1">
+          <?php if ( ! empty( $errors ) ) : ?>
+            <div class="cf-alert cf-alert-error">
+              <strong>入力内容をご確認ください</strong>
+              <ul>
+                <?php foreach ( $errors as $e ) : ?>
+                  <li><?php echo esc_html( $e ); ?></li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+          <?php endif; ?>
+          <?php if ( $mail_error ) : ?>
+            <div class="cf-alert cf-alert-error" style="<?php echo ! empty( $errors ) ? 'margin-top:16px;' : ''; ?>">
+              <strong>メールを送信できませんでした</strong>
+              <p style="margin:8px 0 0;padding:0;"><?php echo esc_html( $mail_error ); ?></p>
+            </div>
+          <?php endif; ?>
         </div>
       <?php endif; ?>
 
