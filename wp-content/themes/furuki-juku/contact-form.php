@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $vals['school']  = sanitize_text_field($_POST['school']  ?? '');
             $vals['phone']   = sanitize_text_field($_POST['phone']   ?? '');
             $vals['email']   = sanitize_email($_POST['email']        ?? '');
+            $vals['contact_preference'] = sanitize_text_field($_POST['contact_preference'] ?? '');
             $vals['trial']   = isset($_POST['trial']) ? '希望する' : '希望しない';
             $vals['message'] = sanitize_textarea_field($_POST['message'] ?? '');
 
@@ -46,6 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (empty($vals['email']))    $errors[] = 'メールアドレスを入力してください。';
             elseif (!is_email($vals['email'])) $errors[] = 'メールアドレスの形式が正しくありません。';
             if (empty($vals['message']))  $errors[] = 'お問い合わせ内容を入力してください。';
+            if (empty($vals['contact_preference'])) {
+                $errors[] = 'ご希望のご連絡方法を選択してください。';
+            } elseif (!in_array($vals['contact_preference'], ['電話', 'メール'], true)) {
+                $errors[] = 'ご希望のご連絡方法の選択が正しくありません。';
+            } elseif ($vals['contact_preference'] === '電話' && empty($vals['phone'])) {
+                $errors[] = '電話連絡希望の方は、お電話番号を入力してください。';
+            }
 
             // スパム・営業キーワードブロック
             $spam_keywords = [
@@ -74,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $body .= "【通学校】　　　" . (empty($vals['school']) ? '（未記入）' : $vals['school']) . "\n";
                 $body .= "【電話番号】　　" . (empty($vals['phone']) ? '（未記入）' : $vals['phone']) . "\n";
                 $body .= "【メール】　　　{$vals['email']}\n";
+                $body .= "【ご希望の連絡方法】{$vals['contact_preference']}\n";
                 $body .= "【無料体験】　　{$vals['trial']}\n";
                 $body .= str_repeat('-', 40) . "\n";
                 $body .= "【お問い合わせ内容】\n{$vals['message']}\n";
@@ -105,6 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $auto_body .= "【性別】　　　　{$vals['gender']}\n";
                     $auto_body .= "【学年】　　　　{$vals['grade']}\n";
                     $auto_body .= "【無料体験】　　{$vals['trial']}\n";
+                    $auto_body .= "【ご希望の連絡方法】{$vals['contact_preference']}\n";
                     $auto_body .= "【お問い合わせ内容】\n{$vals['message']}\n";
                     $auto_body .= str_repeat('-', 40) . "\n\n";
                     $auto_body .= "──────────────────────\n";
@@ -463,6 +473,15 @@ body {
           <input type="email" id="email" name="email"
             value="<?php echo esc_attr($vals['email'] ?? ''); ?>"
             placeholder="例：example@gmail.com" autocomplete="email">
+        </div>
+
+        <div class="cf-field">
+          <label for="contact_preference">ご希望のご連絡方法 <span class="cf-required">必須</span></label>
+          <select id="contact_preference" name="contact_preference">
+            <option value="">選択してください</option>
+            <option value="電話" <?php selected(($vals['contact_preference'] ?? ''), '電話'); ?>>電話での連絡を希望</option>
+            <option value="メール" <?php selected(($vals['contact_preference'] ?? ''), 'メール'); ?>>メールでの連絡を希望</option>
+          </select>
         </div>
 
         <div class="cf-field">
