@@ -1361,14 +1361,18 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
 .access-map-iframe-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
 .access-map-card img   { width: 100%; height: auto; display: block; flex: 1; }
 .access-map-link       { display: block; text-align: center; padding: 8px; font-size: 12px; color: #1a73e8; text-decoration: none; flex-shrink: 0; }
-.access-info-row       { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; background: #fff; border-radius: var(--radius); padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,.07); }
+.access-info-row       { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 24px; background: #fff; border-radius: var(--radius); padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,.07); }
 .access-info-item      { display: flex; gap: 12px; align-items: flex-start; }
 .access-info-icon      { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
 .access-info-label     { font-size: 11px; font-weight: 700; color: var(--text-light); letter-spacing: .05em; text-transform: uppercase; margin-bottom: 4px; }
 .access-info-value     { font-size: 13px; color: var(--text); line-height: 1.7; }
 .access-info-value a   { color: var(--orange); font-weight: 700; }
+.access-info-value strong { color: var(--orange-dark); font-weight: 700; }
 .access-line-link      { color: var(--line-green) !important; }
 
+@media(max-width: 1024px) {
+  .access-info-row    { grid-template-columns: repeat(2, 1fr); }
+}
 @media(max-width: 768px) {
   .access-maps-grid   { grid-template-columns: 1fr; }
   .access-info-row    { grid-template-columns: 1fr; }
@@ -2409,6 +2413,14 @@ $vacancy = [
         </div>
         <div class="faq-a">まずは無料体験で、授業の雰囲気・塾長の教え方を実際に体験してからご判断ください。体験は2週間以内に最大3回まで無料でお試しいただけるので、1回でピンとこなくてもじっくり確認できます。無理な勧誘は一切行っておりません。「相談だけ」でも大歓迎です。</div>
       </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-badge">Q</div>
+          <div class="faq-q-text">自転車で通えますか？駐輪場はありますか？</div>
+          <span class="faq-chevron">▼</span>
+        </div>
+        <div class="faq-a">はい、自転車での通塾も大歓迎です。教室の敷地内に<span class="hl">10台以上</span>の駐輪スペースを確保しており、<span class="hl">路上への駐輪は一切不要</span>です。安心してお越しください。</div>
+      </div>
     </div>
   </div>
 </section>
@@ -2515,6 +2527,13 @@ $vacancy = [
         <div>
           <div class="access-info-label">受付時間</div>
           <div class="access-info-value">平日 15:00〜21:30<br>土・日・祝 休塾<br><small style="color:var(--text-light);">※定期テスト前は開塾することがあります</small></div>
+        </div>
+      </div>
+      <div class="access-info-item">
+        <div class="access-info-icon">🚲</div>
+        <div>
+          <div class="access-info-label">駐輪場</div>
+          <div class="access-info-value">敷地内に<strong>10台以上</strong>の駐輪スペースを確保しています。<strong>路上への駐輪は不要</strong>です。お気軽に自転車でお越しください。</div>
         </div>
       </div>
     </div>
