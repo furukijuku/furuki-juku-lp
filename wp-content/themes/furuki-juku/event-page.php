@@ -34,6 +34,8 @@ $event = [
   ],
 ];
 
+require_once get_template_directory() . '/inc/spam-guard.php';
+
 /* ============================================================
    フォーム処理
 ============================================================ */
@@ -70,6 +72,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     elseif (!is_email($vals['email'])) $errors[] = 'メールアドレスの形式が正しくありません。';
     if (empty($vals['slot']))        $errors[] = '希望の時間帯を選択してください。';
     if (empty($vals['attendees']))   $errors[] = '参加人数を入力してください。';
+
+    // 共通スパム対策チェック
+    $spam_vals = [
+      'name'     => $vals['child_name'],
+      'furigana' => $vals['child_kana'],
+      'phone'    => $vals['phone'],
+      'email'    => $vals['email'],
+      'message'  => $vals['message'],
+    ];
+    $spam_errors = furuki_spam_check( $_POST, $spam_vals );
+    $errors = array_merge( $errors, $spam_errors );
 
     if (empty($errors)) {
       $subject = "【Furuki塾イベント】申し込み：{$vals['child_name']} 様";
@@ -353,6 +366,7 @@ body { font-family: 'Noto Sans JP', sans-serif; background: #fafaf9; color: var(
 
       <form method="post" action="#form" novalidate>
         <?php wp_nonce_field('furuki_event', '_ev_nonce'); ?>
+        <?php furuki_spam_fields(); ?>
         <div class="ev-hp"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
 
         <div class="ev-field-row">

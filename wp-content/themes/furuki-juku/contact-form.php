@@ -7,6 +7,8 @@
 define('FURUKI_MAIL_1', 'furuki.jyuku@gmail.com');
 define('FURUKI_MAIL_2', 'furusawa@furuki-juku.com');
 
+require_once get_template_directory() . '/inc/spam-guard.php';
+
 $errors      = [];
 $mail_error  = '';
 $success     = false;
@@ -55,21 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errors[] = '電話連絡希望の方は、お電話番号を入力してください。';
             }
 
-            // スパム・営業キーワードブロック
-            $spam_keywords = [
-                'SEO', 'seo', '集客', '広告', '営業', '勧誘',
-                'マーケティング', 'リスティング', 'アフィリエイト',
-                '代行', '外注', '投資', '副業', 'ビジネス', 'システム販売',
-                '弊社', '株式会社', '合同会社', '有限会社',
-                'ホームページ制作', 'LP制作', 'サイト制作',
-            ];
-            $check_text = $vals['name'] . ' ' . $vals['message'];
-            foreach ($spam_keywords as $kw) {
-                if (mb_strpos($check_text, $kw) !== false) {
-                    $errors[] = '本フォームは保護者・生徒の方専用です。業者様からのお問い合わせはご遠慮ください。';
-                    break;
-                }
-            }
+            // 共通スパム対策チェック
+            $spam_errors = furuki_spam_check( $_POST, $vals );
+            $errors = array_merge( $errors, $spam_errors );
 
             if (empty($errors)) {
                 // 塾宛メール本文
@@ -400,6 +390,7 @@ body {
 
       <form method="post" action="" novalidate onsubmit="var b=this.querySelector('.cf-submit');if(b){b.disabled=true;b.innerHTML='送信中…';}">
         <?php wp_nonce_field('furuki_contact', '_furuki_nonce'); ?>
+        <?php furuki_spam_fields(); ?>
 
         <!-- ハニーポット -->
         <div class="cf-hp">
