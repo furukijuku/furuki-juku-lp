@@ -52,6 +52,30 @@ function furuki_juku_setup() {
 }
 add_action( 'after_setup_theme', 'furuki_juku_setup' );
 
+/**
+ * 夏期講習固定ページ（/2026summer/）が無ければ自動作成
+ */
+function furuki_juku_ensure_summer_page() {
+	if ( get_page_by_path( '2026summer' ) ) {
+		return;
+	}
+	$page_id = wp_insert_post(
+		[
+			'post_title'  => '夏期講習 2026',
+			'post_name'   => '2026summer',
+			'post_status' => 'publish',
+			'post_type'   => 'page',
+		],
+		true
+	);
+	if ( ! is_wp_error( $page_id ) && $page_id ) {
+		update_post_meta( $page_id, '_wp_page_template', 'summer-course-page.php' );
+	}
+}
+add_action( 'init', 'furuki_juku_ensure_summer_page' );
+
+require get_template_directory() . '/inc/furuki-seo-ai.php';
+
 function furuki_juku_enqueue() {
     wp_enqueue_style(
         'google-fonts',
