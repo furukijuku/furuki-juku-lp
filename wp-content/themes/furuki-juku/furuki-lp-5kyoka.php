@@ -33,7 +33,39 @@ $exam_alerts = [
 ];
 
 /* ============================================================
-   ★ お知らせバー設定（最大3件）
+   ★ スポットライト募集（大規模イベント・LP内で目立たせる）
+   - 夏期講習など「ページ内セクション」として大きく表示
+   - お知らせバー（細い帯）とは別枠。ここに載せたものはバーには出さない
+   - courses[].left: 残席数（0=満席表示）★ 手動更新
+============================================================ */
+$spotlight_campaigns = [
+  [
+    'show'       => true,
+    'start'      => '2026-06-01',
+    'end'        => '2026-08-07',
+    'badge'      => 'SUMMER 2026 ☀',
+    'title'      => '夏期講習 受付中',
+    'headline'   => '夏休みの成長を、確実に。',
+    'period'     => '7/21（月）〜8/31（月）',
+    'deadline'   => '締切：満席次第',
+    'detail_url' => home_url('/2026summer/'),
+    'detail_text'=> 'コース・料金を見る',
+    'cta_url'    => home_url('/2026summer/#form'),
+    'cta_text'   => 'Webで申し込む',
+    'perks'      => [ '入塾金不要', '無料体験1回のみ' ],
+    'courses'    => [
+      ['name' => '小学3〜5',       'price' => '39,650', 'left' => 2],
+      ['name' => '中学1・2',       'price' => '39,650', 'left' => 2],
+      ['name' => '中学3・受験',   'price' => '55,000', 'left' => 1, 'urgent' => true],
+      ['name' => 'プログラミング', 'price' => '8,800〜', 'left' => 3],
+    ],
+  ],
+];
+
+/* ============================================================
+   ★ お知らせバー設定（最大3件）— 小規模・時限イベント向け
+   - 定期テスト対策カウントダウン（$exam_alerts）もここに表示
+   - 大規模募集は $spotlight_campaigns を使う（バーには載せない）
    - show:       true=表示 / false=非表示
    - start/end:  表示期間（'YYYY-MM-DD' 形式）不要なら '' にする
    - type:       'info'=青 / 'warn'=オレンジ / 'urgent'=赤
@@ -83,6 +115,14 @@ $announcements = [
 $today     = date('Y-m-d');
 $today_ts  = strtotime($today);
 
+// スポットライト（大規模募集）
+$active_spotlights = array_values(array_filter($spotlight_campaigns, function ($s) use ($today) {
+  if (!$s['show']) return false;
+  if ($s['start'] !== '' && $today < $s['start']) return false;
+  if ($s['end']   !== '' && $today > $s['end'])   return false;
+  return true;
+}));
+
 // ① 通常告知（is_default=false）
 $normal_announcements = array_filter($announcements, function($a) use ($today) {
   if ($a['is_default'] ?? false) return false;
@@ -114,8 +154,9 @@ foreach ($exam_alerts as $ex) {
   }
 }
 
-// ③ 常設CTA：テスト対策カウントダウンがない期間は常に表示（イベント告知と共存OK）
-//    テスト対策が発動している期間だけCTAは非表示になる（Aパターン：完全切り替え）
+// ③ 常設CTA：テスト対策がない期間は常に表示（小規模イベント告知と共存OK）
+//    テスト対策が発動している期間だけCTAは非表示（完全切り替え）
+//    ※ 大規模募集（$spotlight_campaigns）はバーではなくスポットライトセクションで表示
 $default_announcements = [];
 if (empty($exam_announcements)) {
   $default_announcements = array_filter($announcements, function($a) use ($today) {
@@ -229,63 +270,15 @@ $testimonials = [
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo.svg'); ?>" type="image/svg+xml">
 <title>Furuki塾江東住吉教室｜個別指導・5教科・不登校・発達特性にも対応｜江東区千田</title>
-<meta name="description" content="江東区千田の個別指導学習塾。小1〜中3対応。不登校・発達特性のあるお子さんのご相談も歓迎。認定心理士・電子工学修士の塾長が一人ひとりに寄り添います。5教科学習・速読解力講座。無料体験随時受付中。">
+<meta name="description" content="江東区千田の個別指導学習塾。夏期講習2026受付中（7/21〜8/31）。小1〜中3対応。不登校・発達特性のご相談も歓迎。認定心理士の塾長が完全個別指導。5教科・速読解・プログラミング。無料体験随時受付。">
 <link rel="canonical" href="https://furuki-juku.com/">
-<meta property="og:title" content="Furuki塾江東住吉教室｜個別指導・5教科・不登校・発達特性にも対応">
-<meta property="og:description" content="江東区千田の個別指導塾。不登校・発達特性のご相談歓迎。認定心理士の塾長が一人ひとりに寄り添う学習指導。無料体験随時受付中。">
+<meta property="og:title" content="Furuki塾江東住吉教室｜江東区の個別指導・夏期講習">
+<meta property="og:description" content="江東区千田の個別指導塾。夏期講習受付中。完全個別指導・低価格な通い放題プラン。無料体験随時受付。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://furuki-juku.com/">
-<meta property="og:image" content="https://furuki-juku.com/wp-content/themes/furuki-juku/assets/images/furuki-logo.svg">
+<meta property="og:image" content="https://furuki-juku.com/wp-content/themes/furuki-juku/assets/images/furuki-kanban.png">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:site_name" content="Furuki塾江東住吉教室">
-<!-- 構造化データ（LocalBusiness + EducationalOrganization） -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": ["EducationalOrganization", "LocalBusiness"],
-  "name": "Furuki塾 江東住吉教室",
-  "url": "https://furuki-juku.com/",
-  "logo": "https://furuki-juku.com/wp-content/themes/furuki-juku/assets/images/furuki-logo.svg",
-  "image": "https://furuki-juku.com/wp-content/themes/furuki-juku/assets/images/furuki-logo.svg",
-  "description": "江東区千田の個別指導学習塾。小1〜中3対応。不登校・発達特性のあるお子さんのご相談も歓迎。認定心理士・電子工学修士の塾長が一人ひとりに寄り添います。",
-  "telephone": "03-6770-6936",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "千田11-13 丸万マンダリンハイム1F",
-    "addressLocality": "江東区",
-    "addressRegion": "東京都",
-    "postalCode": "135-0007",
-    "addressCountry": "JP"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 35.6742,
-    "longitude": 139.8063
-  },
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-      "opens": "15:00",
-      "closes": "21:30"
-    }
-  ],
-  "priceRange": "¥¥",
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "学習コース",
-    "itemListElement": [
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "5教科学習コース（小学生）" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "5教科学習コース（中学生）" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "速読解力講座" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "プログラミング講座" } }
-    ]
-  },
-  "sameAs": [
-    "https://www.instagram.com/furukijuku/"
-  ]
-}
-</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -406,6 +399,268 @@ a { color: inherit; text-decoration: none; }
 @media(max-width: 640px) {
   .announcement-item   { font-size: 12px; padding: 8px 12px; }
   .announcement-text   { font-size: 12px; }
+}
+
+/* ==============================
+   Spotlight（大規模募集セクション）
+============================== */
+.spotlight-section {
+  position: relative;
+  overflow: hidden;
+  padding: 48px 0 64px;
+  background: linear-gradient(165deg, #FFE8CC 0%, #FBF6EF 38%, #FFF8F0 62%, #E8F4FD 100%);
+  border-top: 4px solid #E8964F;
+  border-bottom: 1px solid rgba(43,76,126,.12);
+}
+.spotlight-section::before {
+  content: '';
+  position: absolute;
+  right: -100px; top: -100px;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  border: 28px solid rgba(232,150,79,.14);
+  pointer-events: none;
+}
+.spotlight-section::after {
+  content: '';
+  position: absolute;
+  left: -80px; bottom: -80px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  border: 22px solid rgba(74,144,164,.10);
+  pointer-events: none;
+}
+.spotlight-section-bg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(43,76,126,.06) 1.4px, transparent 1.4px);
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+.spotlight-section-label {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #2B4C7E;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+.spotlight-card {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  border: 2px solid #EADFCE;
+  border-radius: 24px;
+  padding: 32px 36px 36px;
+  box-shadow:
+    0 4px 0 #E8964F,
+    0 20px 50px rgba(43,76,126,.14),
+    0 0 0 1px rgba(255,255,255,.8) inset;
+}
+.spotlight-card::before {
+  content: '☀';
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  font-size: 42px;
+  opacity: .12;
+  pointer-events: none;
+  line-height: 1;
+}
+.spotlight-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.spotlight-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #2B4C7E;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  padding: 7px 16px;
+  border-radius: 9999px;
+}
+.spotlight-deadline {
+  font-size: 13px;
+  font-weight: 700;
+  color: #D97E3A;
+}
+.spotlight-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #E8964F;
+  letter-spacing: .08em;
+  margin-bottom: 6px;
+}
+.spotlight-headline {
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 900;
+  line-height: 1.25;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+.spotlight-headline em {
+  font-style: normal;
+  color: #E8964F;
+}
+.spotlight-meta {
+  font-size: 15px;
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+.spotlight-meta strong {
+  color: #2B4C7E;
+  font-weight: 700;
+}
+.spotlight-perks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.spotlight-perk {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #FFF4E6, #FFE8CC);
+  border: 1.5px solid #E8964F;
+  color: #D97E3A;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 9999px;
+}
+.spotlight-courses {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.spotlight-course {
+  background: #fff;
+  border: 1.5px solid #EADFCE;
+  border-radius: 14px;
+  padding: 16px 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(43,76,126,.06);
+  transition: transform .15s, box-shadow .15s;
+}
+.spotlight-course:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(43,76,126,.10);
+}
+.spotlight-course.urgent {
+  border-color: #F0A8A4;
+  background: linear-gradient(180deg, #FFF5F5, #fff);
+  box-shadow: 0 4px 16px rgba(200,90,84,.15);
+}
+.spotlight-course-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #2B4C7E;
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+.spotlight-course-price {
+  font-size: 18px;
+  font-weight: 900;
+  color: #1a1a1a;
+  line-height: 1.2;
+}
+.spotlight-course-price small {
+  font-size: 11px;
+  font-weight: 500;
+  color: #777;
+}
+.spotlight-course-seats {
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #468A70;
+}
+.spotlight-course-seats.urgent { color: #C85A54; }
+.spotlight-course-seats.full   { color: #78716C; }
+.spotlight-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.spotlight-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #F0A050, #E8964F);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 800;
+  padding: 16px 32px;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(232,150,79,.4);
+  transition: transform .15s, box-shadow .15s;
+}
+.spotlight-cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(232,150,79,.42);
+  color: #fff;
+}
+.spotlight-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #2B4C7E;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 14px 20px;
+  border: 2px solid #2B4C7E;
+  border-radius: 9999px;
+  transition: background .15s, color .15s;
+}
+.spotlight-cta-secondary:hover {
+  background: #2B4C7E;
+  color: #fff;
+}
+.nav-spotlight {
+  background: #2B4C7E !important;
+  color: #fff !important;
+  padding: 8px 14px !important;
+  border-radius: 20px !important;
+  font-size: 12px !important;
+  white-space: nowrap;
+  animation: nav-spotlight-pulse 2.5s ease-in-out infinite;
+}
+.nav-spotlight:hover {
+  background: #1e3a5f !important;
+  color: #fff !important;
+}
+@keyframes nav-spotlight-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(43,76,126,.35); }
+  50%      { box-shadow: 0 0 0 6px rgba(43,76,126,0); }
+}
+@media(max-width: 900px) {
+  .spotlight-courses { grid-template-columns: repeat(2, 1fr); }
+}
+@media(max-width: 640px) {
+  .spotlight-section { padding: 36px 0 48px; }
+  .spotlight-card { padding: 22px 18px 26px; }
+  .spotlight-card::before { font-size: 32px; top: 12px; right: 14px; }
+  .spotlight-actions { flex-direction: column; align-items: stretch; }
+  .spotlight-cta-primary,
+  .spotlight-cta-secondary { justify-content: center; }
 }
 
 /* ==============================
@@ -536,6 +791,7 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
   position: relative;
   overflow: hidden;
 }
+.hero-has-spotlight { padding-bottom: 40px; }
 /* 右上：ブルーの光彩 */
 .hero::before {
   content: '';
@@ -590,11 +846,25 @@ body.has-announcements-3 .nav-mobile-menu { top: calc(114px + 60px); }
   border-radius: 100px;
   margin-bottom: 20px;
 }
+a.hero-badge-spotlight {
+  text-decoration: none;
+  background: #2B4C7E;
+  transition: background .15s, transform .15s;
+}
+a.hero-badge-spotlight:hover {
+  background: #1e3a5f;
+  color: #fff;
+  transform: translateY(-1px);
+}
 .hero-title {
   font-size: clamp(28px, 5vw, 48px);
   font-weight: 900;
   line-height: 1.22;
   margin-bottom: 20px;
+}
+.hero-title-line {
+  display: block;
+  white-space: nowrap;
 }
 .hero-title .accent { color: var(--orange); }
 .hero-sub {
@@ -1444,6 +1714,9 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
       <span class="nav-logo-text"><strong>Furuki塾</strong><span class="nav-logo-sub">江東住吉教室</span></span>
     </a>
     <ul class="nav-links">
+      <?php if (!empty($active_spotlights)): ?>
+      <li><a href="<?php echo esc_url($active_spotlights[0]['detail_url']); ?>" class="nav-spotlight">☀ 夏期講習</a></li>
+      <?php endif; ?>
       <li><a href="#reasons">選ばれる理由</a></li>
       <li><a href="#courses">コース紹介</a></li>
       <li><a href="#pricing">料金</a></li>
@@ -1459,6 +1732,9 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 
 <!-- モバイルメニュー -->
 <div class="nav-mobile-menu" id="navMobileMenu">
+  <?php if (!empty($active_spotlights)): ?>
+  <a href="<?php echo esc_url($active_spotlights[0]['detail_url']); ?>" onclick="closeNavMenu()" style="color:#2B4C7E;font-weight:900;">☀ 夏期講習 受付中</a>
+  <?php endif; ?>
   <a href="#reasons"  onclick="closeNavMenu()">選ばれる理由</a>
   <a href="#courses"  onclick="closeNavMenu()">コース紹介</a>
   <a href="#pricing"  onclick="closeNavMenu()">料金のご案内</a>
@@ -1478,7 +1754,7 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 <!-- ============================================================
    1. HERO
 ============================================================ -->
-<section class="hero" id="top">
+<section class="hero<?php echo !empty($active_spotlights) ? ' hero-has-spotlight' : ''; ?>" id="top">
   <!-- 浮遊SVG装飾 -->
   <!-- 鉛筆 -->
   <svg class="hero-deco d1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1522,10 +1798,18 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
   <div class="container">
     <div class="hero-inner">
       <div class="hero-content">
+        <?php if (!empty($active_spotlights)):
+          $sp = $active_spotlights[0];
+        ?>
+        <a href="<?php echo esc_url($sp['detail_url']); ?>" class="hero-badge hero-badge-spotlight">
+          ☀ <?php echo esc_html($sp['title']); ?> — <?php echo esc_html($sp['period']); ?>
+        </a>
+        <?php else: ?>
         <div class="hero-badge">✦ 無料体験 随時受付中</div>
+        <?php endif; ?>
         <h1 class="hero-title">
-          何がわからないか、<br>
-          <span class="accent">わからない。</span>
+          <span class="hero-title-line">何がわからないか、</span>
+          <span class="hero-title-line accent">わからない。</span>
         </h1>
         <p class="hero-sub">
           そんな「悩める」キミに、Furuki塾。<br>
@@ -1585,6 +1869,70 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
     </div>
   </div>
 </section>
+
+<?php if (!empty($active_spotlights)):
+  $sp = $active_spotlights[0];
+?>
+<!-- ============================================================
+   1.5 SPOTLIGHT（大規模募集 — 夏期講習など）
+============================================================ -->
+<section class="spotlight-section" id="spotlight">
+  <div class="spotlight-section-bg" aria-hidden="true"></div>
+  <div class="container-wide">
+    <span class="spotlight-section-label">☀ 夏期講習 2026 — Summer Course</span>
+    <div class="spotlight-card">
+      <div class="spotlight-top">
+        <span class="spotlight-badge"><?php echo esc_html($sp['badge']); ?></span>
+        <span class="spotlight-deadline"><?php echo esc_html($sp['deadline']); ?></span>
+      </div>
+      <div class="spotlight-title"><?php echo esc_html($sp['title']); ?></div>
+      <h2 class="spotlight-headline"><?php
+        $hl = $sp['headline'];
+        if (preg_match('/^(.+[、,])(.+)$/u', $hl, $m)) {
+          echo esc_html($m[1]) . '<em>' . esc_html($m[2]) . '</em>';
+        } else {
+          echo esc_html($hl);
+        }
+      ?></h2>
+      <p class="spotlight-meta"><strong><?php echo esc_html($sp['period']); ?></strong> ｜ 税込・通い放題プランあり</p>
+      <?php if (!empty($sp['perks'])): ?>
+      <div class="spotlight-perks">
+        <?php foreach ($sp['perks'] as $perk): ?>
+        <span class="spotlight-perk">✓ <?php echo esc_html($perk); ?></span>
+        <?php endforeach; ?>
+      </div>
+      <?php endif; ?>
+      <div class="spotlight-courses">
+        <?php foreach ($sp['courses'] as $c):
+          if ($c['left'] === 0) {
+            $seat_class = 'full';
+            $seat_text  = '満席';
+            $card_class = '';
+          } elseif (!empty($c['urgent']) || $c['left'] === 1) {
+            $seat_class = 'urgent';
+            $seat_text  = '残り' . $c['left'] . '名';
+            $card_class = ' urgent';
+          } else {
+            $seat_class = '';
+            $seat_text  = '残り' . $c['left'] . '名';
+            $card_class = '';
+          }
+        ?>
+        <div class="spotlight-course<?php echo esc_attr($card_class); ?>">
+          <div class="spotlight-course-name"><?php echo esc_html($c['name']); ?></div>
+          <div class="spotlight-course-price">¥<?php echo esc_html($c['price']); ?><small>（税込）</small></div>
+          <div class="spotlight-course-seats <?php echo esc_attr($seat_class); ?>"><?php echo esc_html($seat_text); ?></div>
+        </div>
+        <?php endforeach; ?>
+      </div>
+      <div class="spotlight-actions">
+        <a href="<?php echo esc_url($sp['cta_url']); ?>" class="spotlight-cta-primary">📝 <?php echo esc_html($sp['cta_text']); ?></a>
+        <a href="<?php echo esc_url($sp['detail_url']); ?>" class="spotlight-cta-secondary"><?php echo esc_html($sp['detail_text']); ?> →</a>
+      </div>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
 
 <!-- ============================================================
    2. PAIN POINTS
@@ -1720,11 +2068,11 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 // ★ 空き数をここで管理（満席は 0）
 // level: 'ok'=余裕あり(4名以上) / 'warn'=残りわずか(2〜3名) / 'urgent'=残りわずか(1名) / 'full'=満席
 $vacancy = [
-  ['grade' => '小1〜小3', 'left' => 1, 'total' => 2],
-  ['grade' => '小4〜小6', 'left' => 0, 'total' => 6],
-  ['grade' => '中学1年',  'left' => 4, 'total' => 6],
+  ['grade' => '小3', 'left' => 1, 'total' => 2],
+  ['grade' => '小4〜小6', 'left' => 2, 'total' => 6],  // 小4: 2名
+  ['grade' => '中学1年',  'left' => 3, 'total' => 6],
   ['grade' => '中学2年',  'left' => 1, 'total' => 6],
-  ['grade' => '中学3年',  'left' => 3, 'total' => 6],
+  ['grade' => '中学3年',  'left' => 1, 'total' => 6],
 ];
 ?>
 <section class="vacancy-section" id="vacancy">
