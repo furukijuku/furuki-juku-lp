@@ -53,7 +53,7 @@ $courses = [
 		'target'    => '小学3〜5年生',
 		'time_note' => '1日最大2時間',
 		'price'     => '39,650',
-		'left'      => 2,
+		'left'      => 0,
 		'char'      => 'character-banzai.png',
 	],
 	'middle' => [
@@ -520,6 +520,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#fafaf9;color:var(--text);
       <div class="sm-seats<?php echo $is_full ? ' full' : ''; ?>">
         <span class="sm-seats-label"><?php echo $key === 'junior3' ? '受験生 募集' : '夏期 募集'; ?></span>
         <span class="sm-seats-num"><?php echo $is_full ? '満席' : '残り' . (int) $c['left'] . '名'; ?></span>
+        <?php if ( $is_full ) : ?><span class="sm-seats-label">ご応募ありがとうございました</span><?php endif; ?>
         <?php if ( ! $is_full && ! empty( $c['urgent'] ) ) : ?><span class="sm-seats-label">ラスト1枠</span><?php endif; ?>
       </div>
     </div>
@@ -613,7 +614,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#fafaf9;color:var(--text);
                 <?php echo $full ? 'disabled' : ''; ?>
                 <?php checked( $vals['course'] ?? $default_tab, $cid ); ?>>
               <span><?php echo esc_html( $clabel ); ?></span>
-              <?php if ( $full ) : ?><span class="full-tag">満席</span><?php endif; ?>
+              <?php if ( $full ) : ?><span class="full-tag">満席・ありがとうございました</span><?php endif; ?>
             </label>
             <?php endforeach; ?>
           </div>

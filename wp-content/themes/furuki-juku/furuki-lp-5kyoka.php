@@ -54,7 +54,7 @@ $spotlight_campaigns = [
     'cta_text'   => 'Webで申し込む',
     'perks'      => [ '入塾金不要', '無料体験1回のみ' ],
     'courses'    => [
-      ['name' => '小学3〜5',       'price' => '39,650', 'left' => 2],
+      ['name' => '小学3〜5',       'price' => '39,650', 'left' => 0],
       ['name' => '中学1・2',       'price' => '39,650', 'left' => 2],
       ['name' => '中学3・受験',   'price' => '55,000', 'left' => 1, 'urgent' => true],
       ['name' => 'プログラミング', 'price' => '8,800〜', 'left' => 3],
@@ -591,7 +591,13 @@ a { color: inherit; text-decoration: none; }
   color: #468A70;
 }
 .spotlight-course-seats.urgent { color: #C85A54; }
-.spotlight-course-seats.full   { color: #78716C; }
+.spotlight-course-seats.full   { color: #78716C; display: flex; flex-direction: column; gap: 2px; }
+.spotlight-course-thanks {
+  font-size: 10px;
+  font-weight: 600;
+  color: #78716C;
+  line-height: 1.4;
+}
 .spotlight-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1921,7 +1927,12 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
         <div class="spotlight-course<?php echo esc_attr($card_class); ?>">
           <div class="spotlight-course-name"><?php echo esc_html($c['name']); ?></div>
           <div class="spotlight-course-price">¥<?php echo esc_html($c['price']); ?><small>（税込）</small></div>
-          <div class="spotlight-course-seats <?php echo esc_attr($seat_class); ?>"><?php echo esc_html($seat_text); ?></div>
+          <div class="spotlight-course-seats <?php echo esc_attr($seat_class); ?>">
+            <?php echo esc_html($seat_text); ?>
+            <?php if ($c['left'] === 0): ?>
+            <span class="spotlight-course-thanks">ご応募ありがとうございました</span>
+            <?php endif; ?>
+          </div>
         </div>
         <?php endforeach; ?>
       </div>
@@ -2069,7 +2080,7 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 // level: 'ok'=余裕あり(4名以上) / 'warn'=残りわずか(2〜3名) / 'urgent'=残りわずか(1名) / 'full'=満席
 $vacancy = [
   ['grade' => '小3', 'left' => 1, 'total' => 2],
-  ['grade' => '小4〜小6', 'left' => 2, 'total' => 6],  // 小4: 2名
+  ['grade' => '小4〜小6', 'left' => 0, 'total' => 6],  // 小4: 満席
   ['grade' => '中学1年',  'left' => 3, 'total' => 6],
   ['grade' => '中学2年',  'left' => 1, 'total' => 6],
   ['grade' => '中学3年',  'left' => 1, 'total' => 6],
