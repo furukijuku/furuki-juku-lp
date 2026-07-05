@@ -37,6 +37,7 @@ $exam_alerts = [
    - 夏期講習など「ページ内セクション」として大きく表示
    - お知らせバー（細い帯）とは別枠。ここに載せたものはバーには出さない
    - courses[].left: 残席数（0=満席表示）★ 手動更新
+   - courses[].full_from: 満席時に「残りN名→満席」と表示（任意）
 ============================================================ */
 $spotlight_campaigns = [
   [
@@ -54,10 +55,10 @@ $spotlight_campaigns = [
     'cta_text'   => 'Webで申し込む',
     'perks'      => [ '入塾金不要', '無料体験1回のみ' ],
     'courses'    => [
-      ['name' => '小学3〜5',       'price' => '39,650', 'left' => 0],
+      ['name' => '小学3〜5',       'price' => '39,650', 'left' => 0, 'full_from' => 2],
       ['name' => '中学1・2',       'price' => '39,650', 'left' => 2],
       ['name' => '中学3・受験',   'price' => '55,000', 'left' => 1, 'urgent' => true],
-      ['name' => 'プログラミング', 'price' => '8,800〜', 'left' => 3],
+      ['name' => 'プログラミング', 'price' => '8,800〜', 'left' => 2],
     ],
   ],
 ];
@@ -591,7 +592,17 @@ a { color: inherit; text-decoration: none; }
   color: #468A70;
 }
 .spotlight-course-seats.urgent { color: #C85A54; }
-.spotlight-course-seats.full   { color: #78716C; display: flex; flex-direction: column; gap: 2px; }
+.spotlight-course-seats.full   { color: #78716C; display: flex; flex-direction: column; gap: 2px; align-items: center; }
+.spotlight-course-full-from {
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.75;
+  text-decoration: line-through;
+}
+.spotlight-course-full-arrow {
+  font-size: 11px;
+  font-weight: 800;
+}
 .spotlight-course-thanks {
   font-size: 10px;
   font-weight: 600;
@@ -1912,7 +1923,7 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
         <?php foreach ($sp['courses'] as $c):
           if ($c['left'] === 0) {
             $seat_class = 'full';
-            $seat_text  = '満席';
+            $seat_text  = '';
             $card_class = '';
           } elseif (!empty($c['urgent']) || $c['left'] === 1) {
             $seat_class = 'urgent';
@@ -1928,9 +1939,16 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
           <div class="spotlight-course-name"><?php echo esc_html($c['name']); ?></div>
           <div class="spotlight-course-price">¥<?php echo esc_html($c['price']); ?><small>（税込）</small></div>
           <div class="spotlight-course-seats <?php echo esc_attr($seat_class); ?>">
-            <?php echo esc_html($seat_text); ?>
             <?php if ($c['left'] === 0): ?>
-            <span class="spotlight-course-thanks">ご応募ありがとうございました</span>
+              <?php if (!empty($c['full_from'])): ?>
+              <span class="spotlight-course-full-from">残り<?php echo (int) $c['full_from']; ?>名</span>
+              <span class="spotlight-course-full-arrow">→ 満席</span>
+              <?php else: ?>
+              満席
+              <?php endif; ?>
+              <span class="spotlight-course-thanks">ご応募ありがとうございました</span>
+            <?php else: ?>
+              <?php echo esc_html($seat_text); ?>
             <?php endif; ?>
           </div>
         </div>

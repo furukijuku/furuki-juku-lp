@@ -54,6 +54,7 @@ $courses = [
 		'time_note' => '1日最大2時間',
 		'price'     => '39,650',
 		'left'      => 0,
+		'full_from' => 2,
 		'char'      => 'character-banzai.png',
 	],
 	'middle' => [
@@ -121,7 +122,7 @@ $courses = [
 		'time_note' => '',
 		'price'     => '8,800〜',
 		'price_note'=> '60分×3回 ¥8,800 ／ 120分×3回 ¥15,400（追加受講も可）',
-		'left'      => 3,
+		'left'      => 2,
 		'char'      => 'character-brain-idea.png',
 	],
 ];
@@ -392,6 +393,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#fafaf9;color:var(--text);
 .theme-code .sm-seats{background:#128C9E;box-shadow:0 0 20px rgba(18,140,158,.4)}
 .sm-seats-label{font-size:12px;font-weight:700;opacity:.92}
 .sm-seats-num{font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:32px;line-height:1.1;margin-top:4px}
+.sm-seats-change{font-size:13px;font-weight:700;opacity:.88;line-height:1.2;text-decoration:line-through}
 .sm-seats.full{background:#78716C;box-shadow:none}
 
 .sm-brand{text-align:center;margin:40px 0 8px;font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:clamp(18px,3vw,24px);color:var(--navy);line-height:1.6}
@@ -519,7 +521,14 @@ body{font-family:'Noto Sans JP',sans-serif;background:#fafaf9;color:var(--text);
       </div>
       <div class="sm-seats<?php echo $is_full ? ' full' : ''; ?>">
         <span class="sm-seats-label"><?php echo $key === 'junior3' ? '受験生 募集' : '夏期 募集'; ?></span>
-        <span class="sm-seats-num"><?php echo $is_full ? '満席' : '残り' . (int) $c['left'] . '名'; ?></span>
+        <?php if ( $is_full && ! empty( $c['full_from'] ) ) : ?>
+        <span class="sm-seats-change">残り<?php echo (int) $c['full_from']; ?>名</span>
+        <span class="sm-seats-num">→ 満席</span>
+        <?php elseif ( $is_full ) : ?>
+        <span class="sm-seats-num">満席</span>
+        <?php else : ?>
+        <span class="sm-seats-num">残り<?php echo (int) $c['left']; ?>名</span>
+        <?php endif; ?>
         <?php if ( $is_full ) : ?><span class="sm-seats-label">ご応募ありがとうございました</span><?php endif; ?>
         <?php if ( ! $is_full && ! empty( $c['urgent'] ) ) : ?><span class="sm-seats-label">ラスト1枠</span><?php endif; ?>
       </div>
@@ -608,13 +617,16 @@ body{font-family:'Noto Sans JP',sans-serif;background:#fafaf9;color:var(--text);
           <div class="sm-course-radio">
             <?php foreach ( $course_options as $cid => $clabel ) :
               $full = $courses[ $cid ]['left'] <= 0;
+              $full_label = ( $full && ! empty( $courses[ $cid ]['full_from'] ) )
+                ? '残り' . (int) $courses[ $cid ]['full_from'] . '名→満席'
+                : '満席・ありがとうございました';
             ?>
             <label class="<?php echo $full ? 'disabled' : ''; ?>">
               <input type="radio" name="course" value="<?php echo esc_attr( $cid ); ?>"
                 <?php echo $full ? 'disabled' : ''; ?>
                 <?php checked( $vals['course'] ?? $default_tab, $cid ); ?>>
               <span><?php echo esc_html( $clabel ); ?></span>
-              <?php if ( $full ) : ?><span class="full-tag">満席・ありがとうございました</span><?php endif; ?>
+              <?php if ( $full ) : ?><span class="full-tag"><?php echo esc_html( $full_label ); ?></span><?php endif; ?>
             </label>
             <?php endforeach; ?>
           </div>
