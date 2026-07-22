@@ -1956,7 +1956,7 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
       </div>
       <div class="spotlight-actions">
         <?php
-          $cta_is_external = (bool) preg_match('#^https?://#i', $sp['cta_url']);
+          $cta_is_external = strpos($sp['cta_url'], home_url()) !== 0;
           $cta_icon = $cta_is_external ? '📱' : '📝';
         ?>
         <a href="<?php echo esc_url($sp['cta_url']); ?>" class="spotlight-cta-primary"<?php echo $cta_is_external ? ' target="_blank" rel="noopener"' : ''; ?>><?php echo $cta_icon; ?> <?php echo esc_html($sp['cta_text']); ?></a>
