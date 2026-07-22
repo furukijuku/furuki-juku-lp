@@ -1024,8 +1024,9 @@ a.hero-badge-spotlight:hover {
 .vacancy-section       { background: #1c1917; color: #fff; padding: 48px 0; }
 .vacancy-lead          { text-align: center; margin-bottom: 32px; }
 .vacancy-lead-label    { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); background: rgba(249,115,22,.15); padding: 4px 14px; border-radius: 20px; margin-bottom: 10px; }
-.vacancy-lead-title    { font-size: 22px; font-weight: 900; }
+.vacancy-lead-title    { font-size: 22px; font-weight: 900; display: inline-flex; align-items: baseline; justify-content: center; flex-wrap: wrap; gap: 8px 12px; }
 .vacancy-lead-title em { color: var(--orange); font-style: normal; }
+.vacancy-updated       { font-size: 12px; font-weight: 700; color: #a8a29e; letter-spacing: .04em; white-space: nowrap; }
 .vacancy-lead-note     { font-size: 13px; color: #a8a29e; margin-top: 6px; }
 .vacancy-grid          { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; }
 .vacancy-card          { background: #292524; border-radius: 10px; padding: 16px 10px; text-align: center; border: 1px solid #44403c; }
@@ -2102,6 +2103,8 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 // ★ 空き数をここで管理（満席は 0）※学年ごとに個別表示
 // level: 'ok'=余裕あり(4名以上) / 'warn'=残りわずか(2〜3名) / 'urgent'=残りわずか(1名) / 'full'=満席
 // total は表示に使わない（枠バレ防止のダミー。バー幅は left から自動算出）
+// ★ 枠数を変えたら $vacancy_updated も必ず更新
+$vacancy_updated = '2026-07-22';
 $vacancy = [
   ['grade' => '小3', 'left' => 0, 'total' => 6],
   ['grade' => '小4', 'left' => 0, 'total' => 6],
@@ -2111,12 +2114,16 @@ $vacancy = [
   ['grade' => '中2', 'left' => 0, 'total' => 6],
   ['grade' => '中3', 'left' => 1, 'total' => 6],
 ];
+$vacancy_updated_label = date('Y.n.j', strtotime($vacancy_updated));
 ?>
 <section class="vacancy-section" id="vacancy">
   <div class="container">
     <div class="vacancy-lead">
       <div class="vacancy-lead-label">Availability</div>
-      <h2 class="vacancy-lead-title">現在の<em>残り募集枠</em></h2>
+      <h2 class="vacancy-lead-title">
+        現在の<em>残り募集枠</em>
+        <span class="vacancy-updated">最終更新 <?php echo esc_html($vacancy_updated_label); ?></span>
+      </h2>
       <p class="vacancy-lead-note">各学年ごとに人数を限定した少人数制です。お早めにご検討ください。</p>
     </div>
     <div class="vacancy-grid">
