@@ -9,6 +9,11 @@ define('FURUKI_MAIL_2', 'furusawa@furuki-juku.com');
 
 require_once get_template_directory() . '/inc/spam-guard.php';
 
+$trial_options = [
+	'same_day'      => '無料体験と無料相談を同時に行う',
+	'consult_first' => '来塾での無料相談後、無料体験を検討',
+];
+
 $errors      = [];
 $mail_error  = '';
 $success     = false;
@@ -38,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $vals['phone']   = sanitize_text_field($_POST['phone']   ?? '');
             $vals['email']   = sanitize_email($_POST['email']        ?? '');
             $vals['contact_preference'] = sanitize_text_field($_POST['contact_preference'] ?? '');
-            $vals['trial']   = isset($_POST['trial']) ? '希望する' : '希望しない';
+            $vals['trial']   = sanitize_text_field($_POST['trial'] ?? '');
             $vals['message'] = sanitize_textarea_field($_POST['message'] ?? '');
 
             // バリデーション
@@ -56,12 +61,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } elseif ($vals['contact_preference'] === '電話' && empty($vals['phone'])) {
                 $errors[] = '電話連絡希望の方は、お電話番号を入力してください。';
             }
+            if (empty($vals['trial']) || !isset($trial_options[$vals['trial']])) {
+                $errors[] = '無料体験・相談のご希望を選択してください。';
+            }
 
             // 共通スパム対策チェック
             $spam_errors = furuki_spam_check( $_POST, $vals );
             $errors = array_merge( $errors, $spam_errors );
 
             if (empty($errors)) {
+                $trial_label = $trial_options[$vals['trial']];
+
                 // 塾宛メール本文
                 $body = "Furuki塾 お問い合わせフォームより送信がありました。\n";
                 $body .= str_repeat('-', 40) . "\n";
@@ -73,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $body .= "【電話番号】　　" . (empty($vals['phone']) ? '（未記入）' : $vals['phone']) . "\n";
                 $body .= "【メール】　　　{$vals['email']}\n";
                 $body .= "【ご希望の連絡方法】{$vals['contact_preference']}\n";
-                $body .= "【無料体験】　　{$vals['trial']}\n";
+                $body .= "【体験・相談】　{$trial_label}\n";
                 $body .= str_repeat('-', 40) . "\n";
                 $body .= "【お問い合わせ内容】\n{$vals['message']}\n";
                 $body .= str_repeat('-', 40) . "\n";
@@ -103,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $auto_body .= "【お名前】　　　{$vals['name']}（{$vals['furigana']}）\n";
                     $auto_body .= "【性別】　　　　{$vals['gender']}\n";
                     $auto_body .= "【学年】　　　　{$vals['grade']}\n";
-                    $auto_body .= "【無料体験】　　{$vals['trial']}\n";
+                    $auto_body .= "【体験・相談】　{$trial_label}\n";
                     $auto_body .= "【ご希望の連絡方法】{$vals['contact_preference']}\n";
                     $auto_body .= "【お問い合わせ内容】\n{$vals['message']}\n";
                     $auto_body .= str_repeat('-', 40) . "\n\n";
@@ -268,17 +278,24 @@ body {
 }
 .cf-field textarea { resize: vertical; min-height: 130px; }
 
-/* チェックボックス */
-.cf-checkbox-wrap {
+/* 体験・相談の選択肢 */
+.cf-choice-group {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.cf-choice-wrap {
   display: flex; align-items: flex-start; gap: 10px;
   background: var(--orange-light); border-radius: 8px; padding: 14px 16px; cursor: pointer;
+  border: 2px solid transparent; transition: border-color .15s, background .15s;
 }
-.cf-checkbox-wrap input[type="checkbox"] {
+.cf-choice-wrap:has(input:checked) {
+  border-color: var(--orange); background: #fff7ed;
+}
+.cf-choice-wrap input[type="radio"] {
   width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;
   accent-color: var(--orange); cursor: pointer;
 }
-.cf-checkbox-label { font-size: 14px; font-weight: 600; color: var(--text); }
-.cf-checkbox-label small { display: block; font-size: 12px; font-weight: 400; color: var(--text-light); margin-top: 2px; }
+.cf-choice-label { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.5; }
+.cf-choice-note { font-size: 12px; color: var(--text-light); margin-top: 8px; line-height: 1.6; }
 
 /* 送信ボタン */
 .cf-submit {
@@ -476,13 +493,17 @@ body {
         </div>
 
         <div class="cf-field">
-          <label class="cf-checkbox-wrap">
-            <input type="checkbox" name="trial" value="1" <?php checked(!empty($vals['trial']) && $vals['trial'] === '希望する'); ?>>
-            <span class="cf-checkbox-label">
-              無料体験授業を希望する
-              <small>初回含め2週間・最大4回まで無料でご体験いただけます</small>
-            </span>
-          </label>
+          <label>無料体験・相談のご希望 <span class="cf-required">必須</span></label>
+          <div class="cf-choice-group">
+            <?php foreach ($trial_options as $trial_key => $trial_text) : ?>
+            <label class="cf-choice-wrap">
+              <input type="radio" name="trial" value="<?php echo esc_attr($trial_key); ?>"
+                <?php checked(($vals['trial'] ?? ''), $trial_key); ?>>
+              <span class="cf-choice-label"><?php echo esc_html($trial_text); ?></span>
+            </label>
+            <?php endforeach; ?>
+          </div>
+          <p class="cf-choice-note">無料体験は初回含め2週間・最大3回までです。しつこい勧誘はございません。</p>
         </div>
 
         <div class="cf-field">
