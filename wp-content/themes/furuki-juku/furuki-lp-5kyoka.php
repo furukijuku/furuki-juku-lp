@@ -43,22 +43,22 @@ $spotlight_campaigns = [
   [
     'show'       => true,
     'start'      => '2026-06-01',
-    'end'        => '2026-08-07',
+    'end'        => '2026-08-07', // ★ 満員御礼表示はこの日まで
     'badge'      => 'SUMMER 2026 ☀',
-    'title'      => '夏期講習 受付中',
+    'title'      => '夏期講習 満員御礼',
     'headline'   => '夏休みの成長を、確実に。',
     'period'     => '7/21（月）〜8/31（月）',
-    'deadline'   => '締切：満席次第',
+    'deadline'   => '満員御礼',
     'detail_url' => home_url('/2026summer/'),
     'detail_text'=> 'コース・料金を見る',
-    'cta_url'    => home_url('/2026summer/#form'),
-    'cta_text'   => 'Webで申し込む',
+    'cta_url'    => 'https://lin.ee/7NV1Pld',
+    'cta_text'   => 'キャンセル待ちはLINEへ',
     'perks'      => [ '入塾金不要', '無料体験1回のみ' ],
     'courses'    => [
       ['name' => '小学3〜5',       'price' => '39,650', 'left' => 0, 'full_from' => 2],
-      ['name' => '中学1・2',       'price' => '39,650', 'left' => 2],
-      ['name' => '中学3・受験',   'price' => '55,000', 'left' => 1, 'urgent' => true],
-      ['name' => 'プログラミング', 'price' => '8,800〜', 'left' => 2],
+      ['name' => '中学1・2',       'price' => '39,650', 'left' => 0, 'full_from' => 2],
+      ['name' => '中学3・受験',   'price' => '55,000', 'left' => 0, 'full_from' => 1],
+      ['name' => 'プログラミング', 'price' => '8,800〜', 'left' => 0, 'full_from' => 2],
     ],
   ],
 ];
@@ -271,10 +271,10 @@ $testimonials = [
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo.svg'); ?>" type="image/svg+xml">
 <title>Furuki塾江東住吉教室｜個別指導・5教科・不登校・発達特性にも対応｜江東区千田</title>
-<meta name="description" content="江東区千田の個別指導学習塾。夏期講習2026受付中（7/21〜8/31）。小1〜中3対応。不登校・発達特性のご相談も歓迎。認定心理士の塾長が完全個別指導。5教科・速読解・プログラミング。無料体験随時受付。">
+<meta name="description" content="江東区千田の個別指導学習塾。夏期講習2026は満員御礼（7/21〜8/31）。小1〜中3対応。不登校・発達特性のご相談も歓迎。認定心理士の塾長が完全個別指導。5教科・速読解・プログラミング。無料体験随時受付。">
 <link rel="canonical" href="https://furuki-juku.com/">
 <meta property="og:title" content="Furuki塾江東住吉教室｜江東区の個別指導・夏期講習">
-<meta property="og:description" content="江東区千田の個別指導塾。夏期講習受付中。完全個別指導・低価格な通い放題プラン。無料体験随時受付。">
+<meta property="og:description" content="江東区千田の個別指導塾。夏期講習2026は満員御礼。完全個別指導・低価格な通い放題プラン。無料体験随時受付。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://furuki-juku.com/">
 <meta property="og:image" content="https://furuki-juku.com/wp-content/themes/furuki-juku/assets/images/furuki-kanban.png">
@@ -1750,7 +1750,7 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 <!-- モバイルメニュー -->
 <div class="nav-mobile-menu" id="navMobileMenu">
   <?php if (!empty($active_spotlights)): ?>
-  <a href="<?php echo esc_url($active_spotlights[0]['detail_url']); ?>" onclick="closeNavMenu()" style="color:#2B4C7E;font-weight:900;">☀ 夏期講習 受付中</a>
+  <a href="<?php echo esc_url($active_spotlights[0]['detail_url']); ?>" onclick="closeNavMenu()" style="color:#2B4C7E;font-weight:900;">☀ <?php echo esc_html($active_spotlights[0]['title']); ?></a>
   <?php endif; ?>
   <a href="#reasons"  onclick="closeNavMenu()">選ばれる理由</a>
   <a href="#courses"  onclick="closeNavMenu()">コース紹介</a>
@@ -1946,7 +1946,7 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
               <?php else: ?>
               満席
               <?php endif; ?>
-              <span class="spotlight-course-thanks">ご応募ありがとうございました</span>
+              <span class="spotlight-course-thanks">満員御礼</span>
             <?php else: ?>
               <?php echo esc_html($seat_text); ?>
             <?php endif; ?>
@@ -1955,7 +1955,11 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
         <?php endforeach; ?>
       </div>
       <div class="spotlight-actions">
-        <a href="<?php echo esc_url($sp['cta_url']); ?>" class="spotlight-cta-primary">📝 <?php echo esc_html($sp['cta_text']); ?></a>
+        <?php
+          $cta_is_external = strpos($sp['cta_url'], home_url()) !== 0;
+          $cta_icon = $cta_is_external ? '📱' : '📝';
+        ?>
+        <a href="<?php echo esc_url($sp['cta_url']); ?>" class="spotlight-cta-primary"<?php echo $cta_is_external ? ' target="_blank" rel="noopener"' : ''; ?>><?php echo $cta_icon; ?> <?php echo esc_html($sp['cta_text']); ?></a>
         <a href="<?php echo esc_url($sp['detail_url']); ?>" class="spotlight-cta-secondary"><?php echo esc_html($sp['detail_text']); ?> →</a>
       </div>
     </div>
