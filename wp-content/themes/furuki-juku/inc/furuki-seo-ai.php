@@ -246,7 +246,7 @@ function furuki_seo_ai_output_schema() {
 			'@id'         => $base . '/2026summer/#webpage',
 			'url'         => $base . '/2026summer/',
 			'name'        => '夏期講習 2026 | Furuki塾 江東住吉教室',
-			'description' => 'Furuki塾の夏期講習2026。7/21〜8/31。小学3〜5・中学1・2・中3受験・プログラミング。江東区千田の個別指導塾。',
+			'description' => 'Furuki塾の夏期講習2026は満員御礼。7/21〜8/31。小学3〜5・中学1・2・中3受験・プログラミング。江東区千田の個別指導塾。',
 			'isPartOf'    => [ '@id' => $base . '/#website' ],
 			'about'       => [ '@id' => $base . '/#organization' ],
 			'inLanguage'  => 'ja',

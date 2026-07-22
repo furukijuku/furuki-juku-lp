@@ -25,7 +25,7 @@ $summer = [
 	'year'     => '2026',
 	'period'   => '7/21（月）〜8/31（月）',
 	'hours'    => '9:00〜13:00・14:00〜18:00',
-	'deadline' => '満席になり次第',
+	'deadline' => '満員御礼',
 	'place'    => 'Furuki塾 江東住吉教室（東京都江東区千田11-13 丸万マンダリンハイム1F）',
 	'perks'    => [
 		'入塾金不要',
@@ -76,7 +76,8 @@ $courses = [
 		'target'    => '中学1年・中学2年生',
 		'time_note' => '1日最大4時間',
 		'price'     => '39,650',
-		'left'      => 2,
+		'left'      => 0,
+		'full_from' => 2,
 		'char'      => '',
 	],
 	'junior3' => [
@@ -98,8 +99,8 @@ $courses = [
 		'target'    => '中学3年生',
 		'time_note' => '1日最大8時間',
 		'price'     => '55,000',
-		'left'      => 1,
-		'urgent'    => true,
+		'left'      => 0,
+		'full_from' => 1,
 		'char'      => '',
 	],
 	'programming' => [
@@ -122,7 +123,8 @@ $courses = [
 		'time_note' => '',
 		'price'     => '8,800〜',
 		'price_note'=> '60分×3回 ¥8,800 ／ 120分×3回 ¥15,400（追加受講も可）',
-		'left'      => 2,
+		'left'      => 0,
+		'full_from' => 2,
 		'char'      => 'character-brain-idea.png',
 	],
 ];
@@ -284,10 +286,10 @@ if ( ! empty( $_GET['course'] ) && isset( $courses[ $_GET['course'] ] ) ) {
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>夏期講習 <?php echo esc_html( $summer['year'] ); ?> | Furuki塾 江東住吉教室</title>
-<meta name="description" content="江東区千田のFuruki塾 夏期講習2026。7/21〜8/31。小学3〜5・中学1・2・中3受験・プログラミング。個別指導・通い放題で低価格。Web申込受付中。">
+<meta name="description" content="江東区千田のFuruki塾 夏期講習2026は満員御礼。7/21〜8/31。小学3〜5・中学1・2・中3受験・プログラミング。キャンセル待ちはLINE・お電話にて。">
 <link rel="canonical" href="<?php echo esc_url( home_url( '/2026summer/' ) ); ?>">
-<meta property="og:title" content="夏期講習2026 | Furuki塾 江東住吉教室">
-<meta property="og:description" content="江東区の個別指導塾Furuki塾の夏期講習。通い放題39,650円〜。7/21〜8/31。">
+<meta property="og:title" content="夏期講習2026 満員御礼 | Furuki塾 江東住吉教室">
+<meta property="og:description" content="江東区の個別指導塾Furuki塾の夏期講習2026は満員御礼。7/21〜8/31。キャンセル待ちはLINE・お電話にて。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="<?php echo esc_url( home_url( '/2026summer/' ) ); ?>">
 <meta property="og:locale" content="ja_JP">
@@ -455,10 +457,10 @@ body{font-family:'Noto Sans JP',sans-serif;background:#fafaf9;color:var(--text);
 
 <div class="sm-hero">
   <div class="sm-hero-badge">SUMMER <?php echo esc_html( $summer['year'] ); ?> ☀</div>
-  <h1 class="sm-hero-title zen">夏期講習 <em>受付中</em></h1>
+  <h1 class="sm-hero-title zen">夏期講習 <em>満員御礼</em></h1>
   <p class="sm-hero-meta">
     <strong><?php echo esc_html( $summer['period'] ); ?></strong>
-     ｜ 締切：<?php echo esc_html( $summer['deadline'] ); ?>
+     ｜ <?php echo esc_html( $summer['deadline'] ); ?>
   </p>
   <div class="sm-hero-perks">
     <?php foreach ( $summer['perks'] as $perk ) : ?>
@@ -529,7 +531,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:#fafaf9;color:var(--text);
         <?php else : ?>
         <span class="sm-seats-num">残り<?php echo (int) $c['left']; ?>名</span>
         <?php endif; ?>
-        <?php if ( $is_full ) : ?><span class="sm-seats-label">ご応募ありがとうございました</span><?php endif; ?>
+        <?php if ( $is_full ) : ?><span class="sm-seats-label">満員御礼</span><?php endif; ?>
         <?php if ( ! $is_full && ! empty( $c['urgent'] ) ) : ?><span class="sm-seats-label">ラスト1枠</span><?php endif; ?>
       </div>
     </div>
@@ -541,11 +543,15 @@ body{font-family:'Noto Sans JP',sans-serif;background:#fafaf9;color:var(--text);
   <div class="sm-cta-bar">
     <a href="https://lin.ee/7NV1Pld" class="sm-cta-btn sm-cta-line" target="_blank" rel="noopener">📱 LINEで相談</a>
     <a href="tel:0367706936" class="sm-cta-btn sm-cta-tel">📞 電話する</a>
+    <?php if ( ! $all_full ) : ?>
     <a href="#form" class="sm-cta-btn sm-cta-web">📝 Webで申込</a>
+    <?php else : ?>
+    <a href="#form" class="sm-cta-btn sm-cta-web">🎉 満員御礼</a>
+    <?php endif; ?>
   </div>
 
   <div class="sm-card" id="form">
-    <div class="sm-card-title">✏️ 夏期講習 申し込みフォーム</div>
+    <div class="sm-card-title"><?php echo $all_full ? '🎉 夏期講習 満員御礼' : '✏️ 夏期講習 申し込みフォーム'; ?></div>
 
     <?php if ( $success ) : ?>
       <div class="sm-alert sm-alert-success">
@@ -557,8 +563,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:#fafaf9;color:var(--text);
 
     <?php elseif ( $all_full ) : ?>
       <div class="sm-alert sm-alert-error">
-        <strong>🙇 申し訳ありません。全コース満席となりました。</strong><br>
-        キャンセル待ちをご希望の方はLINEまたはお電話（03-6770-6936）にてご連絡ください。
+        <strong>🎉 満員御礼 — 全コース満席となりました。</strong><br>
+        ご応募ありがとうございました。キャンセル待ちをご希望の方はLINEまたはお電話（03-6770-6936）にてご連絡ください。
       </div>
 
     <?php else : ?>
