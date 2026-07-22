@@ -2097,7 +2097,7 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 </div>
 <!-- ============================================================
    3.5 VACANCY（残り募集枠）
-   ★ 空き数が変わったら vacancy-count の数字と vacancy-bar-fill の width を更新
+   ★ 空き数が変わったら $vacancy の left と $vacancy_updated を更新
 ============================================================ -->
 <?php
 // ★ 空き数をここで管理（満席は 0）※学年ごとに個別表示
