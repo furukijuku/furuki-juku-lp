@@ -12,6 +12,7 @@ require_once get_template_directory() . '/inc/spam-guard.php';
 $trial_options = [
 	'same_day'      => '無料体験と無料相談を同時に行う',
 	'consult_first' => '来塾での無料相談後、無料体験を検討',
+	'email_only'    => 'まずはメールでの質問相談のみ',
 ];
 
 $errors      = [];
