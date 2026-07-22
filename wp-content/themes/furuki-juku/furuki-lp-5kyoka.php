@@ -1027,8 +1027,8 @@ a.hero-badge-spotlight:hover {
 .vacancy-lead-title    { font-size: 22px; font-weight: 900; }
 .vacancy-lead-title em { color: var(--orange); font-style: normal; }
 .vacancy-lead-note     { font-size: 13px; color: #a8a29e; margin-top: 6px; }
-.vacancy-grid          { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-.vacancy-card          { background: #292524; border-radius: 10px; padding: 16px 12px; text-align: center; border: 1px solid #44403c; }
+.vacancy-grid          { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; }
+.vacancy-card          { background: #292524; border-radius: 10px; padding: 16px 10px; text-align: center; border: 1px solid #44403c; }
 .vacancy-grade         { font-size: 12px; font-weight: 700; color: #a8a29e; margin-bottom: 8px; letter-spacing: .03em; }
 .vacancy-count         { font-size: 28px; font-weight: 900; line-height: 1; color: #4ade80; }
 .vacancy-count.warn    { color: var(--orange); }
@@ -1050,7 +1050,8 @@ a.hero-badge-spotlight:hover {
 .vacancy-cta           { text-align: center; margin-top: 28px; }
 .vacancy-cta a         { display: inline-flex; align-items: center; gap: 8px; background: var(--orange); color: #fff; padding: 14px 28px; border-radius: 30px; font-size: 15px; font-weight: 700; text-decoration: none; transition: background .2s; }
 .vacancy-cta a:hover   { background: var(--orange-dark); }
-@media(max-width: 640px) { .vacancy-grid { grid-template-columns: repeat(3, 1fr); } }
+@media(max-width: 900px) { .vacancy-grid { grid-template-columns: repeat(4, 1fr); } }
+@media(max-width: 640px) { .vacancy-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; } }
 @media(max-width: 400px) { .vacancy-grid { grid-template-columns: repeat(2, 1fr); } }
 
 /* ==============================
@@ -2098,14 +2099,17 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
    ★ 空き数が変わったら vacancy-count の数字と vacancy-bar-fill の width を更新
 ============================================================ -->
 <?php
-// ★ 空き数をここで管理（満席は 0）
+// ★ 空き数をここで管理（満席は 0）※学年ごとに個別表示
 // level: 'ok'=余裕あり(4名以上) / 'warn'=残りわずか(2〜3名) / 'urgent'=残りわずか(1名) / 'full'=満席
+// total は表示に使わない（枠バレ防止のダミー。バー幅は left から自動算出）
 $vacancy = [
-  ['grade' => '小3', 'left' => 1, 'total' => 2],
-  ['grade' => '小4〜小6', 'left' => 0, 'total' => 6],  // 小4: 満席
-  ['grade' => '中学1年',  'left' => 3, 'total' => 6],
-  ['grade' => '中学2年',  'left' => 1, 'total' => 6],
-  ['grade' => '中学3年',  'left' => 1, 'total' => 6],
+  ['grade' => '小3', 'left' => 0, 'total' => 6],
+  ['grade' => '小4', 'left' => 0, 'total' => 6],
+  ['grade' => '小5', 'left' => 0, 'total' => 6],
+  ['grade' => '小6', 'left' => 3, 'total' => 6],
+  ['grade' => '中1', 'left' => 2, 'total' => 6],
+  ['grade' => '中2', 'left' => 0, 'total' => 6],
+  ['grade' => '中3', 'left' => 1, 'total' => 6],
 ];
 ?>
 <section class="vacancy-section" id="vacancy">
