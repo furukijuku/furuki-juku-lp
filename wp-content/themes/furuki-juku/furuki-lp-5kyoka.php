@@ -2106,8 +2106,8 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 // ★ 枠数を変えたら $vacancy_updated も必ず更新
 $vacancy_updated = '2026-10-20';
 $vacancy = [
-  ['grade' => '小3', 'left' => 0, 'total' => 6],
-  ['grade' => '小4', 'left' => 0, 'total' => 6],
+  ['grade' => '小3', 'left' => 1, 'total' => 6],
+  ['grade' => '小4', 'left' => 1, 'total' => 6],
   ['grade' => '小5', 'left' => 1, 'total' => 6],
   ['grade' => '小6', 'left' => 3, 'total' => 6],
   ['grade' => '中1', 'left' => 1, 'total' => 6],
