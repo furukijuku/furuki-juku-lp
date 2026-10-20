@@ -117,3 +117,15 @@ function furuki_juku_tailwind() {
     </script>' . "\n";
 }
 add_action( 'wp_head', 'furuki_juku_tailwind', 1 );
+
+/**
+ * ファビコン・ホーム画面アイコン（トップ左の水色アイコンと統一）
+ * wp_head を呼ばないテンプレート（contact / event）は furuki_juku_favicon_tags() を直接呼ぶ
+ */
+function furuki_juku_favicon_tags() {
+	$base = get_template_directory_uri() . '/assets/images/';
+	echo '<link rel="icon" href="' . esc_url( $base . 'favicon-32.png' ) . '" type="image/png" sizes="32x32">' . "\n";
+	echo '<link rel="icon" href="' . esc_url( $base . 'icon-192.png' ) . '" type="image/png" sizes="192x192">' . "\n";
+	echo '<link rel="apple-touch-icon" href="' . esc_url( $base . 'apple-touch-icon.png' ) . '">' . "\n";
+}
+add_action( 'wp_head', 'furuki_juku_favicon_tags', 1 );

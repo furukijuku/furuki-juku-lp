@@ -269,7 +269,6 @@ $testimonials = [
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="<?php echo esc_url(get_template_directory_uri() . '/assets/images/furuki-logo.svg'); ?>" type="image/svg+xml">
 <title>Furuki塾江東住吉教室｜個別指導・5教科・不登校・発達特性にも対応｜江東区千田</title>
 <meta name="description" content="江東区千田の個別指導学習塾。夏期講習2026は満員御礼（7/21〜8/31）。小1〜中3対応。不登校・発達特性のご相談も歓迎。認定心理士の塾長が完全個別指導。5教科・速読解・プログラミング。無料体験随時受付。">
 <link rel="canonical" href="https://furuki-juku.com/">
