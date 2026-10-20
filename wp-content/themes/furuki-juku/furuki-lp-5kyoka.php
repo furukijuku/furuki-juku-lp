@@ -2649,7 +2649,7 @@ $vacancy_updated_label = date('Y.n.j', strtotime($vacancy_updated));
           <tbody>
             <tr>
               <td class="lbl">中1・中2</td><td>120分</td>
-              <td class="hl">19,800円</td>
+              <td class="hl">23,100円</td>
               <td class="hl">28,600円</td>
               <td class="hl">37,950円</td>
             </tr>
