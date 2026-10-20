@@ -2104,15 +2104,15 @@ $body_class = $ann_count > 0 ? "has-announcements-{$ann_count}" : '';
 // level: 'ok'=余裕あり(4名以上) / 'warn'=残りわずか(2〜3名) / 'urgent'=残りわずか(1名) / 'full'=満席
 // total は表示に使わない（枠バレ防止のダミー。バー幅は left から自動算出）
 // ★ 枠数を変えたら $vacancy_updated も必ず更新
-$vacancy_updated = '2026-07-22';
+$vacancy_updated = '2026-10-20';
 $vacancy = [
   ['grade' => '小3', 'left' => 0, 'total' => 6],
   ['grade' => '小4', 'left' => 0, 'total' => 6],
-  ['grade' => '小5', 'left' => 0, 'total' => 6],
+  ['grade' => '小5', 'left' => 1, 'total' => 6],
   ['grade' => '小6', 'left' => 3, 'total' => 6],
-  ['grade' => '中1', 'left' => 2, 'total' => 6],
+  ['grade' => '中1', 'left' => 1, 'total' => 6],
   ['grade' => '中2', 'left' => 0, 'total' => 6],
-  ['grade' => '中3', 'left' => 1, 'total' => 6],
+  ['grade' => '中3', 'left' => 0, 'total' => 6],
 ];
 $vacancy_updated_label = date('Y.n.j', strtotime($vacancy_updated));
 ?>
